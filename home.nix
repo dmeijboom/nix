@@ -1,6 +1,8 @@
 { config, pkgs, ... }:
 {
-  home.packages = [];
+  home.packages = [
+    pkgs.kubie
+  ];
   home.stateVersion = "23.11";
 
   # Shell config
@@ -31,7 +33,7 @@
     };
     aws = { disabled = true; };
     gcloud = { disabled = true; };
-    kubernetes = { disabled = true; };
+    kubernetes = { disabled = false; };
     docker_context = { disabled = true; };
   };
 
@@ -63,6 +65,8 @@
     };
     ignores = [
       ".envrc"
+      "/flake.lock"
+      "/flake.nix"
       ".zed/tasks.json"
     ];
   };
