@@ -16,10 +16,6 @@
 
       system.configurationRevision = self.rev or self.dirtyRev or null;
       system.stateVersion = 6;
-      system.defaults = {
-        dock.autohide = true;
-        finder.AppleShowAllExtensions = true;
-      };
 
       nixpkgs.hostPlatform = "aarch64-darwin";
 

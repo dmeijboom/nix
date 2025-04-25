@@ -2,12 +2,13 @@
 {
   home.packages = [];
   home.stateVersion = "23.11";
-  
+
   # Shell config
   programs.zsh = {
     enable = true;
     enableCompletion = true;
     autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
     historySubstringSearch.enable = true;
     history = {
       share = true;
@@ -18,7 +19,7 @@
       save = 10000000;
     };
   };
-  
+
   programs.starship.enable = true;
   programs.starship.enableZshIntegration = true;
   programs.starship.settings = {
@@ -32,6 +33,15 @@
     gcloud = { disabled = true; };
     kubernetes = { disabled = true; };
     docker_context = { disabled = true; };
+  };
+
+  programs.rio.enable = true;
+  programs.rio.settings = {
+    theme = "nord";
+    cursor = {
+      shape = "underline";
+      blinking = false;
+    };
   };
 
   # Git config
