@@ -2,6 +2,7 @@
 {
   home.packages = [
     pkgs.kubie
+    pkgs.mirrord
   ];
   home.stateVersion = "23.11";
 
@@ -20,6 +21,9 @@
       size = 10000000;
       save = 10000000;
     };
+    initContent = ''
+      export EDITOR="zed --wait"
+    '';
   };
 
   programs.starship.enable = true;
