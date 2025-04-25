@@ -4,6 +4,9 @@
     pkgs.kubie
     pkgs.mirrord
   ];
+  home.shellAliases = {
+    s = "lazygit";
+  };
   home.stateVersion = "23.11";
 
   # Shell config
@@ -73,5 +76,12 @@
       "/flake.nix"
       ".zed/tasks.json"
     ];
+  };
+  
+  programs.lazygit.enable = true;
+  programs.lazygit.settings = {
+    git.paging.pager = "delta --dark --paging=never";
+    git.autoFetch = false;
+    gui.statusPanelView = "allBranchesLog";
   };
 }
