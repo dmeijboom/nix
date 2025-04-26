@@ -7,40 +7,48 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, nix-darwin, home-manager, nixpkgs }:
-  let
-    configuration = { ... }: {
-      security.pam.services.sudo_local.touchIdAuth = true;
+  outputs =
+    inputs@{
+      self,
+      nix-darwin,
+      home-manager,
+      nixpkgs,
+    }:
+    let
+      configuration =
+        { ... }:
+        {
+          security.pam.services.sudo_local.touchIdAuth = true;
 
-      nix.settings.experimental-features = "nix-command flakes";
+          nix.settings.experimental-features = "nix-command flakes";
 
-      system.configurationRevision = self.rev or self.dirtyRev or null;
-      system.stateVersion = 6;
+          system.configurationRevision = self.rev or self.dirtyRev or null;
+          system.stateVersion = 6;
 
-      nixpkgs.hostPlatform = "aarch64-darwin";
+          nixpkgs.hostPlatform = "aarch64-darwin";
 
-      # Setup .localhost resolver
-      services.dnsmasq.enable = true;
-      services.dnsmasq.port = 53;
-      services.dnsmasq.addresses = {
-        ".localhost" = "127.0.0.1";
+          # Setup .localhost resolver
+          services.dnsmasq.enable = true;
+          services.dnsmasq.port = 53;
+          services.dnsmasq.addresses = {
+            ".localhost" = "127.0.0.1";
+          };
+        };
+    in
+    {
+      darwinConfigurations."Dillens-MacBook-Pro" = nix-darwin.lib.darwinSystem {
+        modules = [
+          configuration
+          home-manager.darwinModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.dmeijboom = import ./home.nix;
+            };
+            users.users.dmeijboom.home = "/Users/dmeijboom";
+          }
+        ];
       };
     };
-  in
-  {
-    darwinConfigurations."Dillens-MacBook-Pro" = nix-darwin.lib.darwinSystem {
-      modules = [
-        configuration
-        home-manager.darwinModules.home-manager
-        {
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            users.dmeijboom = import ./home.nix;
-          };
-          users.users.dmeijboom.home = "/Users/dmeijboom";
-        }
-      ];
-    };
-  };
 }

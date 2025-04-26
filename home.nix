@@ -9,49 +9,12 @@
   };
   home.stateVersion = "23.11";
 
+  imports = [
+    ./config/shell.nix
+    ./config/editor.nix
+  ];
+
   programs = {
-    # Shell config
-    zsh = {
-      enable = true;
-      enableCompletion = true;
-      autosuggestion.enable = true;
-      syntaxHighlighting.enable = true;
-      historySubstringSearch.enable = true;
-      history = {
-        share = true;
-        append = true;
-        extended = true;
-        ignoreDups = true;
-        size = 10000000;
-        save = 10000000;
-      };
-      initContent = ''
-        export EDITOR="zed --wait"
-      '';
-    };
-
-    direnv = {
-      enable = true;
-      silent = true;
-      enableZshIntegration = true;
-      nix-direnv.enable = true;
-    };
-
-    starship.enable = true;
-    starship.enableZshIntegration = true;
-    starship.settings = {
-      add_newline = false;
-      character = {
-        success_symbol = "[➜](bold green)";
-        error_symbol = "[➜](bold red)";
-        vicmd_symbol = "[V](bold green)";
-      };
-      aws = { disabled = true; };
-      gcloud = { disabled = true; };
-      kubernetes = { disabled = false; };
-      docker_context = { disabled = true; };
-    };
-
     rio.enable = true;
     rio.settings = {
       theme = "nord";
@@ -75,8 +38,12 @@
       userName = "Dillen Meijboom";
       userEmail = "dillen@brainhive.nl";
       extraConfig = {
-        push = { autoSetupRemote = true; };
-        pull = { ff = "only"; };
+        push = {
+          autoSetupRemote = true;
+        };
+        pull = {
+          ff = "only";
+        };
       };
       ignores = [
         ".envrc"
@@ -91,7 +58,9 @@
       git.paging.pager = "delta --dark --paging=never";
       git.autoFetch = false;
       gui.statusPanelView = "allBranchesLog";
-      gui.authorColors = { "*" = "#b7bdf8"; };
+      gui.authorColors = {
+        "*" = "#b7bdf8";
+      };
       gui.showRandomTip = false;
       gui.showCommandLog = false;
       gui.showPanelJumps = false;
@@ -100,14 +69,14 @@
           "#8aadf4"
           "bold"
         ];
-        inactiveBorderColor = ["#a5adcb"];
-        optionsTextColor = ["#8aadf4"];
-        selectedLineBgColor = ["#363a4f"];
-        cherryPickedCommitBgColor = ["#494d64"];
-        cherryPickedCommitFgColor = ["#8aadf4"];
-        unstagedChangesColor = ["#ed8796"];
-        defaultFgColor = ["#cad3f5"];
-        searchingActiveBorderColor = ["#eed49f"];
+        inactiveBorderColor = [ "#a5adcb" ];
+        optionsTextColor = [ "#8aadf4" ];
+        selectedLineBgColor = [ "#363a4f" ];
+        cherryPickedCommitBgColor = [ "#494d64" ];
+        cherryPickedCommitFgColor = [ "#8aadf4" ];
+        unstagedChangesColor = [ "#ed8796" ];
+        defaultFgColor = [ "#cad3f5" ];
+        searchingActiveBorderColor = [ "#eed49f" ];
       };
     };
   };
