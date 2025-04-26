@@ -49,5 +49,14 @@
         disabled = true;
       };
     };
+
+    rio.enable = true;
+    rio.settings = {
+      theme = "nord";
+      cursor = {
+        shape = "underline";
+        blinking = false;
+      };
+    };
   };
 }
