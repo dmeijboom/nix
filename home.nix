@@ -80,8 +80,8 @@
       };
       ignores = [
         ".envrc"
-        "/flake.lock"
-        "/flake.nix"
+        ".dev"
+        ".direnv"
         ".zed/tasks.json"
       ];
     };
