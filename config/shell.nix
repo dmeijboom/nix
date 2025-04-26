@@ -49,6 +49,9 @@
         disabled = true;
       };
     };
+    
+    fzf.enable = true;
+    fzf.enableZshIntegration = true;
 
     rio.enable = true;
     rio.settings = {
