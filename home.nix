@@ -77,11 +77,29 @@
       ".zed/tasks.json"
     ];
   };
-  
+
   programs.lazygit.enable = true;
   programs.lazygit.settings = {
     git.paging.pager = "delta --dark --paging=never";
     git.autoFetch = false;
     gui.statusPanelView = "allBranchesLog";
+    gui.authorColors = { "*" = "#b7bdf8"; };
+    gui.showRandomTip = false;
+    gui.showCommandLog = false;
+    gui.showPanelJumps = false;
+    gui.theme = {
+      activeBorderColor = [
+        "#8aadf4"
+        "bold"
+      ];
+      inactiveBorderColor = ["#a5adcb"];
+      optionsTextColor = ["#8aadf4"];
+      selectedLineBgColor = ["#363a4f"];
+      cherryPickedCommitBgColor = ["#494d64"];
+      cherryPickedCommitFgColor = ["#8aadf4"];
+      unstagedChangesColor = ["#ed8796"];
+      defaultFgColor = ["#cad3f5"];
+      searchingActiveBorderColor = ["#eed49f"];
+    };
   };
 }
