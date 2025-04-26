@@ -1,8 +1,11 @@
 { config, pkgs, ... }:
 {
   home.packages = [
+    # Kubernetes
     pkgs.kubie
+    pkgs.kubernetes-helm
     pkgs.mirrord
+    pkgs.skaffold
   ];
   home.shellAliases = {
     s = "lazygit";

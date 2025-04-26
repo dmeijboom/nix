@@ -31,6 +31,7 @@
 
     lazygit.enable = true;
     lazygit.settings = {
+      promptToReturnFromSubprocess = false;
       git.paging.pager = "delta --dark --paging=never";
       git.autoFetch = false;
       gui.statusPanelView = "allBranchesLog";
