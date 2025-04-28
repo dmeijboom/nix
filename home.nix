@@ -1,11 +1,18 @@
 { config, pkgs, ... }:
 {
-  home.packages = [
+  home.packages = with pkgs; [
     # Kubernetes
-    pkgs.kubie
-    pkgs.kubernetes-helm
-    pkgs.mirrord
-    pkgs.skaffold
+    kubie
+    kubernetes-helm
+    mirrord
+    skaffold
+
+    # Cloud Tooling
+    kubelogin
+    (google-cloud-sdk.withExtraComponents( with google-cloud-sdk.components; [
+      gke-gcloud-auth-plugin
+    ]))
+    (azure-cli.withExtensions [ azure-cli.extensions.aks-preview ])
   ];
   home.shellAliases = {
     s = "lazygit";
