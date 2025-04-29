@@ -3,6 +3,7 @@
   home.packages = with pkgs; [
     # Kubernetes
     kubie
+    stern
     kubernetes-helm
     mirrord
     skaffold
