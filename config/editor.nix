@@ -80,6 +80,8 @@
       }
     ];
     userSettings = {
+      load_direnv = "shell_hook";
+
       file_scan_exclusions = [
         "**/.git"
         "**/.svn"
