@@ -4,9 +4,16 @@
     zsh = {
       enable = true;
       enableCompletion = true;
+      enableVteIntegration = true;
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
       historySubstringSearch.enable = true;
+      dirHashes  = {
+        git = "$HOME/git";
+        github = "$HOME/git/github.com";
+        brainhive = "$HOME/git/github.com/brainhivenl";
+        brainpod = "$HOME/git/github.com/brainpodnl";
+      };
       history = {
         share = true;
         append = true;
@@ -18,6 +25,11 @@
       initContent = ''
         export EDITOR="zed --wait"
       '';
+    };
+
+    autojump = {
+      enable = true;
+      enableZshIntegration  = true;
     };
 
     direnv = {
@@ -49,7 +61,7 @@
         disabled = true;
       };
     };
-    
+
     fzf.enable = true;
     fzf.enableZshIntegration = true;
 
