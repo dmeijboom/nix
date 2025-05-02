@@ -31,6 +31,45 @@
 
     lazygit.enable = true;
     lazygit.settings = {
+      customCommands = [
+        {
+          key     = "s";
+          context = "files";
+          command = "git stash -u -- {{.SelectedFile.Name | quote}}";
+        }
+        {
+          key     = "B";
+          context = "files";
+          prompts = [
+            {
+              type  = "menu";
+              title = "What kind of commit/branch?";
+              key = "BranchType";
+              options = [
+                {
+                  name  = "feature";
+                  value = "feat";
+                }
+                {
+                  name  = "hotfix";
+                  value = "fix";
+                }
+                {
+                  name  = "refactor";
+                  value = "refactor";
+                }
+              ];
+            }
+            {
+              type         = "input";
+              title        = "Commit message?";
+              key          = "Message";
+              initialValue = "";
+            }
+          ];
+          command = "git checkout -b {{ .Form.BranchType }}/$(echo {{ .Form.Message | quote }} | sed 's/[ \\(\\)@]/-/g' | tr '[:upper:]' '[:lower:]') && git commit -m '{{ .Form.BranchType }}: {{ .Form.Message }}'";
+        }
+      ];
       promptToReturnFromSubprocess = false;
       git.paging.pager = "delta --dark --paging=never";
       git.autoFetch = false;
