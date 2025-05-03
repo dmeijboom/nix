@@ -1,12 +1,17 @@
 { config, pkgs, ... }:
 {
   home.packages = with pkgs; [
+    # Build tools
+    bazelisk
+    buildifier
+    buildozer
+    skaffold
+
     # Kubernetes
     kubie
     stern
     kubernetes-helm
     mirrord
-    skaffold
 
     # Cloud Tooling
     kubelogin
@@ -17,6 +22,7 @@
   ];
   home.shellAliases = {
     s = "lazygit";
+    bazel = "bazelisk";
   };
   home.stateVersion = "23.11";
 
