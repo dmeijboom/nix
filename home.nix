@@ -2,6 +2,7 @@
 {
   home.packages = with pkgs; [
     # Build tools
+    devenv
     bazelisk
     buildifier
     buildozer

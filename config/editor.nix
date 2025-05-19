@@ -34,7 +34,6 @@
       "typst"
       "xml"
     ];
-    extraPackages = [ pkgs.nixd ];
     userKeymaps = [
       {
         bindings = {
@@ -81,6 +80,14 @@
     ];
     userSettings = {
       load_direnv = "shell_hook";
+
+      lsp = {
+        rust-analyzer = {
+          binary = {
+            path_lookup = true;
+          };
+        };
+      };
 
       file_scan_exclusions = [
         "**/.git"
@@ -219,6 +226,9 @@
             enabled = true;
             show_type_hints = false;
           };
+        };
+        Nix = {
+          language_servers = ["nixd" "!nil"];
         };
       };
 
