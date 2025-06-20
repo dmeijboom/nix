@@ -80,6 +80,7 @@
       gui.showRandomTip = false;
       gui.showCommandLog = false;
       gui.showPanelJumps = false;
+      gui.screenMode = "half";
       gui.theme = {
         activeBorderColor = [
           "#8aadf4"

@@ -167,8 +167,8 @@
       };
 
       features = {
-        edit_prediction_provider = "zed";
         copilot = true;
+        edit_prediction_provider = "copilot";
       };
 
       toolbar = {

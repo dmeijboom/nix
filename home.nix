@@ -7,11 +7,15 @@
     buildifier
     buildozer
     skaffold
+    
+    # temp
+    rustup
 
     # Kubernetes
     kubie
     stern
     kubernetes-helm
+    kubectl-cnpg
     mirrord
 
     # Cloud Tooling
