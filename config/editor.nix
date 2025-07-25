@@ -3,12 +3,17 @@
   programs.zed-editor = {
     enable = true;
     extensions = [
+      "assembly"
+      "atom"
       "basher"
       "bearded-icon-theme"
+      "cue"
+      "dart"
       "deno"
       "dockerfile"
       "elisp"
       "emmet"
+      "fhir-shorthand"
       "fsh"
       "git-firefly"
       "helm"
@@ -23,11 +28,14 @@
       "nix"
       "nord"
       "php"
+      "pkl"
       "proto"
       "rego"
+      "ron"
       "scheme"
       "sql"
       "starlark"
+      "svelte"
       "tera"
       "terraform"
       "toml"
@@ -82,6 +90,14 @@
       load_direnv = "shell_hook";
 
       lsp = {
+        deno = {
+          settings = {
+            deno = {
+              enable = true;
+              enablePaths = ["web"];
+            };
+          };
+        };
         rust-analyzer = {
           binary = {
             path_lookup = true;
@@ -108,7 +124,7 @@
           proxy = null;
           proxy_no_verify = null;
         };
-        enabled_in_assistant = false;
+        enabled_in_text_threads = false;
       };
 
       icon_theme = "Bearded Icon Theme";
@@ -203,7 +219,7 @@
       current_line_highlight = "none";
       format_on_save = "off";
 
-      assistant = {
+      agent = {
         default_model = {
           provider = "zed.dev";
           model = "claude-3-5-sonnet-latest";
@@ -218,6 +234,24 @@
       };
 
       languages = {
+        JavaScript = {
+          language_servers = [
+            "deno"
+            "typescript-language-server"
+            "vtsls"
+            "!eslint"
+          ];
+          formatter = "language_server";
+        };
+        TypeScript = {
+          language_servers = [
+            "deno"
+            "!typescript-language-server"
+            "!vtsls"
+            "!eslint"
+          ];
+          formatter = "language_server";
+        };
         Rust = {
           show_edit_predictions = true;
         };
@@ -226,9 +260,19 @@
             enabled = true;
             show_type_hints = false;
           };
+          language_servers = [
+            "deno"
+            "!typescript-language-server"
+            "!vtsls"
+            "!eslint"
+          ];
+          formatter = "language_server";
         };
         Nix = {
           language_servers = ["nixd" "!nil"];
+        };
+        Pkl = {
+          tab_size = 2;
         };
       };
 

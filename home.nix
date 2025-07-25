@@ -8,7 +8,10 @@
     buildozer
     skaffold
     
-    # temp
+    # Misc tools
+    duckdb
+    
+    # Hacks
     rustup
 
     # Kubernetes
@@ -19,6 +22,7 @@
     mirrord
 
     # Cloud Tooling
+    sops
     kubelogin
     (google-cloud-sdk.withExtraComponents( with google-cloud-sdk.components; [
       gke-gcloud-auth-plugin
