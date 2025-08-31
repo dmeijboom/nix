@@ -7,10 +7,11 @@
     buildifier
     buildozer
     skaffold
-    
+
     # Misc tools
     duckdb
-    
+    ast-grep
+
     # Hacks
     rustup
 

@@ -94,6 +94,7 @@
           settings = {
             deno = {
               enable = true;
+              documentPreloadLimit = 15000;
               enablePaths = ["web"];
             };
           };
@@ -224,7 +225,6 @@
           provider = "zed.dev";
           model = "claude-3-5-sonnet-latest";
         };
-        version = "2";
         button = false;
       };
 
