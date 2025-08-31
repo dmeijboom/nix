@@ -15,6 +15,7 @@
       nixpkgs,
     }:
     let
+      forAllSystems = nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-linux" ];
       config = {
         nixpkgs.config.allowUnfree = true;
         nix.settings = {
@@ -22,11 +23,6 @@
           extra-substituters = "https://devenv.cachix.org";
           extra-trusted-public-keys = "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=";
         };
-      };
-      home-config = {
-        useGlobalPkgs = true;
-        useUserPackages = true;
-        users.dmeijboom = import ./home.nix;
       };
     in
     {
@@ -48,10 +44,23 @@
           }
           home-manager.darwinModules.home-manager
           {
-            home-manager = home-config;
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.dmeijboom = {
+                imports = [./home.nix];
+                custom.cloud.enable = true;
+              };
+            };
             users.users.dmeijboom.home = "/Users/dmeijboom";
           }
         ];
       };
+      homeConfigurations = forAllSystems (system:
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.${system};
+          modules = [./home.nix];
+        }
+      );
     };
 }

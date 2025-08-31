@@ -60,6 +60,9 @@
       docker_context = {
         disabled = true;
       };
+      container = {
+        disabled = true;
+      };
     };
 
     fzf.enable = true;

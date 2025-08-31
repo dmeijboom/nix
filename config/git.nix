@@ -22,7 +22,6 @@
         };
       };
       ignores = [
-        ".envrc"
         ".dev"
         ".direnv"
         ".zed/tasks.json"
