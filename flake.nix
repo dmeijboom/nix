@@ -30,18 +30,6 @@
       };
     in
     {
-      nixosConfigurations."dillen-linux" = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          config
-          ./configuration.nix
-          home-manager.darwinModules.home-manager
-          {
-            home-manager = home-config;
-            users.users.dmeijboom.home = "/home/dmeijboom";
-          }
-        ];
-      };
       darwinConfigurations."Dillens-MacBook-Pro" = nix-darwin.lib.darwinSystem {
         modules = [
           config
