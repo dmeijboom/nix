@@ -61,6 +61,17 @@
           pkgs = nixpkgs.legacyPackages.${system};
           modules = [./home.nix];
         }
-      );
+      ) // {
+        kpn = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          modules = [
+            ./home.nix
+            {
+              custom.username = "so";
+              custom.cloud.enable = true;
+            }
+          ];
+        };
+      };
     };
 }
