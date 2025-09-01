@@ -22,7 +22,6 @@
       bazelisk
       buildifier
       buildozer
-      skaffold
 
       # Misc tools
       duckdb
@@ -32,10 +31,7 @@
       rustup
     ];
 
-    home.shellAliases = {
-      s = "lazygit";
-      bazel = "bazelisk";
-    };
+    home.shellAliases.bazel = "bazelisk";
     home.stateVersion = "23.11";
   };
 

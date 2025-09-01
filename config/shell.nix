@@ -1,4 +1,18 @@
-{ config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+let
+  starshipDisabledMods = [
+    "aws"
+    "gcloud"
+    "kubernetes"
+    "docker_context"
+    "container"
+  ];
+in
 {
   programs = {
     zsh = {
@@ -8,7 +22,7 @@
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
       historySubstringSearch.enable = true;
-      dirHashes  = {
+      dirHashes = {
         git = "$HOME/git";
         github = "$HOME/git/github.com";
         brainhive = "$HOME/git/github.com/brainhivenl";
@@ -22,14 +36,11 @@
         size = 10000000;
         save = 10000000;
       };
-      initContent = ''
-        export EDITOR="zed --wait"
-      '';
     };
 
     autojump = {
       enable = true;
-      enableZshIntegration  = true;
+      enableZshIntegration = true;
     };
 
     direnv = {
@@ -48,22 +59,10 @@
         error_symbol = "[➜](bold red)";
         vicmd_symbol = "[V](bold green)";
       };
-      aws = {
-        disabled = true;
-      };
-      gcloud = {
-        disabled = true;
-      };
-      kubernetes = {
-        disabled = false;
-      };
-      docker_context = {
-        disabled = true;
-      };
-      container = {
-        disabled = true;
-      };
-    };
+    }
+    // lib.genAttrs starshipDisabledMods (name: {
+      disabled = true;
+    });
 
     fzf.enable = true;
     fzf.enableZshIntegration = true;

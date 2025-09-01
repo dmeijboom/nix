@@ -1,5 +1,9 @@
 { config, pkgs, ... }:
 {
+  programs.zsh.initContent = ''
+    export EDITOR="zed --wait"
+  '';
+
   programs.zed-editor = {
     enable = true;
     installRemoteServer = pkgs.stdenv.isLinux;
@@ -96,7 +100,7 @@
             deno = {
               enable = true;
               documentPreloadLimit = 15000;
-              enablePaths = ["web"];
+              enablePaths = [ "web" ];
             };
           };
         };
@@ -270,7 +274,10 @@
           formatter = "language_server";
         };
         Nix = {
-          language_servers = ["nixd" "!nil"];
+          language_servers = [
+            "nixd"
+            "!nil"
+          ];
         };
         Pkl = {
           tab_size = 2;

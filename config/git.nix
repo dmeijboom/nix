@@ -1,5 +1,7 @@
 { config, pkgs, ... }:
 {
+  home.shellAliases.s = "lazygit";
+
   programs = {
     git = {
       enable = true;
@@ -32,37 +34,37 @@
     lazygit.settings = {
       customCommands = [
         {
-          key     = "s";
+          key = "s";
           context = "files";
           command = "git stash -u -- {{.SelectedFile.Name | quote}}";
         }
         {
-          key     = "B";
+          key = "B";
           context = "files";
           prompts = [
             {
-              type  = "menu";
+              type = "menu";
               title = "What kind of commit/branch?";
               key = "BranchType";
               options = [
                 {
-                  name  = "feature";
+                  name = "feature";
                   value = "feat";
                 }
                 {
-                  name  = "hotfix";
+                  name = "hotfix";
                   value = "fix";
                 }
                 {
-                  name  = "refactor";
+                  name = "refactor";
                   value = "refactor";
                 }
               ];
             }
             {
-              type         = "input";
-              title        = "Commit message?";
-              key          = "Message";
+              type = "input";
+              title = "Commit message?";
+              key = "Message";
               initialValue = "";
             }
           ];

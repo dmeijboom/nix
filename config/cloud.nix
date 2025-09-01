@@ -1,4 +1,9 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 {
   config = lib.mkIf config.custom.cloud.enable {
     home.packages = with pkgs; [
@@ -11,10 +16,14 @@
 
       # Cloud Tooling
       sops
+      skaffold
       kubelogin
-      (google-cloud-sdk.withExtraComponents( with google-cloud-sdk.components; [
-        gke-gcloud-auth-plugin
-      ]))
+      (google-cloud-sdk.withExtraComponents (
+        with google-cloud-sdk.components;
+        [
+          gke-gcloud-auth-plugin
+        ]
+      ))
       # Build fails
       # (azure-cli.withExtensions [ azure-cli.extensions.aks-preview ])
     ];
