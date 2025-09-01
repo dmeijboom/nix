@@ -31,7 +31,11 @@
       rustup
     ];
 
-    home.shellAliases.bazel = "bazelisk";
+    home.shellAliases = {
+      sg = "ast-grep";
+      bazel = "bazelisk";
+    };
+
     home.stateVersion = "23.11";
   };
 
