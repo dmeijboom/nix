@@ -34,6 +34,9 @@
 
       # Hacks
       rustup
+
+      # Fonts
+      nerd-fonts.jetbrains-mono
     ];
 
     home.shellAliases = {
@@ -47,7 +50,8 @@
   imports = [
     ./config/shell.nix
     ./config/git.nix
-    ./config/editor.nix
     ./config/cloud.nix
+    ./config/editor/zed.nix
+    ./config/editor/vscode.nix
   ];
 }
