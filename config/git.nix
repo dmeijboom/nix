@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ lib, config, pkgs, ... }:
 {
   home.shellAliases.s = "lazygit";
 
@@ -9,9 +9,10 @@
       lfs.enable = true;
       signing = {
         format = "ssh";
-        signer = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
         key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM3qdw1DknYTEUeIuyRqCitz/Mqo5m1+a0g8/KdfQ2wr";
         signByDefault = true;
+      } // lib.optionalAttrs pkgs.stdenv.isDarwin {
+        signer = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
       };
       userName = "Dillen Meijboom";
       userEmail = "dillen@brainhive.nl";
@@ -24,6 +25,7 @@
         };
       };
       ignores = [
+        ".env"
         ".dev"
         ".direnv"
         ".zed/tasks.json"
