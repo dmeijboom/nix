@@ -6,6 +6,7 @@
       default = "dmeijboom";
       description = "Username";
     };
+    vscode.enable = lib.mkEnableOption "Enable vscode";
     cloud.enable = lib.mkEnableOption "Kubernetes tools";
   };
 
