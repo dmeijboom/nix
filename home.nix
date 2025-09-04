@@ -53,5 +53,6 @@
     ./config/git.nix
     ./config/cloud.nix
     ./config/editor/zed.nix
+    ./config/editor/neovim.nix
   ];
 }

@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 {
   home.shellAliases.s = "lazygit";
 
@@ -10,10 +15,12 @@
       signing = {
         format = "ssh";
         signByDefault = true;
-      } // lib.optionalAttrs pkgs.stdenv.isDarwin {
+      }
+      // lib.optionalAttrs pkgs.stdenv.isDarwin {
         key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM3qdw1DknYTEUeIuyRqCitz/Mqo5m1+a0g8/KdfQ2wr";
         signer = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
-      } // lib.optionalAttrs pkgs.stdenv.isLinux {
+      }
+      // lib.optionalAttrs pkgs.stdenv.isLinux {
         key = "/home/${config.custom.username}/.ssh/signing_key.pub";
       };
       userName = "Dillen Meijboom";

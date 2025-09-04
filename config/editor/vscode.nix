@@ -28,7 +28,7 @@
         "terminal.integrated.fontSize" = 13;
         "terminal.integrated.fontFamily" = "JetBrains Mono";
         "terminal.integrated.sendKeybindingsToShell" = true;
-        "projectManager.git.baseFolders" = ["~/dev"];
+        "projectManager.git.baseFolders" = [ "~/dev" ];
         "vim.showMarksInGutter" = true;
         "vim.smartRelativeLine" = true;
         "vim.cursorStylePerMode.normal" = "underline-thin";
@@ -38,8 +38,8 @@
         "vim.leader" = ";";
         "vim.normalModeKeyBindingsNonRecursive" = [
           {
-            before = [","];
-            commands = ["whichkey.show"];
+            before = [ "," ];
+            commands = [ "whichkey.show" ];
           }
         ];
       };
