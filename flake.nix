@@ -65,6 +65,7 @@
         kpn = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           modules = [
+            { nixpkgs.config.allowUnfree = true; }
             ./home.nix
             {
               custom.username = "so";
