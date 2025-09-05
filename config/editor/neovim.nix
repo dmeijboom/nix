@@ -15,6 +15,7 @@ let
     auto-save-nvim = { };
     nvim-tree-lua = { };
     telescope-nvim = { };
+    render-markdown-nvim = { };
   };
   pluginNames = lib.mapAttrsToList (
     name: config: vimPluginName pkgs.vimPlugins.${name}.pname
@@ -61,6 +62,7 @@ in
       cmp.setup {
         sources = {
           { name = 'nvim_lsp' },
+          { name = 'render-markdown' },
         },
         mapping = cmp.mapping.preset.insert({
           ['<C-Space>'] = cmp.mapping.complete(),
@@ -103,6 +105,7 @@ in
 
       -- Settings
       vim.g.nord_italic = false
+      vim.g.nord_borders = false
       vim.g.loaded_netrw = 1
       vim.g.loaded_netrwPlugin = 1
       vim.opt.hlsearch = false
@@ -117,6 +120,7 @@ in
 
       nordUtil.highlight('LspInlayHint', { fg = colors.nord3_gui_bright })
       nordUtil.highlight('WinSeparator', { fg = colors.nord1_gui })
+      nordUtil.highlight('VertSplit', { fg = colors.nord1_gui })
 
       -- Leader key
       vim.g.mapleader = ','
@@ -141,6 +145,8 @@ in
       keymap('n', '<leader>wj', '<C-w>j')
       keymap('n', '<leader>wk', '<C-w>k')
       keymap('n', '<leader>wl', '<C-w>l')
+      keymap('n', '<leader>w/', ':vsplit<CR>')
+      keymap('n', '<leader>w-', ':split<CR>')
 
       -- Language server
       keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', { noremap = true, silent = true })
@@ -168,6 +174,7 @@ in
         c
         html
         markdown
+        markdown_inline
         ruby
         python
         rust
