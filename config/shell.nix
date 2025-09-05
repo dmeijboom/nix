@@ -70,6 +70,11 @@ in
     rio.enable = true;
     rio.settings = {
       theme = "nord";
+      hide-mouse-cursor-when-typing = true;
+      renderer.performance = "High";
+      fonts = {
+        family = "JetBrainsMono Nerd Font";
+      };
       cursor = {
         shape = "underline";
         blinking = false;

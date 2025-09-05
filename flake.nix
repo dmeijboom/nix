@@ -15,7 +15,10 @@
       nixpkgs,
     }:
     let
-      forAllSystems = nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-linux" ];
+      forAllSystems = nixpkgs.lib.genAttrs [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
       config = {
         nixpkgs.config.allowUnfree = true;
         nix.settings = {
@@ -48,7 +51,7 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               users.dmeijboom = {
-                imports = [./home.nix];
+                imports = [ ./home.nix ];
                 custom.cloud.enable = true;
               };
             };
@@ -56,23 +59,26 @@
           }
         ];
       };
-      homeConfigurations = forAllSystems (system:
-        home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.${system};
-          modules = [./home.nix];
-        }
-      ) // {
-        kpn = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [
-            { nixpkgs.config.allowUnfree = true; }
-            ./home.nix
-            {
-              custom.username = "so";
-              custom.cloud.enable = true;
-            }
-          ];
+      homeConfigurations =
+        forAllSystems (
+          system:
+          home-manager.lib.homeManagerConfiguration {
+            pkgs = nixpkgs.legacyPackages.${system};
+            modules = [ ./home.nix ];
+          }
+        )
+        // {
+          kpn = home-manager.lib.homeManagerConfiguration {
+            pkgs = nixpkgs.legacyPackages.x86_64-linux;
+            modules = [
+              { nixpkgs.config.allowUnfree = true; }
+              ./home.nix
+              {
+                custom.username = "so";
+                custom.cloud.enable = true;
+              }
+            ];
+          };
         };
-      };
     };
 }

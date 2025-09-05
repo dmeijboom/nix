@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 {
   options.custom = {
     username = lib.mkOption {
@@ -13,9 +18,10 @@
   config = {
     home.username = config.custom.username;
     home.homeDirectory =
-      if pkgs.stdenv.isLinux
-      then "/home/${config.custom.username}"
-      else "/Users/${config.custom.username}";
+      if pkgs.stdenv.isLinux then
+        "/home/${config.custom.username}"
+      else
+        "/Users/${config.custom.username}";
 
     programs.home-manager.enable = pkgs.stdenv.isLinux;
 

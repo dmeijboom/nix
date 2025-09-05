@@ -5,174 +5,215 @@
   ...
 }:
 let
-  vimPluginName = (
-    name: lib.strings.replaceString ".lua" "" (lib.strings.replaceString ".nvim" "" name)
+  lua = import ../../lib/lua.nix { lib = lib; };
+  mkPlugin = (
+    name: config: {
+      name = name;
+      pluginName = config.name;
+      setup = lua.serialize (removeAttrs config [ "name" ]);
+    }
   );
-  plugins = {
-    mini-surround = { };
-    mini-comment = { };
-    mini-icons = { };
-    auto-save-nvim = { };
-    nvim-tree-lua = { };
-    telescope-nvim = { };
-    render-markdown-nvim = { };
+
+  kubectl-nvim = pkgs.vimUtils.buildVimPlugin {
+    name = "kubectl-nvim";
+    nvimRequireCheck = "kubectl";
+    src = pkgs.fetchFromGitHub {
+      owner = "Ramilito";
+      repo = "kubectl.nvim";
+      rev = "318057aab0cd0ca69273e55b9cebc01c78f9a9ab";
+      sha256 = "sha256-nxF1oeswhzENSsjSdDvqeBsbm0NraVVFBwRdIFDf930=";
+    };
   };
-  pluginNames = lib.mapAttrsToList (
-    name: config: vimPluginName pkgs.vimPlugins.${name}.pname
-  ) plugins;
+
+  gitsigns-nvim = mkPlugin "gitsigns-nvim" { name = "gitsigns"; };
+  nvim-web-devicons = mkPlugin "nvim-web-devicons" { name = "nvim-web-devicons"; };
+  nvim-surround = mkPlugin "nvim-surround" { name = "nvim-surround"; };
+  mini-icons = mkPlugin "mini-icons" { name = "mini.icons"; };
+  auto-save-nvim = mkPlugin "auto-save-nvim" { name = "auto-save"; };
+  copilot-cmp = mkPlugin "copilot-cmp" { name = "copilot_cmp"; };
+  neogit = mkPlugin "neogit" {
+    name = "neogit";
+    kind = "vsplit";
+    prompt_force_push = true;
+    graph_style = "kitty";
+  };
+  diffview-nvim = mkPlugin "diffview-nvim" {
+    name = "diffview"; 
+    use_icons = true;
+  };
+  copilot-lua = mkPlugin "copilot-lua" {
+    name = "copilot";
+    copilot_node_command = "${pkgs.nodejs}/bin/node";
+    suggestion = {
+      enabled = true;
+    };
+    panel = {
+      enabled = false;
+    };
+  };
+  nvim-tree-lua = mkPlugin "nvim-tree-lua" {
+    name = "nvim-tree";
+    renderer = {
+      root_folder_label = ":t";
+    };
+  };
+  telescope-nvim = mkPlugin "telescope-nvim" {
+    name = "telescope";
+    defaults = {
+      border = false;
+    };
+    extensions = {
+      ui-select = {
+        _raw = "require('telescope.themes').get_cursor {}";
+      };
+      project = {
+        base_dirs = [
+          {
+            path = "~/git";
+            max_depth = 4;
+          }
+          {
+            path = "~/dev";
+            max_depth = 2;
+          }
+        ];
+        sync_with_nvim_tree = true;
+        on_project_selected = {
+          _raw = ''
+            function(prompt_bufnr)
+              require('telescope._extensions.project.actions').change_working_directory(prompt_bufnr, false)
+              vim.cmd('NvimTreeToggle')
+              vim.cmd('bufdo bd')
+            end
+          '';
+        };
+      };
+    };
+  };
+  render-markdown-nvim = mkPlugin "render-markdown-nvim" {
+    name = "render-markdown";
+    heading = {
+      enabled = false;
+    };
+    completions = {
+      blink = {
+        enabled = true;
+      };
+      lsp = {
+        enabled = true;
+      };
+    };
+  };
+  trouble-nvim = mkPlugin "trouble-nvim" {
+    name = "trouble";
+    modes = {
+      diagnostics = {
+        auto_open = false;
+        auto_close = true;
+        preview = {
+          scratch = false;
+        };
+      };
+    };
+  };
+  which-key-nvim = mkPlugin "which-key-nvim" { name = "which-key"; };
+  gbprod-nord = mkPlugin "gbprod-nord" {
+    name = "nord";
+    styles = {
+      comments = {
+        italic = false;
+      };
+    };
+  };
+  cmp-nvim-lsp = mkPlugin "cmp-nvim-lsp" { name = "cmp_nvim_lsp"; };
+  indent-blankline-nvim-lua = mkPlugin "indent-blankline-nvim-lua" {
+    name = "ibl";
+    scope = {
+        show_start = false;
+        show_end = false;
+        highlight = "IblScope";
+    };
+    indent = {
+        char = "│";
+    };
+  };
+
+  plugins = [
+    "nvim-treesitter"
+    "nvim-lspconfig"
+    "nvim-cmp"
+    "vim-illuminate"
+    "telescope-ui-select-nvim"
+    "telescope-project-nvim"
+    indent-blankline-nvim-lua
+    cmp-nvim-lsp
+    copilot-lua
+    gitsigns-nvim
+    which-key-nvim
+    trouble-nvim
+    nvim-web-devicons
+    nvim-surround
+    mini-icons
+    auto-save-nvim
+    nvim-tree-lua
+    telescope-nvim
+    render-markdown-nvim
+    gbprod-nord
+    diffview-nvim
+    neogit
+  ];
+
+  pluginsToSetup = builtins.filter (plugin: builtins.isAttrs plugin) plugins;
+  pluginNames = map (plugin: if builtins.isAttrs plugin then plugin.name else plugin) plugins;
 in
 {
   home.packages = with pkgs; [
+    # Neovim utils
     fd
     bat
-    vtsls
     ripgrep
+
+    # Tree-sitter requirements
+    go
+    nodejs
+
+    # Language servers
+    vtsls
+    marksman
+    helm-ls
+    gopls
+    lua-language-server
+    copilot-node-server
+    vscode-json-languageserver
+    nodePackages.yaml-language-server
   ];
 
   programs.neovim = {
     enable = true;
-    extraLuaConfig = ''
-      -- Utilities
-      local terminal_buf = -1
-      local terminal_win = -1
-
-      local function toggle_terminal()
-        if terminal_win ~= -1 and vim.fn.win_id2win(terminal_win) ~= 0 then
-          vim.cmd(vim.fn.win_id2win(terminal_win) .. 'close')
-          terminal_win = -1
-        else
-          vim.cmd('botright split')
-          vim.cmd('resize 15')
-
-          if terminal_buf ~= -1 and vim.fn.bufexists(terminal_buf) == 1 then
-            vim.cmd('buffer ' .. terminal_buf)
-          else
-            vim.cmd('terminal')
-            terminal_buf = vim.fn.bufnr('%')
-          end
-
-          terminal_win = vim.fn.win_getid()
-          vim.cmd('startinsert')
-        end
-      end
-
-      -- Language servers
-      local cmp = require'cmp'
-
-      cmp.setup {
-        sources = {
-          { name = 'nvim_lsp' },
-          { name = 'render-markdown' },
-        },
-        mapping = cmp.mapping.preset.insert({
-          ['<C-Space>'] = cmp.mapping.complete(),
-          ['<C-e>'] = cmp.mapping.abort(),
-          ['<Tab>'] = cmp.mapping.select_next_item(),
-          ['<S-Tab>'] = cmp.mapping.select_prev_item(),
-          ['<CR>'] = cmp.mapping.confirm({ select = false }),
-        }),
-        performance = {
-          max_view_entries = 25,
-        },
-        experimental = {
-          ghost_text = true,
-        },
-      }
-
-      -- Completions
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-      vim.lsp.config('vtsls', {
-        capabilities = capabilities,
-        cmd = { '${pkgs.vtsls}/bin/vtsls', '--stdio' },
-        filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact' },
-        settings = {
-          typescript = {
-            inlayHints = {
-              parameterNames = { enabled = 'all' },
-            }
-          },
-          javascript = {
-            inlayHints = {
-              parameterNames = { enabled = 'all' },
-            }
-          }
-        },
-      })
-
-      vim.lsp.enable('vtsls')
-      vim.lsp.inlay_hint.enable()
-
-      -- Settings
-      vim.g.nord_italic = false
-      vim.g.nord_borders = false
-      vim.g.loaded_netrw = 1
-      vim.g.loaded_netrwPlugin = 1
-      vim.opt.hlsearch = false
-      vim.opt.showmode = false
-      vim.opt.laststatus = 0
-      vim.opt.termguicolors = true
-      vim.opt.relativenumber = true
-      vim.opt.completeopt = {'menuone', 'noinsert', 'noselect'}
-
-      local colors = require('nord.colors')
-      local nordUtil = require('nord.util')
-
-      nordUtil.highlight('LspInlayHint', { fg = colors.nord3_gui_bright })
-      nordUtil.highlight('WinSeparator', { fg = colors.nord1_gui })
-      nordUtil.highlight('VertSplit', { fg = colors.nord1_gui })
-
-      -- Leader key
-      vim.g.mapleader = ','
-
-      -- Keybindings
-      local keymap = vim.keymap.set
-
-      -- Terminal escape
-      keymap('t', '<Esc>', '<C-\\><C-n>')
-
-      -- File operations
-      keymap('n', '<C-p>', ':Telescope find_files find_command=rg,--ignore,--hidden,--files<CR>')
-      keymap('n', '<leader>f', ':NvimTreeFindFileToggle<CR>')
-      keymap('n', '<C-f>', ':NvimTreeFindFileToggle<CR>')
-
-      -- Terminal toggle
-      keymap('n', '<leader>t', toggle_terminal)
-      keymap('n', '<C-t>', toggle_terminal)
-
-      -- Window navigation
-      keymap('n', '<leader>wh', '<C-w>h')
-      keymap('n', '<leader>wj', '<C-w>j')
-      keymap('n', '<leader>wk', '<C-w>k')
-      keymap('n', '<leader>wl', '<C-w>l')
-      keymap('n', '<leader>w/', ':vsplit<CR>')
-      keymap('n', '<leader>w-', ':split<CR>')
-
-      -- Language server
-      keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', { noremap = true, silent = true })
-      keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', { noremap = true, silent = true })
-
-      require('nord').set()
-      vim.cmd([[colorscheme nord]])
-    ''
-    + (lib.concatStringsSep "\n" (map (name: "require('${name}').setup {}") pluginNames));
+    extraLuaConfig =
+      (lib.concatStringsSep "\n" (
+        map (plugin: "require('${plugin.pluginName}').setup ${plugin.setup}") pluginsToSetup
+      ))
+      + "\n" + (builtins.readFile (pkgs.replaceVars ./neovim/init.lua {
+        copilot-node-server = "${pkgs.copilot-node-server}";
+        lua-language-server = "${pkgs.lua-language-server}";
+        yaml-language-server = "${pkgs.nodePackages.yaml-language-server}";
+        vscode-json-languageserver = "${pkgs.vscode-json-languageserver}";
+        helm-ls = "${pkgs.helm-ls}";
+        gopls = "${pkgs.gopls}";
+        marksman = "${pkgs.marksman}";
+        vtsls = "${pkgs.vtsls}";
+      }));
     plugins =
       with pkgs.vimPlugins;
-      [
-        # Completion
-        nvim-treesitter
-        nvim-lspconfig
-        cmp-nvim-lsp
-        nvim-cmp
-
-        # Theme
-        nord-nvim
-      ]
-      ++ lib.mapAttrsToList (name: _: pkgs.vimPlugins.${name}) plugins
+      map (name: pkgs.vimPlugins.${name}) pluginNames
+      ++ [kubectl-nvim]
       ++ (with pkgs.vimPlugins.nvim-treesitter-parsers; [
         bash
         c
+        go
         html
+        helm
         markdown
         markdown_inline
         ruby
