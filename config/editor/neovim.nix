@@ -81,9 +81,20 @@ let
         on_project_selected = {
           _raw = ''
             function(prompt_bufnr)
+              local old=vim.fs.basename(vim.fn.getcwd())
+              vim.cmd('mks! /tmp/.session_' .. old)
+
               require('telescope._extensions.project.actions').change_working_directory(prompt_bufnr, false)
+
               vim.cmd('NvimTreeToggle')
-              vim.cmd('bufdo bd')
+
+              local new=vim.fs.basename(vim.fn.getcwd())
+
+              if vim.fn.filereadable('/tmp/.session_' .. new) then
+                vim.cmd('silent! source /tmp/.session_' .. new)
+              else
+                vim.cmd('silent! bufdo bd')
+              end
             end
           '';
         };
