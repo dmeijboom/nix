@@ -30,7 +30,39 @@ let
   nvim-surround = mkPlugin "nvim-surround" { name = "nvim-surround"; };
   mini-icons = mkPlugin "mini-icons" { name = "mini.icons"; };
   auto-save-nvim = mkPlugin "auto-save-nvim" { name = "auto-save"; };
-  copilot-cmp = mkPlugin "copilot-cmp" { name = "copilot_cmp"; };
+  blink-copilot = mkPlugin "blink-copilot" { name = "blink-copilot"; };
+  blink-cmp = mkPlugin "blink-cmp" {
+    name = "blink.cmp";
+    sources = {
+      default = ["lsp" "buffer"];
+      providers = {
+        copilot = {
+          name = "copilot";
+          module = "blink-copilot";
+          async = true;
+        };
+      };
+    };
+    keymap = {
+      preset = "enter";
+      "<S-Tab>" = ["select_prev" "fallback"];
+      "<Tab>" = ["select_next" "fallback"];
+    };
+    completion = {
+      ghost_text = {
+        enabled = true;
+      };
+      trigger = {
+        show_on_keyword = true;
+      };
+      documentation = {
+        auto_show = true;
+      };
+    };
+    signature = {
+      enabled = true;
+    };
+  };
   neogit = mkPlugin "neogit" {
     name = "neogit";
     kind = "vsplit";
@@ -46,12 +78,8 @@ let
   copilot-lua = mkPlugin "copilot-lua" {
     name = "copilot";
     copilot_node_command = "${pkgs.nodejs}/bin/node";
-    suggestion = {
-      enabled = true;
-    };
-    panel = {
-      enabled = false;
-    };
+    suggestion = { enabled = false; };
+    panel = { enabled = false; };
   };
   nvim-tree-lua = mkPlugin "nvim-tree-lua" {
     name = "nvim-tree";
@@ -137,7 +165,6 @@ let
       };
     };
   };
-  cmp-nvim-lsp = mkPlugin "cmp-nvim-lsp" { name = "cmp_nvim_lsp"; };
   indent-blankline-nvim-lua = mkPlugin "indent-blankline-nvim-lua" {
     name = "ibl";
     scope = {
@@ -153,13 +180,13 @@ let
   plugins = [
     "nvim-treesitter"
     "nvim-lspconfig"
-    "nvim-cmp"
     "vim-illuminate"
     "telescope-ui-select-nvim"
     "telescope-project-nvim"
-    indent-blankline-nvim-lua
-    cmp-nvim-lsp
     copilot-lua
+    blink-copilot
+    blink-cmp
+    indent-blankline-nvim-lua
     gitsigns-nvim
     which-key-nvim
     trouble-nvim

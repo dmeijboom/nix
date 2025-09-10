@@ -33,7 +33,7 @@ local function toggle_terminal()
 end
 
 -- Language servers
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local capabilities = require('blink.cmp').get_lsp_capabilities()
 
 vim.lsp.config('copilot', {
   capabilities = capabilities,
@@ -139,31 +139,6 @@ vim.lsp.enable('yamlls')
 vim.lsp.enable('helm_ls')
 vim.lsp.enable('rust_analyzer')
 vim.lsp.inlay_hint.enable()
-
--- Completions
-require('cmp_nvim_lsp').setup()
-
-local cmp = require 'cmp'
-
-cmp.setup {
-  sources = {
-    { name = 'nvim_lsp' },
-    { name = 'render-markdown' },
-  },
-  mapping = cmp.mapping.preset.insert({
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.abort(),
-    ['<Tab>'] = cmp.mapping.select_next_item(),
-    ['<S-Tab>'] = cmp.mapping.select_prev_item(),
-    ['<CR>'] = cmp.mapping.confirm({ select = false }),
-  }),
-  performance = {
-    max_view_entries = 25,
-  },
-  experimental = {
-    ghost_text = true,
-  },
-}
 
 -- Settings
 vim.g.loaded_netrw = 1
