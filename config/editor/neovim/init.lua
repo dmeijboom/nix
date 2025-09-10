@@ -216,8 +216,8 @@ keymap('n', '<leader>gs', ':Neogit<CR>', extra('Git status'))
 keymap('n', '<leader>gl', ':NeogitLogCurrent<CR>', extra('Git log'))
 
 -- Terminal toggle
-keymap('n', '<leader>t', toggle_terminal, extra('Toggle terminal'))
 keymap('n', '<C-t>', toggle_terminal, quiet)
+keymap('t', '<C-t>', toggle_terminal, quiet)
 
 -- Window navigation
 keymap('n', '<leader>wh', '<C-w>h', quiet)

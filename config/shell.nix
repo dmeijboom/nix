@@ -36,6 +36,9 @@ in
         size = 10000000;
         save = 10000000;
       };
+      envExtra = ''
+        export FZF_CTRL_T_COMMAND=
+      '';
     };
 
     autojump = {
