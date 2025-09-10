@@ -35,7 +35,9 @@ let
     name = "neogit";
     kind = "vsplit";
     prompt_force_push = true;
-    graph_style = "kitty";
+    graph_style = "unicode";
+    process_spinner = true;
+    log_view = { kind = "vsplit"; };
   };
   diffview-nvim = mkPlugin "diffview-nvim" {
     name = "diffview"; 
