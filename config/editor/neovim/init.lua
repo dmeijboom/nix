@@ -50,6 +50,25 @@ vim.lsp.config('lua_ls', {
   cmd = { '@lua-language-server@/bin/lua-language-server' },
 })
 
+vim.lsp.config('sqls', {
+  capabilities = capabilities,
+  cmd = { '@sqls@/bin/sqls' },
+})
+
+vim.lsp.config('rust_analyzer', {
+  capabilities = capabilities,
+  cmd = { '@rustup@/bin/rust-analyzer' },
+  settings = {
+    ["rust-analyzer"] = {
+      inlayHints = {
+        typeHints = {
+          enable = true,
+        },
+      },
+    },
+  },
+})
+
 vim.lsp.config('gopls', {
   capabilities = capabilities,
   cmd = { '@gopls@/bin/gopls' },
@@ -109,6 +128,7 @@ require 'nvim-treesitter.configs'.setup {
   },
 }
 
+vim.lsp.enable('sqls')
 vim.lsp.enable('vtsls')
 vim.lsp.enable('copilot')
 vim.lsp.enable('marksman')
@@ -117,6 +137,7 @@ vim.lsp.enable('jsonls')
 vim.lsp.enable('gopls')
 vim.lsp.enable('yamlls')
 vim.lsp.enable('helm_ls')
+vim.lsp.enable('rust_analyzer')
 vim.lsp.inlay_hint.enable()
 
 -- Completions

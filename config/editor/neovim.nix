@@ -194,6 +194,8 @@ in
     marksman
     helm-ls
     gopls
+    sqls
+    rustup
     lua-language-server
     copilot-node-server
     vscode-json-languageserver
@@ -207,14 +209,16 @@ in
         map (plugin: "require('${plugin.pluginName}').setup ${plugin.setup}") pluginsToSetup
       ))
       + "\n" + (builtins.readFile (pkgs.replaceVars ./neovim/init.lua {
+        sqls = "${pkgs.sqls}";
+        gopls = "${pkgs.gopls}";
+        vtsls = "${pkgs.vtsls}";
+        rustup = "${pkgs.rustup}";
+        helm-ls = "${pkgs.helm-ls}";
+        marksman = "${pkgs.marksman}";
         copilot-node-server = "${pkgs.copilot-node-server}";
         lua-language-server = "${pkgs.lua-language-server}";
-        yaml-language-server = "${pkgs.nodePackages.yaml-language-server}";
         vscode-json-languageserver = "${pkgs.vscode-json-languageserver}";
-        helm-ls = "${pkgs.helm-ls}";
-        gopls = "${pkgs.gopls}";
-        marksman = "${pkgs.marksman}";
-        vtsls = "${pkgs.vtsls}";
+        yaml-language-server = "${pkgs.nodePackages.yaml-language-server}";
       }));
     plugins =
       with pkgs.vimPlugins;
