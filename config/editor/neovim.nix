@@ -44,9 +44,8 @@ let
       };
     };
     keymap = {
-      preset = "enter";
-      "<S-Tab>" = ["select_prev" "fallback"];
-      "<Tab>" = ["select_next" "fallback"];
+      preset = "default";
+      "<Tab>" = ["select_and_accept" "fallback"];
     };
     completion = {
       ghost_text = {
@@ -112,6 +111,7 @@ let
           _raw = ''
             function(prompt_bufnr)
               local old=vim.fs.basename(vim.fn.getcwd())
+              close_terminal()
               vim.cmd('mks! /tmp/.session_' .. old)
 
               require('telescope._extensions.project.actions').change_working_directory(prompt_bufnr, false)

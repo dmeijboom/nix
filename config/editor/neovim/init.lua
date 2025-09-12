@@ -12,6 +12,13 @@ vim.api.nvim_create_autocmd('ExitPre', {
 local terminal_buf = -1
 local terminal_win = -1
 
+function close_terminal()
+  if terminal_win ~= -1 and vim.fn.win_id2win(terminal_win) ~= 0 then
+    vim.cmd(vim.fn.win_id2win(terminal_win) .. 'close')
+    terminal_win = -1
+  end
+end
+
 local function toggle_terminal()
   if terminal_win ~= -1 and vim.fn.win_id2win(terminal_win) ~= 0 then
     vim.cmd(vim.fn.win_id2win(terminal_win) .. 'close')
@@ -23,7 +30,7 @@ local function toggle_terminal()
     if terminal_buf ~= -1 and vim.fn.bufexists(terminal_buf) == 1 then
       vim.cmd('buffer ' .. terminal_buf)
     else
-      vim.cmd('terminal')
+      vim.cmd('terminal zsh')
       terminal_buf = vim.fn.bufnr('%')
     end
 
