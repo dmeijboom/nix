@@ -178,6 +178,11 @@ end
 -- Terminal escape
 keymap('t', '<Esc>', '<C-\\><C-n>')
 
+-- Quickfix
+keymap('n', '<leader>q', function()
+  require("quicker").toggle()
+end, extra('Toggle quickfix'))
+
 -- File operations
 keymap('n', '<C-p>', ':Telescope find_files theme=dropdown previewer=false find_command=rg,--ignore,--files<CR>', quiet)
 keymap('n', '<C-f>', ':NvimTreeFindFileToggle<CR>', quiet)

@@ -25,6 +25,7 @@ let
     };
   };
 
+  quicker-nvim = mkPlugin "quicker-nvim" { name = "quicker"; };
   gitsigns-nvim = mkPlugin "gitsigns-nvim" { name = "gitsigns"; };
   nvim-web-devicons = mkPlugin "nvim-web-devicons" { name = "nvim-web-devicons"; };
   nvim-surround = mkPlugin "nvim-surround" { name = "nvim-surround"; };
@@ -187,6 +188,7 @@ let
     blink-copilot
     blink-cmp
     indent-blankline-nvim-lua
+    quicker-nvim
     gitsigns-nvim
     which-key-nvim
     trouble-nvim
