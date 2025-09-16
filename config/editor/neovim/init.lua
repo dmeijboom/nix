@@ -49,6 +49,11 @@ vim.g.rest_nvim = {
 -- Language servers
 local capabilities = require('blink.cmp').get_lsp_capabilities()
 
+vim.lsp.config('eslint', {
+  capabilities = capabilities,
+  cmd = { '@vscode-langservers-extracted@/bin/vscode-eslint-language-server', '--stdio' },
+})
+
 vim.lsp.config('copilot', {
   capabilities = capabilities,
   cmd = { '@copilot-node-server@/bin/copilot-node-server', '--stdio' },
@@ -56,7 +61,7 @@ vim.lsp.config('copilot', {
 
 vim.lsp.config('jsonls', {
   capabilities = capabilities,
-  cmd = { '@vscode-json-languageserver@/bin/vscode-json-language-server', '--stdio' },
+  cmd = { '@vscode-langservers-extracted@/bin/vscode-json-language-server', '--stdio' },
 })
 
 vim.lsp.config('lua_ls', {
@@ -145,6 +150,7 @@ require 'nvim-treesitter.configs'.setup {
 vim.lsp.enable('sqls')
 vim.lsp.enable('vtsls')
 vim.lsp.enable('copilot')
+vim.lsp.enable('eslint')
 vim.lsp.enable('marksman')
 vim.lsp.enable('lua_ls')
 vim.lsp.enable('jsonls')

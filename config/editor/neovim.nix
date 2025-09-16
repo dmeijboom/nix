@@ -228,7 +228,7 @@ in
     rustup
     lua-language-server
     copilot-node-server
-    vscode-json-languageserver
+    vscode-langservers-extracted
     nodePackages.yaml-language-server
   ];
 
@@ -247,8 +247,8 @@ in
         marksman = "${pkgs.marksman}";
         copilot-node-server = "${pkgs.copilot-node-server}";
         lua-language-server = "${pkgs.lua-language-server}";
-        vscode-json-languageserver = "${pkgs.vscode-json-languageserver}";
         yaml-language-server = "${pkgs.nodePackages.yaml-language-server}";
+        vscode-langservers-extracted = "${pkgs.vscode-langservers-extracted}";
       }));
     plugins =
       with pkgs.vimPlugins;
