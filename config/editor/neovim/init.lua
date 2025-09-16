@@ -39,6 +39,13 @@ local function toggle_terminal()
   end
 end
 
+-- Rest nvim
+vim.g.rest_nvim = {
+  request = {
+    skip_ssl_verification = true,
+  },
+}
+
 -- Language servers
 local capabilities = require('blink.cmp').get_lsp_capabilities()
 

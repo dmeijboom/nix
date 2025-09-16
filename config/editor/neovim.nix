@@ -184,6 +184,7 @@ let
     "vim-illuminate"
     "telescope-ui-select-nvim"
     "telescope-project-nvim"
+    "rest-nvim"
     copilot-lua
     blink-copilot
     blink-cmp
@@ -264,6 +265,7 @@ in
         ruby
         python
         rust
+        http
         javascript
         typescript
         yaml
