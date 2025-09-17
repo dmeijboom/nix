@@ -25,13 +25,14 @@ let
     };
   };
 
-  quicker-nvim = mkPlugin "quicker-nvim" { name = "quicker"; };
-  gitsigns-nvim = mkPlugin "gitsigns-nvim" { name = "gitsigns"; };
-  nvim-web-devicons = mkPlugin "nvim-web-devicons" { name = "nvim-web-devicons"; };
-  nvim-surround = mkPlugin "nvim-surround" { name = "nvim-surround"; };
   mini-icons = mkPlugin "mini-icons" { name = "mini.icons"; };
+  quicker-nvim = mkPlugin "quicker-nvim" { name = "quicker"; };
+  overseer-nvim = mkPlugin "overseer-nvim" { name = "overseer"; };
+  gitsigns-nvim = mkPlugin "gitsigns-nvim" { name = "gitsigns"; };
+  nvim-surround = mkPlugin "nvim-surround" { name = "nvim-surround"; };
   auto-save-nvim = mkPlugin "auto-save-nvim" { name = "auto-save"; };
   blink-copilot = mkPlugin "blink-copilot" { name = "blink-copilot"; };
+  nvim-web-devicons = mkPlugin "nvim-web-devicons" { name = "nvim-web-devicons"; };
   blink-cmp = mkPlugin "blink-cmp" {
     name = "blink.cmp";
     sources = {
@@ -190,6 +191,7 @@ let
     blink-cmp
     indent-blankline-nvim-lua
     quicker-nvim
+    overseer-nvim
     gitsigns-nvim
     which-key-nvim
     trouble-nvim

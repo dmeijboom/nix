@@ -188,6 +188,9 @@ local extra = function(desc)
   return { noremap = true, silent = true, desc = desc }
 end
 
+-- Tasks
+keymap('n', '<leader>t', ':OverseerRun<CR>', extra('Run task'))
+
 -- Terminal escape
 keymap('t', '<Esc>', '<C-\\><C-n>')
 
