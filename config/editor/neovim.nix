@@ -27,16 +27,38 @@ let
 
   mini-icons = mkPlugin "mini-icons" { name = "mini.icons"; };
   quicker-nvim = mkPlugin "quicker-nvim" { name = "quicker"; };
-  overseer-nvim = mkPlugin "overseer-nvim" { name = "overseer"; };
   gitsigns-nvim = mkPlugin "gitsigns-nvim" { name = "gitsigns"; };
   nvim-surround = mkPlugin "nvim-surround" { name = "nvim-surround"; };
   auto-save-nvim = mkPlugin "auto-save-nvim" { name = "auto-save"; };
   blink-copilot = mkPlugin "blink-copilot" { name = "blink-copilot"; };
   nvim-web-devicons = mkPlugin "nvim-web-devicons" { name = "nvim-web-devicons"; };
+  overseer-nvim = mkPlugin "overseer-nvim" {
+    name = "overseer";
+    strategy = "toggleterm";
+  };
+  nvim-treesitter = mkPlugin "nvim-treesitter" {
+    name = "nvim-treesitter.configs";
+    auto_install = false;
+    parser_install_dir = {
+      _raw = "parser_install_dir";
+    };
+    highlight = {
+      enable = true;
+      additional_vim_regex_highlighting = false;
+    };
+  };
+  toggleterm-nvim = mkPlugin "toggleterm-nvim" {
+    name = "toggleterm";
+    shade_terminals = true;
+    shading_factor = 0;
+  };
   blink-cmp = mkPlugin "blink-cmp" {
     name = "blink.cmp";
     sources = {
-      default = ["lsp" "buffer"];
+      default = [
+        "lsp"
+        "buffer"
+      ];
       providers = {
         copilot = {
           name = "copilot";
@@ -47,7 +69,10 @@ let
     };
     keymap = {
       preset = "default";
-      "<Tab>" = ["select_and_accept" "fallback"];
+      "<Tab>" = [
+        "select_and_accept"
+        "fallback"
+      ];
     };
     completion = {
       ghost_text = {
@@ -70,17 +95,23 @@ let
     prompt_force_push = true;
     graph_style = "unicode";
     process_spinner = true;
-    log_view = { kind = "vsplit"; };
+    log_view = {
+      kind = "vsplit";
+    };
   };
   diffview-nvim = mkPlugin "diffview-nvim" {
-    name = "diffview"; 
+    name = "diffview";
     use_icons = true;
   };
   copilot-lua = mkPlugin "copilot-lua" {
     name = "copilot";
     copilot_node_command = "${pkgs.nodejs}/bin/node";
-    suggestion = { enabled = false; };
-    panel = { enabled = false; };
+    suggestion = {
+      enabled = false;
+    };
+    panel = {
+      enabled = false;
+    };
   };
   nvim-tree-lua = mkPlugin "nvim-tree-lua" {
     name = "nvim-tree";
@@ -170,22 +201,23 @@ let
   indent-blankline-nvim-lua = mkPlugin "indent-blankline-nvim-lua" {
     name = "ibl";
     scope = {
-        show_start = false;
-        show_end = false;
-        highlight = "IblScope";
+      show_start = false;
+      show_end = false;
+      highlight = "IblScope";
     };
     indent = {
-        char = "│";
+      char = "│";
     };
   };
 
   plugins = [
-    "nvim-treesitter"
+    "rest-nvim"
     "nvim-lspconfig"
     "vim-illuminate"
     "telescope-ui-select-nvim"
     "telescope-project-nvim"
-    "rest-nvim"
+    nvim-treesitter
+    toggleterm-nvim
     copilot-lua
     blink-copilot
     blink-cmp
@@ -220,6 +252,7 @@ in
     # Tree-sitter requirements
     go
     nodejs
+    tree-sitter
 
     # Language servers
     vtsls
@@ -236,11 +269,16 @@ in
 
   programs.neovim = {
     enable = true;
-    extraLuaConfig =
-      (lib.concatStringsSep "\n" (
-        map (plugin: "require('${plugin.pluginName}').setup ${plugin.setup}") pluginsToSetup
-      ))
-      + "\n" + (builtins.readFile (pkgs.replaceVars ./neovim/init.lua {
+    extraLuaConfig = ''
+      local parser_install_dir = vim.fs.joinpath(vim.fn.stdpath("data"), "treesitter")
+      vim.opt.runtimepath:append(parser_install_dir)
+    ''
+    + (lib.concatStringsSep "\n" (
+      map (plugin: "require('${plugin.pluginName}').setup ${plugin.setup}") pluginsToSetup
+    ))
+    + "\n"
+    + (builtins.readFile (
+      pkgs.replaceVars ./neovim/init.lua {
         sqls = "${pkgs.sqls}";
         gopls = "${pkgs.gopls}";
         vtsls = "${pkgs.vtsls}";
@@ -251,11 +289,12 @@ in
         lua-language-server = "${pkgs.lua-language-server}";
         yaml-language-server = "${pkgs.nodePackages.yaml-language-server}";
         vscode-langservers-extracted = "${pkgs.vscode-langservers-extracted}";
-      }));
+      }
+    ));
     plugins =
       with pkgs.vimPlugins;
       map (name: pkgs.vimPlugins.${name}) pluginNames
-      ++ [kubectl-nvim]
+      ++ [ kubectl-nvim ]
       ++ (with pkgs.vimPlugins.nvim-treesitter-parsers; [
         bash
         c

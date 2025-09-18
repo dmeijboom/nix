@@ -20,23 +20,7 @@ function close_terminal()
 end
 
 local function toggle_terminal()
-  if terminal_win ~= -1 and vim.fn.win_id2win(terminal_win) ~= 0 then
-    vim.cmd(vim.fn.win_id2win(terminal_win) .. 'close')
-    terminal_win = -1
-  else
-    vim.cmd('botright split')
-    vim.cmd('resize 15')
-
-    if terminal_buf ~= -1 and vim.fn.bufexists(terminal_buf) == 1 then
-      vim.cmd('buffer ' .. terminal_buf)
-    else
-      vim.cmd('terminal zsh')
-      terminal_buf = vim.fn.bufnr('%')
-    end
-
-    terminal_win = vim.fn.win_getid()
-    vim.cmd('startinsert')
-  end
+  vim.cmd('ToggleTerm')
 end
 
 -- Rest nvim
@@ -139,13 +123,6 @@ vim.lsp.config('helm_ls', {
   capabilities = capabilities,
   cmd = { '@helm-ls@/bin/helm_ls', 'serve' },
 })
-
-require 'nvim-treesitter.configs'.setup {
-  highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = false,
-  },
-}
 
 vim.lsp.enable('sqls')
 vim.lsp.enable('vtsls')
