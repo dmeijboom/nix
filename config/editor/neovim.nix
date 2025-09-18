@@ -14,14 +14,13 @@ let
     }
   );
 
-  kubectl-nvim = pkgs.vimUtils.buildVimPlugin {
-    name = "kubectl-nvim";
-    nvimRequireCheck = "kubectl";
+  dooing = pkgs.vimUtils.buildVimPlugin {
+    name = "dooing";
     src = pkgs.fetchFromGitHub {
-      owner = "Ramilito";
-      repo = "kubectl.nvim";
-      rev = "318057aab0cd0ca69273e55b9cebc01c78f9a9ab";
-      sha256 = "sha256-nxF1oeswhzENSsjSdDvqeBsbm0NraVVFBwRdIFDf930=";
+      owner = "atiladefreitas";
+      repo = "dooing";
+      rev = "cd914ec59de9f249e5419d95ba7bb2508fa1bf4f";
+      sha256 = "sha256-nQv59GdOw3eMjnT97FVegLZ3akV0XPnuYCa/In9GiWk=";
     };
   };
 
@@ -295,7 +294,7 @@ in
     plugins =
       with pkgs.vimPlugins;
       map (name: pkgs.vimPlugins.${name}) pluginNames
-      ++ [ kubectl-nvim ]
+      ++ [ dooing ]
       ++ (with pkgs.vimPlugins.nvim-treesitter-parsers; [
         bash
         c

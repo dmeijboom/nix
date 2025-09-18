@@ -155,7 +155,8 @@ local extra = function(desc)
 end
 
 -- Tasks
-keymap('n', '<leader>t', ':OverseerRun<CR>', extra('Run task'))
+keymap('n', '<leader>x', ':OverseerRun<CR>', extra('Run task'))
+keymap('n', '<leader>t', ':Dooing<CR>', extra('Toggle todos'))
 
 -- Terminal escape
 keymap('t', '<Esc>', '<C-\\><C-n>')
@@ -175,7 +176,7 @@ keymap('n', '<leader>p', function()
   require('telescope').extensions.project.project(require('telescope.themes').get_dropdown({}))
 end, quiet)
 keymap('n', '<leader>ff', ':Telescope live_grep theme=ivy<CR>', extra('Find in files'))
-keymap('n', '<leader>fs', ':Telescope lsp_document_symbols theme=dropdown<CR>', extra('Show symbols'))
+keymap('n', '<leader>fs', ':Telescope lsp_document_symbols theme=dropdown previewer=false<CR>', extra('Show symbols'))
 keymap('n', '<leader>fw', function()
   require('telescope.builtin').live_grep(require('telescope.themes').get_cursor({
     default_text = vim.fn.expand('<cword>')
@@ -233,7 +234,7 @@ wk.add({
 })
 
 -- Misc
-require('kubectl').setup()
+require('dooing').setup()
 require('telescope').load_extension('ui-select')
 
 vim.cmd.colorscheme 'nord'
