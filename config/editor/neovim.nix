@@ -35,6 +35,7 @@ let
   overseer-nvim = mkPlugin "overseer-nvim" {
     name = "overseer";
     strategy = "toggleterm";
+    autochdir = true;
   };
   nvim-treesitter = mkPlugin "nvim-treesitter" {
     name = "nvim-treesitter.configs";
@@ -144,7 +145,6 @@ let
           _raw = ''
             function(prompt_bufnr)
               local old=vim.fs.basename(vim.fn.getcwd())
-              close_terminal()
               vim.cmd('mks! /tmp/.session_' .. old)
 
               require('telescope._extensions.project.actions').change_working_directory(prompt_bufnr, false)

@@ -12,17 +12,6 @@ vim.api.nvim_create_autocmd('ExitPre', {
 local terminal_buf = -1
 local terminal_win = -1
 
-function close_terminal()
-  if terminal_win ~= -1 and vim.fn.win_id2win(terminal_win) ~= 0 then
-    vim.cmd(vim.fn.win_id2win(terminal_win) .. 'close')
-    terminal_win = -1
-  end
-end
-
-local function toggle_terminal()
-  vim.cmd('ToggleTerm')
-end
-
 -- Rest nvim
 vim.g.rest_nvim = {
   request = {
@@ -176,13 +165,16 @@ keymap('n', '<leader>q', function()
   require("quicker").toggle()
 end, extra('Toggle quickfix'))
 
+-- Rest operations
+keymap('n', '<leader>R', ':Rest run<CR>', extra('REST Run'))
+
 -- File operations
 keymap('n', '<C-p>', ':Telescope find_files theme=dropdown previewer=false find_command=rg,--ignore,--files<CR>', quiet)
 keymap('n', '<C-f>', ':NvimTreeFindFileToggle<CR>', quiet)
 keymap('n', '<leader>p', function()
   require('telescope').extensions.project.project(require('telescope.themes').get_dropdown({}))
 end, quiet)
-keymap('n', '<leader>ff', ':Telescope live_grep<CR>', extra('Find in files'))
+keymap('n', '<leader>ff', ':Telescope live_grep theme=ivy<CR>', extra('Find in files'))
 keymap('n', '<leader>fs', ':Telescope lsp_document_symbols theme=dropdown<CR>', extra('Show symbols'))
 keymap('n', '<leader>fw', function()
   require('telescope.builtin').live_grep(require('telescope.themes').get_cursor({
@@ -196,8 +188,8 @@ keymap('n', '<leader>gs', ':Neogit<CR>', extra('Git status'))
 keymap('n', '<leader>gl', ':NeogitLogCurrent<CR>', extra('Git log'))
 
 -- Terminal toggle
-keymap('n', '<C-t>', toggle_terminal, quiet)
-keymap('t', '<C-t>', toggle_terminal, quiet)
+keymap('n', '<C-t>', ':ToggleTerm<CR>', quiet)
+keymap('t', '<C-t>', ':ToggleTerm<CR>', quiet)
 
 -- Window navigation
 keymap('n', '<leader>wh', '<C-w>h', quiet)
