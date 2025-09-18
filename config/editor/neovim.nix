@@ -52,6 +52,7 @@ let
     name = "toggleterm";
     shade_terminals = true;
     shading_factor = 0;
+    shell = "zsh";
   };
   blink-cmp = mkPlugin "blink-cmp" {
     name = "blink.cmp";
