@@ -128,7 +128,7 @@ vim.lsp.enable('sqls')
 vim.lsp.enable('vtsls')
 vim.lsp.enable('copilot')
 vim.lsp.enable('tailwindcss')
-vim.lsp.enable('nil')
+-- vim.lsp.enable('nil') @TODO: horrible..
 vim.lsp.enable('eslint')
 vim.lsp.enable('dockerls')
 vim.lsp.enable('marksman')
