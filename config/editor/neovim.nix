@@ -264,6 +264,7 @@ in
     gopls
     sqls
     rustup
+    tombi
     lua-language-server
     copilot-node-server
     dockerfile-language-server
@@ -287,6 +288,7 @@ in
         nil = "${pkgs.nil}";
         sqls = "${pkgs.sqls}";
         gopls = "${pkgs.gopls}";
+        tombi = "${pkgs.tombi}";
         vtsls = "${pkgs.vtsls}";
         rustup = "${pkgs.rustup}";
         helm-ls = "${pkgs.helm-ls}";

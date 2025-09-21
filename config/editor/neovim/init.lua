@@ -53,6 +53,11 @@ vim.lsp.config('lua_ls', {
   cmd = { '@lua-language-server@/bin/lua-language-server' },
 })
 
+vim.lsp.config('tombi', {
+  capabilities = capabilities,
+  cmd = { '@tombi@/bin/tombi', 'lsp' },
+})
+
 vim.lsp.config('sqls', {
   capabilities = capabilities,
   cmd = { '@sqls@/bin/sqls' },
@@ -125,6 +130,7 @@ vim.lsp.config('helm_ls', {
 })
 
 vim.lsp.enable('sqls')
+vim.lsp.enable('tombi')
 vim.lsp.enable('vtsls')
 vim.lsp.enable('copilot')
 vim.lsp.enable('tailwindcss')
