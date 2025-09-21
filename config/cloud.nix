@@ -24,8 +24,7 @@
           gke-gcloud-auth-plugin
         ]
       ))
-      # Build fails
-      # (azure-cli.withExtensions [ azure-cli.extensions.aks-preview ])
+      (azure-cli.withExtensions [ azure-cli.extensions.aks-preview ])
     ];
   };
 }

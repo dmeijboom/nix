@@ -8,10 +8,6 @@ vim.api.nvim_create_autocmd('ExitPre', {
   end
 })
 
--- Utilities
-local terminal_buf = -1
-local terminal_win = -1
-
 -- Rest nvim
 vim.g.rest_nvim = {
   request = {
@@ -22,9 +18,24 @@ vim.g.rest_nvim = {
 -- Language servers
 local capabilities = require('blink.cmp').get_lsp_capabilities()
 
+vim.lsp.config('dockerls', {
+  capabilities = capabilities,
+  cmd = { '@dockerfile-language-server@/bin/docker-langserver', '--stdio' },
+})
+
 vim.lsp.config('eslint', {
   capabilities = capabilities,
   cmd = { '@vscode-langservers-extracted@/bin/vscode-eslint-language-server', '--stdio' },
+})
+
+vim.lsp.config('nil', {
+  capabilities = capabilities,
+  cmd = { '@nil@/bin/nil' },
+})
+
+vim.lsp.config('tailwindcss', {
+  capabilities = capabilities,
+  cmd = { '@tailwindcss-language-server@/bin/tailwindcss-language-server', '--stdio' },
 })
 
 vim.lsp.config('copilot', {
@@ -116,7 +127,10 @@ vim.lsp.config('helm_ls', {
 vim.lsp.enable('sqls')
 vim.lsp.enable('vtsls')
 vim.lsp.enable('copilot')
+vim.lsp.enable('tailwindcss')
+vim.lsp.enable('nil')
 vim.lsp.enable('eslint')
+vim.lsp.enable('dockerls')
 vim.lsp.enable('marksman')
 vim.lsp.enable('lua_ls')
 vim.lsp.enable('jsonls')
@@ -238,3 +252,9 @@ require('dooing').setup()
 require('telescope').load_extension('ui-select')
 
 vim.cmd.colorscheme 'nord'
+
+-- Theme highlight fixes
+vim.api.nvim_set_hl(0, 'Special', { fg = '#8FBCBB' })
+vim.api.nvim_set_hl(0, 'htmlTag', { fg = '#81A1C1' })
+vim.api.nvim_set_hl(0, 'htmlTagName', { fg = '#81A1C1' })
+vim.api.nvim_set_hl(0, 'Type', { fg = '#8FBCBB' })

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 {
   programs.zsh.initContent = ''
     export EDITOR="zed --wait"

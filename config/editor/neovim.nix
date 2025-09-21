@@ -1,6 +1,5 @@
 {
   lib,
-  config,
   pkgs,
   ...
 }:
@@ -168,6 +167,9 @@ let
     heading = {
       enabled = false;
     };
+    latex = {
+      enabled = false;
+    };
     completions = {
       blink = {
         enabled = true;
@@ -255,6 +257,7 @@ in
     tree-sitter
 
     # Language servers
+    nil
     vtsls
     marksman
     helm-ls
@@ -263,6 +266,8 @@ in
     rustup
     lua-language-server
     copilot-node-server
+    dockerfile-language-server
+    tailwindcss-language-server
     vscode-langservers-extracted
     nodePackages.yaml-language-server
   ];
@@ -279,6 +284,7 @@ in
     + "\n"
     + (builtins.readFile (
       pkgs.replaceVars ./neovim/init.lua {
+        nil = "${pkgs.nil}";
         sqls = "${pkgs.sqls}";
         gopls = "${pkgs.gopls}";
         vtsls = "${pkgs.vtsls}";
@@ -287,7 +293,9 @@ in
         marksman = "${pkgs.marksman}";
         copilot-node-server = "${pkgs.copilot-node-server}";
         lua-language-server = "${pkgs.lua-language-server}";
+        dockerfile-language-server = "${pkgs.dockerfile-language-server}";
         yaml-language-server = "${pkgs.nodePackages.yaml-language-server}";
+        tailwindcss-language-server = "${pkgs.tailwindcss-language-server}";
         vscode-langservers-extracted = "${pkgs.vscode-langservers-extracted}";
       }
     ));
