@@ -265,6 +265,7 @@ in
     sqls
     rustup
     tombi
+    basedpyright
     lua-language-server
     copilot-node-server
     dockerfile-language-server
@@ -293,6 +294,7 @@ in
         rustup = "${pkgs.rustup}";
         helm-ls = "${pkgs.helm-ls}";
         marksman = "${pkgs.marksman}";
+        basedpyright = "${pkgs.basedpyright}";
         copilot-node-server = "${pkgs.copilot-node-server}";
         lua-language-server = "${pkgs.lua-language-server}";
         dockerfile-language-server = "${pkgs.dockerfile-language-server}";

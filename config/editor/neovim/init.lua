@@ -18,6 +18,11 @@ vim.g.rest_nvim = {
 -- Language servers
 local capabilities = require('blink.cmp').get_lsp_capabilities()
 
+vim.lsp.config('basedpyright', {
+  capabilities = capabilities,
+  cmd = { '@basedpyright@/bin/basedpyright-langserver', '--stdio' },
+})
+
 vim.lsp.config('dockerls', {
   capabilities = capabilities,
   cmd = { '@dockerfile-language-server@/bin/docker-langserver', '--stdio' },
@@ -137,6 +142,7 @@ vim.lsp.enable('tailwindcss')
 -- vim.lsp.enable('nil') @TODO: horrible..
 vim.lsp.enable('eslint')
 vim.lsp.enable('dockerls')
+vim.lsp.enable('basedpyright')
 vim.lsp.enable('marksman')
 vim.lsp.enable('lua_ls')
 vim.lsp.enable('jsonls')
