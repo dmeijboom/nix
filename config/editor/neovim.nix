@@ -263,6 +263,7 @@ in
     helm-ls
     gopls
     sqls
+    deno
     rustup
     tombi
     basedpyright
@@ -288,6 +289,7 @@ in
       pkgs.replaceVars ./neovim/init.lua {
         nil = "${pkgs.nil}";
         sqls = "${pkgs.sqls}";
+        deno = "${pkgs.deno}";
         gopls = "${pkgs.gopls}";
         tombi = "${pkgs.tombi}";
         vtsls = "${pkgs.vtsls}";

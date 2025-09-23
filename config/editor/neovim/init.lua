@@ -38,6 +38,11 @@ vim.lsp.config('nil', {
   cmd = { '@nil@/bin/nil' },
 })
 
+vim.lsp.config('denols', {
+  capabilities = capabilities,
+  cmd = { '@deno@/bin/deno', 'lsp' },
+})
+
 vim.lsp.config('tailwindcss', {
   capabilities = capabilities,
   cmd = { '@tailwindcss-language-server@/bin/tailwindcss-language-server', '--stdio' },
@@ -138,6 +143,7 @@ vim.lsp.enable('sqls')
 vim.lsp.enable('tombi')
 vim.lsp.enable('vtsls')
 vim.lsp.enable('copilot')
+vim.lsp.enable('denols')
 vim.lsp.enable('tailwindcss')
 -- vim.lsp.enable('nil') @TODO: horrible..
 vim.lsp.enable('eslint')
