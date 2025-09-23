@@ -267,6 +267,7 @@ in
     rustup
     tombi
     basedpyright
+    bash-language-server
     lua-language-server
     copilot-node-server
     dockerfile-language-server
@@ -299,6 +300,7 @@ in
         basedpyright = "${pkgs.basedpyright}";
         copilot-node-server = "${pkgs.copilot-node-server}";
         lua-language-server = "${pkgs.lua-language-server}";
+        bash-language-server = "${pkgs.bash-language-server}";
         dockerfile-language-server = "${pkgs.dockerfile-language-server}";
         yaml-language-server = "${pkgs.nodePackages.yaml-language-server}";
         tailwindcss-language-server = "${pkgs.tailwindcss-language-server}";
