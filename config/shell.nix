@@ -135,7 +135,7 @@ in
                 bind "i" { TogglePanePinned; SwitchToMode "Normal"; }
             }
             move {
-                bind "Alt h" { SwitchToMode "Normal"; }
+                bind "Alt m" { SwitchToMode "Normal"; }
                 bind "n" "Tab" { MovePane; }
                 bind "p" { MovePaneBackwards; }
                 bind "h" "Left" { MovePane "Left"; }
@@ -306,7 +306,7 @@ in
                 bind "Alt t" { SwitchToMode "Tab"; }
             }
             shared_except "move" "locked" {
-                bind "Alt h" { SwitchToMode "Move"; }
+                bind "Alt m" { SwitchToMode "Move"; }
             }
             shared_except "tmux" "locked" {
                 bind "Alt b" { SwitchToMode "Tmux"; }
