@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 {
   config = lib.mkIf config.custom.vscode.enable {
     programs.vscode.enable = true;
