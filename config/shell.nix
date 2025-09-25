@@ -103,7 +103,7 @@ in
                 bind "Alt g" { SwitchToMode "Normal"; }
             }
             resize {
-                bind "Alt n" { SwitchToMode "Normal"; }
+                bind "Alt r" { SwitchToMode "Normal"; }
                 bind "h" "Left" { Resize "Increase Left"; }
                 bind "j" "Down" { Resize "Increase Down"; }
                 bind "k" "Up" { Resize "Increase Up"; }
@@ -294,7 +294,7 @@ in
                 bind "Alt p" { SwitchToMode "Pane"; }
             }
             shared_except "resize" "locked" {
-                bind "Alt n" { SwitchToMode "Resize"; }
+                bind "Alt r" { SwitchToMode "Resize"; }
             }
             shared_except "scroll" "locked" {
                 bind "Alt s" { SwitchToMode "Scroll"; }

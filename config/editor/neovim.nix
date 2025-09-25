@@ -32,7 +32,6 @@ let
   nvim-web-devicons = mkPlugin "nvim-web-devicons" { name = "nvim-web-devicons"; };
   overseer-nvim = mkPlugin "overseer-nvim" {
     name = "overseer";
-    strategy = "toggleterm";
     autochdir = true;
   };
   nvim-treesitter = mkPlugin "nvim-treesitter" {
@@ -45,12 +44,6 @@ let
       enable = true;
       additional_vim_regex_highlighting = false;
     };
-  };
-  toggleterm-nvim = mkPlugin "toggleterm-nvim" {
-    name = "toggleterm";
-    shade_terminals = true;
-    shading_factor = 0;
-    shell = "zsh";
   };
   blink-cmp = mkPlugin "blink-cmp" {
     name = "blink.cmp";
@@ -219,7 +212,6 @@ let
     "telescope-ui-select-nvim"
     "telescope-project-nvim"
     nvim-treesitter
-    toggleterm-nvim
     copilot-lua
     blink-copilot
     blink-cmp

@@ -227,12 +227,6 @@ keymap('n', '<leader>gb', ':Telescope git_branches<CR>', extra('Git branches'))
 keymap('n', '<leader>gs', ':Neogit<CR>', extra('Git status'))
 keymap('n', '<leader>gl', ':NeogitLogCurrent<CR>', extra('Git log'))
 
--- Terminal toggle
-keymap('n', '<C-t>', ':ToggleTerm<CR>', quiet)
-keymap('t', '<C-t>', function()
-  vim.cmd('ToggleTerm')
-end, quiet)
-
 -- Window navigation
 keymap('n', '<leader>wh', '<C-w>h', quiet)
 keymap('n', '<leader>wj', '<C-w>j', quiet)
