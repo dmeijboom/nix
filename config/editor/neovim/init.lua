@@ -46,6 +46,7 @@ vim.lsp.config('nil', {
 vim.lsp.config('denols', {
   capabilities = capabilities,
   cmd = { '@deno@/bin/deno', 'lsp' },
+  root_markers = { 'deno.json', 'deno.jsonc' },
 })
 
 vim.lsp.config('tailwindcss', {
