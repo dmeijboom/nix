@@ -28,7 +28,6 @@ let
   gitsigns-nvim = mkPlugin "gitsigns-nvim" { name = "gitsigns"; };
   nvim-surround = mkPlugin "nvim-surround" { name = "nvim-surround"; };
   auto-save-nvim = mkPlugin "auto-save-nvim" { name = "auto-save"; };
-  blink-copilot = mkPlugin "blink-copilot" { name = "blink-copilot"; };
   nvim-web-devicons = mkPlugin "nvim-web-devicons" { name = "nvim-web-devicons"; };
   overseer-nvim = mkPlugin "overseer-nvim" {
     name = "overseer";
@@ -52,13 +51,6 @@ let
         "lsp"
         "buffer"
       ];
-      providers = {
-        copilot = {
-          name = "copilot";
-          module = "blink-copilot";
-          async = true;
-        };
-      };
     };
     keymap = {
       preset = "default";
@@ -95,16 +87,6 @@ let
   diffview-nvim = mkPlugin "diffview-nvim" {
     name = "diffview";
     use_icons = true;
-  };
-  copilot-lua = mkPlugin "copilot-lua" {
-    name = "copilot";
-    copilot_node_command = "${pkgs.nodejs}/bin/node";
-    suggestion = {
-      enabled = false;
-    };
-    panel = {
-      enabled = false;
-    };
   };
   nvim-tree-lua = mkPlugin "nvim-tree-lua" {
     name = "nvim-tree";
@@ -212,8 +194,6 @@ let
     "telescope-ui-select-nvim"
     "telescope-project-nvim"
     nvim-treesitter
-    copilot-lua
-    blink-copilot
     blink-cmp
     indent-blankline-nvim-lua
     quicker-nvim
@@ -261,7 +241,6 @@ in
     basedpyright
     bash-language-server
     lua-language-server
-    copilot-node-server
     dockerfile-language-server
     tailwindcss-language-server
     vscode-langservers-extracted
@@ -290,7 +269,6 @@ in
         helm-ls = "${pkgs.helm-ls}";
         marksman = "${pkgs.marksman}";
         basedpyright = "${pkgs.basedpyright}";
-        copilot-node-server = "${pkgs.copilot-node-server}";
         lua-language-server = "${pkgs.lua-language-server}";
         bash-language-server = "${pkgs.bash-language-server}";
         dockerfile-language-server = "${pkgs.dockerfile-language-server}";

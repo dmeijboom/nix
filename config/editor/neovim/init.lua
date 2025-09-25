@@ -54,11 +54,6 @@ vim.lsp.config('tailwindcss', {
   cmd = { '@tailwindcss-language-server@/bin/tailwindcss-language-server', '--stdio' },
 })
 
-vim.lsp.config('copilot', {
-  capabilities = capabilities,
-  cmd = { '@copilot-node-server@/bin/copilot-node-server', '--stdio' },
-})
-
 vim.lsp.config('jsonls', {
   capabilities = capabilities,
   cmd = { '@vscode-langservers-extracted@/bin/vscode-json-language-server', '--stdio' },
@@ -148,7 +143,6 @@ vim.lsp.config('helm_ls', {
 vim.lsp.enable('sqls')
 vim.lsp.enable('tombi')
 vim.lsp.enable('vtsls')
-vim.lsp.enable('copilot')
 vim.lsp.enable('denols')
 vim.lsp.enable('tailwindcss')
 -- vim.lsp.enable('nil') @TODO: horrible..

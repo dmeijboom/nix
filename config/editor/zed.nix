@@ -189,7 +189,7 @@
       };
 
       features = {
-        copilot = true;
+        copilot = false;
         edit_prediction_provider = "copilot";
       };
 
