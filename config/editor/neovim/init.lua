@@ -117,11 +117,30 @@ vim.lsp.config('marksman', {
   cmd = { '@marksman@/bin/marksman', 'server' },
 })
 
+local vue_plugin = {
+  name = '@vue/typescript-plugin',
+  location = '@vue-language-server@/bin/vue-language-server',
+  languages = { 'vue' },
+  configNamespace = 'typescript',
+}
+
+vim.lsp.config('vue_ls', {
+  capabilities = capabilities,
+  cmd = { '@vue-language-server@/bin/vue-language-server', '--stdio' },
+})
+
 vim.lsp.config('vtsls', {
   capabilities = capabilities,
   cmd = { '@vtsls@/bin/vtsls', '--stdio' },
-  filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact' },
+  filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
   settings = {
+    vtsls = {
+      tsserver = {
+        globalPlugins = {
+          vue_plugin,
+        },
+      },
+    },
     typescript = {
       inlayHints = {
         parameterNames = { enabled = 'all' },
@@ -142,6 +161,7 @@ vim.lsp.config('helm_ls', {
 
 vim.lsp.enable('sqls')
 vim.lsp.enable('tombi')
+vim.lsp.enable('vue_ls')
 vim.lsp.enable('vtsls')
 vim.lsp.enable('denols')
 vim.lsp.enable('tailwindcss')
@@ -220,6 +240,9 @@ end, extra('Find selected word'))
 keymap('n', '<leader>gb', ':Telescope git_branches<CR>', extra('Git branches'))
 keymap('n', '<leader>gs', ':Neogit<CR>', extra('Git status'))
 keymap('n', '<leader>gl', ':NeogitLogCurrent<CR>', extra('Git log'))
+
+-- Overseer toggle
+keymap('n', '<C-t>', ':OverseerToggle<CR>', quiet)
 
 -- Window navigation
 keymap('n', '<leader>wh', '<C-w>h', quiet)

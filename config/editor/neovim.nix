@@ -213,39 +213,44 @@ let
     neogit
   ];
 
+  languageServers = [
+    "nil"
+    "sqls"
+    "deno"
+    "gopls"
+    "tombi"
+    "vtsls"
+    "rustup"
+    "helm-ls"
+    "marksman"
+    "basedpyright"
+    "lua-language-server"
+    "vue-language-server"
+    "bash-language-server"
+    "dockerfile-language-server"
+    "yaml-language-server"
+    "tailwindcss-language-server"
+    "vscode-langservers-extracted"
+  ];
+
   pluginsToSetup = builtins.filter (plugin: builtins.isAttrs plugin) plugins;
   pluginNames = map (plugin: if builtins.isAttrs plugin then plugin.name else plugin) plugins;
 in
 {
-  home.packages = with pkgs; [
-    # Neovim utils
-    fd
-    bat
-    ripgrep
+  home.packages =
+    with pkgs;
+    [
+      # Neovim utils
+      fd
+      bat
+      ripgrep
 
-    # Tree-sitter requirements
-    go
-    nodejs
-    tree-sitter
-
-    # Language servers
-    nil
-    vtsls
-    marksman
-    helm-ls
-    gopls
-    sqls
-    deno
-    rustup
-    tombi
-    basedpyright
-    bash-language-server
-    lua-language-server
-    dockerfile-language-server
-    tailwindcss-language-server
-    vscode-langservers-extracted
-    nodePackages.yaml-language-server
-  ];
+      # Tree-sitter requirements
+      go
+      nodejs
+      tree-sitter
+    ]
+    ++ map (name: builtins.getAttr name pkgs) languageServers;
 
   programs.neovim = {
     enable = true;
@@ -258,24 +263,12 @@ in
     ))
     + "\n"
     + (builtins.readFile (
-      pkgs.replaceVars ./neovim/init.lua {
-        nil = "${pkgs.nil}";
-        sqls = "${pkgs.sqls}";
-        deno = "${pkgs.deno}";
-        gopls = "${pkgs.gopls}";
-        tombi = "${pkgs.tombi}";
-        vtsls = "${pkgs.vtsls}";
-        rustup = "${pkgs.rustup}";
-        helm-ls = "${pkgs.helm-ls}";
-        marksman = "${pkgs.marksman}";
-        basedpyright = "${pkgs.basedpyright}";
-        lua-language-server = "${pkgs.lua-language-server}";
-        bash-language-server = "${pkgs.bash-language-server}";
-        dockerfile-language-server = "${pkgs.dockerfile-language-server}";
-        yaml-language-server = "${pkgs.nodePackages.yaml-language-server}";
-        tailwindcss-language-server = "${pkgs.tailwindcss-language-server}";
-        vscode-langservers-extracted = "${pkgs.vscode-langservers-extracted}";
-      }
+      pkgs.replaceVars ./neovim/init.lua (
+        builtins.listToAttrs (map (name: {
+          name = name;
+          value = "${builtins.getAttr name pkgs}";
+        }) languageServers)
+      )
     ));
     plugins =
       with pkgs.vimPlugins;
