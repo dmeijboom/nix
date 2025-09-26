@@ -227,8 +227,9 @@ let
     "lua-language-server"
     "vue-language-server"
     "bash-language-server"
-    "dockerfile-language-server"
+    "emmet-language-server"
     "yaml-language-server"
+    "dockerfile-language-server"
     "tailwindcss-language-server"
     "vscode-langservers-extracted"
   ];

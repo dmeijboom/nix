@@ -18,6 +18,11 @@ vim.g.rest_nvim = {
 -- Language servers
 local capabilities = require('blink.cmp').get_lsp_capabilities()
 
+vim.lsp.config('emmet_language_server', {
+  capabilities = capabilities,
+  cmd = { '@emmet-language-server@/bin/emmet-language-server', '--stdio' },
+})
+
 vim.lsp.config('bashls', {
   capabilities = capabilities,
   cmd = { '@bash-language-server@/bin/bash-language-server', 'start' },
@@ -177,6 +182,7 @@ vim.lsp.enable('gopls')
 vim.lsp.enable('yamlls')
 vim.lsp.enable('helm_ls')
 vim.lsp.enable('rust_analyzer')
+vim.lsp.enable('emmet_language_server')
 vim.lsp.inlay_hint.enable()
 
 -- Settings
