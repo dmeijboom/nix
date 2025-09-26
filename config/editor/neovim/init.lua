@@ -21,6 +21,9 @@ local capabilities = require('blink.cmp').get_lsp_capabilities()
 vim.lsp.config('emmet_language_server', {
   capabilities = capabilities,
   cmd = { '@emmet-language-server@/bin/emmet-language-server', '--stdio' },
+  init_options = {
+    showSuggestionsAsSnippets = true,
+  },
 })
 
 vim.lsp.config('bashls', {
@@ -122,30 +125,30 @@ vim.lsp.config('marksman', {
   cmd = { '@marksman@/bin/marksman', 'server' },
 })
 
-local vue_plugin = {
-  name = '@vue/typescript-plugin',
-  location = '@vue-language-server@/bin/vue-language-server',
-  languages = { 'vue' },
-  configNamespace = 'typescript',
-}
-
-vim.lsp.config('vue_ls', {
-  capabilities = capabilities,
-  cmd = { '@vue-language-server@/bin/vue-language-server', '--stdio' },
-})
+-- local vue_plugin = {
+--   name = '@vue/typescript-plugin',
+--   location = '@vue-language-server@/bin/vue-language-server',
+--   languages = { 'vue' },
+--   configNamespace = 'typescript',
+-- }
+--
+-- vim.lsp.config('vue_ls', {
+--   capabilities = capabilities,
+--   cmd = { '@vue-language-server@/bin/vue-language-server', '--stdio' },
+-- })
 
 vim.lsp.config('vtsls', {
   capabilities = capabilities,
   cmd = { '@vtsls@/bin/vtsls', '--stdio' },
   filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
   settings = {
-    vtsls = {
-      tsserver = {
-        globalPlugins = {
-          vue_plugin,
-        },
-      },
-    },
+    -- vtsls = {
+    --   tsserver = {
+    --     globalPlugins = {
+    --       vue_plugin,
+    --     },
+    --   },
+    -- },
     typescript = {
       inlayHints = {
         parameterNames = { enabled = 'all' },
@@ -166,7 +169,7 @@ vim.lsp.config('helm_ls', {
 
 vim.lsp.enable('sqls')
 vim.lsp.enable('tombi')
-vim.lsp.enable('vue_ls')
+-- vim.lsp.enable('vue_ls') @TODO: broken in nix-unstable
 vim.lsp.enable('vtsls')
 vim.lsp.enable('denols')
 vim.lsp.enable('tailwindcss')

@@ -50,6 +50,8 @@ let
       default = [
         "lsp"
         "buffer"
+        "path"
+        "snippets"
       ];
     };
     keymap = {
