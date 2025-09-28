@@ -18,6 +18,11 @@ vim.g.rest_nvim = {
 -- Language servers
 local capabilities = require('blink.cmp').get_lsp_capabilities()
 
+vim.lsp.config('mdx_analyzer', {
+  capabilities = capabilities,
+  cmd = { '@mdx-language-server@/bin/mdx-language-server', '--stdio' },
+})
+
 vim.lsp.config('emmet_language_server', {
   capabilities = capabilities,
   cmd = { '@emmet-language-server@/bin/emmet-language-server', '--stdio' },
@@ -186,6 +191,7 @@ vim.lsp.enable('yamlls')
 vim.lsp.enable('helm_ls')
 vim.lsp.enable('rust_analyzer')
 vim.lsp.enable('emmet_language_server')
+vim.lsp.enable('mdx_analyzer')
 vim.lsp.inlay_hint.enable()
 
 -- Settings
@@ -292,8 +298,11 @@ wk.add({
   { "<leader>g", group = "git" },
 })
 
--- Misc
+-- Setup custom plugins
 require('dooing').setup()
+require('mdx').setup()
+
+-- Misc
 require('telescope').load_extension('ui-select')
 
 vim.cmd.colorscheme 'nord'

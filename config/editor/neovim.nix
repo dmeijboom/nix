@@ -13,6 +13,16 @@ let
     }
   );
 
+  mdx-nvim = pkgs.vimUtils.buildVimPlugin {
+    name = "mdx";
+    src = pkgs.fetchFromGitHub {
+      owner = "davidmh";
+      repo = "mdx.nvim";
+      rev = "464a74be368dce212cff02f6305845dc7f209ab3";
+      sha256 = "sha256-jpMcrWx/Rg9sMfkQFXnIM8VB5qRuSB/70wuSh6Y5uFk=";
+    };
+  };
+
   dooing = pkgs.vimUtils.buildVimPlugin {
     name = "dooing";
     src = pkgs.fetchFromGitHub {
@@ -226,6 +236,7 @@ let
     "helm-ls"
     "marksman"
     "basedpyright"
+    "mdx-language-server"
     "lua-language-server"
     "vue-language-server"
     "bash-language-server"
@@ -276,7 +287,7 @@ in
     plugins =
       with pkgs.vimPlugins;
       map (name: pkgs.vimPlugins.${name}) pluginNames
-      ++ [ dooing ]
+      ++ [ dooing mdx-nvim ]
       ++ (with pkgs.vimPlugins.nvim-treesitter-parsers; [
         bash
         c

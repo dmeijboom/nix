@@ -1,0 +1,8 @@
+{
+  "version": "2.0.0",
+  "tasks": [{
+    "label": "Rebuild Switch",
+    "type": "shell",
+    "command": "sudo darwin-rebuild switch --flake ."
+  }]
+}
