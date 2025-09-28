@@ -39,6 +39,34 @@ let
   nvim-surround = mkPlugin "nvim-surround" { name = "nvim-surround"; };
   auto-save-nvim = mkPlugin "auto-save-nvim" { name = "auto-save"; };
   nvim-web-devicons = mkPlugin "nvim-web-devicons" { name = "nvim-web-devicons"; };
+  codecompanion-nvim = mkPlugin "codecompanion-nvim" {
+    name = "codecompanion";
+    strategies = {
+      inline = {
+        adapter = {
+          name = "ollama";
+          model = "qwen3-coder:30b";
+        };
+        keymaps = {
+          accept_change = {
+            modes = { n = "ga"; };
+            description = "Accept the suggested change";
+          };
+          reject_change = {
+            modes = { n = "gr"; };
+            opts = { nowait = true; };
+            description = "Reject the suggested change";
+          };
+        };
+      };
+      chat = {
+        adapter = {
+          name = "ollama";
+          model = "qwen3-coder:30b";
+        };
+      };
+    };
+  };
   overseer-nvim = mkPlugin "overseer-nvim" {
     name = "overseer";
     autochdir = true;
@@ -205,6 +233,7 @@ let
     "vim-illuminate"
     "telescope-ui-select-nvim"
     "telescope-project-nvim"
+    codecompanion-nvim
     nvim-treesitter
     blink-cmp
     indent-blankline-nvim-lua

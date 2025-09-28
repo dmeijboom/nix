@@ -234,6 +234,10 @@ keymap('n', '<leader>q', function()
   require("quicker").toggle()
 end, extra('Toggle quickfix'))
 
+-- CodeCompanion
+keymap({ "n", "v" }, "<leader>c", "<cmd>CodeCompanionChat Toggle<cr>", extra("Toggle chat"))
+keymap("v", "ga", "<cmd>CodeCompanionChat Add<cr>", extra("Add context"))
+
 -- Rest operations
 keymap('n', '<leader>R', ':Rest run<CR>', extra('REST Run'))
 
