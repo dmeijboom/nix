@@ -5,7 +5,7 @@
   '';
 
   programs.zed-editor = {
-    enable = true;
+    enable = false;
     installRemoteServer = pkgs.stdenv.isLinux;
     extensions = [
       "assembly"
