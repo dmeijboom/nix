@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   programs.zsh.initContent = ''
-    export EDITOR="zed --wait"
+    export EDITOR="nvim"
   '';
 
   programs.zed-editor = {
