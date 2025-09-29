@@ -6,7 +6,6 @@ let
   starshipDisabledMods = [
     "aws"
     "gcloud"
-    "kubernetes"
     "docker_context"
     "container"
   ];
@@ -59,6 +58,9 @@ in
         success_symbol = "[➜](bold green)";
         error_symbol = "[➜](bold red)";
         vicmd_symbol = "[V](bold green)";
+      };
+      kubernetes = {
+        disabled = false;
       };
     }
     // lib.genAttrs starshipDisabledMods (name: {
