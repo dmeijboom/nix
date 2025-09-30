@@ -1,10 +1,17 @@
 vim.loader.enable()
 
--- Session Management
+-- Event handling
 vim.api.nvim_create_autocmd('ExitPre', {
   callback = function()
     local dirname = vim.fs.basename(vim.fn.getcwd())
     vim.cmd('mks! /tmp/.session_' .. dirname)
+  end
+})
+
+vim.api.nvim_create_autocmd('DirChanged', {
+  callback = function()
+    local dirname = vim.fs.basename(vim.fn.getcwd())
+    vim.cmd('!zellij action rename-tab "' .. dirname .. '"')
   end
 })
 
