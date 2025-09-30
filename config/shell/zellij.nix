@@ -29,8 +29,11 @@
           pane size=1 borderless=true {
             plugin location="file:${zjstatus}/bin/zjstatus.wasm" {
               format_left  "{mode} {tabs}"
-              format_right "#[fg=#4C566A,bg=#2E3440]"
+              format_right "#[fg=#4C566A,bg=#2E3440] {pipe_status}"
               format_space "#[bg=#2E3440]"
+
+              pipe_status_format     "{output}"
+              pipe_status_rendermode "dynamic"
 
               mode_normal          "#[bg=#88C0D0] "
               mode_locked          "#[bg=#D08770] "

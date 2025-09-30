@@ -21,6 +21,17 @@ vim.api.nvim_create_autocmd('DirChanged', {
   callback = sync_tab_name
 })
 
+vim.api.nvim_create_autocmd({'CursorMoved', 'CursorMovedI', 'WinEnter', 'BufEnter'}, {
+  callback = function()
+    local result = vim.api.nvim_eval_statusline(
+      '%h%m%r%=%-14.(%l,%c%V%) %P',
+      { highlights = true }
+    )
+
+    vim.fn.system("zellij pipe 'zjstatus::pipe::pipe_status::" .. vim.trim(result.str) .. "'")
+  end
+})
+
 -- Rest nvim
 vim.g.rest_nvim = {
   request = {
