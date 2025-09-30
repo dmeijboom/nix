@@ -1,24 +1,73 @@
 vim.loader.enable()
 
 -- Event handling
-local sync_tab_name = function()
-  local dirname = vim.fs.basename(vim.fn.getcwd())
-  vim.cmd('silent !zellij action rename-tab "' .. dirname .. '"')
+local git_branch = nil
+local zellij_enabled = true
+
+local zellij_pipe = function(name, result)
+  if not zellij_enabled then
+    return
+  end
+
+  vim.system(
+    { 'zellij', 'pipe', 'zjstatus::pipe::pipe_' .. name .. '::' .. vim.trim(result) },
+    { text = true }
+  )
+end
+
+local zellij_sync = function()
+  local result = vim.api.nvim_eval_statusline(
+    '%t %l:%c%{reg_recording()!=""?" [REC]":""}%r',
+    { highlights = true }
+  )
+
+  local divider = '\27[38;2;59;66;82m›\27[0m'
+  local ghost_text = '\27[38;2;97;110;136m' .. result.str .. '\27[0m'
+
+  if git_branch then
+    zellij_pipe('status', '\27[38;2;164;121;157m ' .. git_branch .. '\27[0m ' .. divider .. ' ' .. ghost_text)
+  else
+    zellij_pipe('status', ghost_text)
+  end
 end
 
 vim.api.nvim_create_autocmd('ExitPre', {
   callback = function()
     local dirname = vim.fs.basename(vim.fn.getcwd())
     vim.cmd('mks! /tmp/.session_' .. dirname)
+
+    zellij_pipe('status', '')
   end
 })
 
-vim.api.nvim_create_autocmd('UIEnter', {
-  callback = sync_tab_name
+vim.api.nvim_create_autocmd('FocusGained', {
+  callback = function ()
+    zellij_enabled = true
+    zellij_sync()
+  end
 })
 
-vim.api.nvim_create_autocmd('DirChanged', {
-  callback = sync_tab_name
+vim.api.nvim_create_autocmd('FocusLost', {
+  callback = function ()
+    zellij_pipe('status', '')
+    zellij_enabled = false
+  end
+})
+
+vim.api.nvim_create_autocmd({ 'UIEnter', 'DirChanged' }, {
+  callback = function()
+    local cwd = vim.fn.getcwd()
+    local dirname = vim.fs.basename(cwd)
+
+    vim.cmd('silent !zellij action rename-tab "' .. dirname .. '"')
+    vim.system({ 'git', '-C', cwd, 'rev-parse', '--abbrev-ref', 'HEAD' }, { text = true }, function(result)
+      if result.code == 0 then
+        git_branch = vim.trim(result.stdout)
+      else
+        git_branch = nil
+      end
+    end)
+  end
 })
 
 local timer = nil
@@ -31,16 +80,8 @@ vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI', 'WinEnter', 'BufEnt
     end
 
     timer = vim.loop.new_timer()
-    timer:start(100, 0, vim.schedule_wrap(function()
-      local result = vim.api.nvim_eval_statusline(
-        '%l:%c%{reg_recording()!=""?" REC":""}',
-        { highlights = true }
-      )
-
-      vim.system(
-        { 'zellij', 'pipe', 'zjstatus::pipe::pipe_status::' .. vim.trim(result.str) },
-        { text = true }
-      )
+    timer:start(400, 0, vim.schedule_wrap(function()
+      zellij_sync()
     end))
   end
 })
@@ -235,6 +276,7 @@ vim.lsp.inlay_hint.enable()
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.opt.signcolumn = 'yes'
+vim.opt.swapfile = false
 vim.opt.hlsearch = false
 vim.opt.showmode = false
 vim.opt.laststatus = 0
