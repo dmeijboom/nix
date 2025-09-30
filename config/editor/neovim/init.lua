@@ -1,6 +1,11 @@
 vim.loader.enable()
 
 -- Event handling
+local sync_tab_name = function()
+  local dirname = vim.fs.basename(vim.fn.getcwd())
+  vim.cmd('silent !zellij action rename-tab "' .. dirname .. '"')
+end
+
 vim.api.nvim_create_autocmd('ExitPre', {
   callback = function()
     local dirname = vim.fs.basename(vim.fn.getcwd())
@@ -8,11 +13,12 @@ vim.api.nvim_create_autocmd('ExitPre', {
   end
 })
 
+vim.api.nvim_create_autocmd('UIEnter', {
+  callback = sync_tab_name
+})
+
 vim.api.nvim_create_autocmd('DirChanged', {
-  callback = function()
-    local dirname = vim.fs.basename(vim.fn.getcwd())
-    vim.cmd('!zellij action rename-tab "' .. dirname .. '"')
-  end
+  callback = sync_tab_name
 })
 
 -- Rest nvim
@@ -229,10 +235,6 @@ local extra = function(desc)
   return { noremap = true, silent = true, desc = desc }
 end
 
--- Tasks
-keymap('n', '<leader>x', ':OverseerRun<CR>', extra('Run task'))
-keymap('n', '<leader>t', ':Dooing<CR>', extra('Toggle todos'))
-
 -- Terminal escape
 keymap('t', '<Esc>', '<C-\\><C-n>')
 
@@ -247,6 +249,18 @@ keymap("v", "ga", "<cmd>CodeCompanionChat Add<cr>", extra("Add context"))
 
 -- Rest operations
 keymap('n', '<leader>R', ':Rest run<CR>', extra('REST Run'))
+
+-- Telescope operations
+keymap('n', '<leader>b', ':Telescope buffers theme=dropdown previewer=false<CR>', extra("Show buffers"))
+keymap('n', '<leader>t', function()
+  vim.ui.select(vim.fn.systemlist('zellij action query-tab-names'), {
+    prompt = 'Select tab:',
+  }, function(name)
+    if name then
+      vim.cmd('silent !zellij action go-to-tab-name "' .. name .. '"')
+    end
+  end)
+end, extra("Show tabs"))
 
 -- File operations
 keymap('n', '<C-p>', ':Telescope find_files theme=dropdown previewer=false find_command=rg,--ignore,--files<CR>', quiet)
@@ -269,6 +283,7 @@ keymap('n', '<leader>gl', ':NeogitLogCurrent<CR>', extra('Git log'))
 
 -- Overseer toggle
 keymap('n', '<C-t>', ':OverseerToggle<CR>', quiet)
+keymap('n', '<leader>x', ':OverseerRun<CR>', extra('Run task'))
 
 -- Window navigation
 keymap('n', '<leader>wh', '<C-w>h', quiet)
@@ -310,7 +325,6 @@ wk.add({
 })
 
 -- Setup custom plugins
-require('dooing').setup()
 require('mdx').setup()
 
 -- Misc
