@@ -5,6 +5,7 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    zjstatus.url = "github:dj95/zjstatus";
   };
 
   outputs =
@@ -13,6 +14,7 @@
       nix-darwin,
       home-manager,
       nixpkgs,
+      zjstatus,
     }:
     let
       forAllSystems = nixpkgs.lib.genAttrs [
@@ -50,6 +52,9 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
+              extraSpecialArgs = {
+                zjstatus = zjstatus.packages.aarch64-darwin.default;
+              };
               users.dmeijboom = {
                 imports = [ ./home.nix ];
                 custom.cloud.enable = true;
@@ -64,14 +69,22 @@
           system:
           home-manager.lib.homeManagerConfiguration {
             pkgs = nixpkgs.legacyPackages.${system};
+            extraSpecialArgs = {
+              zjstatus = zjstatus.packages.${system}.default;
+            };
             modules = [ ./home.nix ];
           }
         )
         // {
           kpn = home-manager.lib.homeManagerConfiguration {
-            pkgs = nixpkgs.legacyPackages.x86_64-linux;
+            pkgs = import nixpkgs {
+              system = "x86_64-linux";
+              config.allowUnfree = true;
+            };
+            extraSpecialArgs = {
+              zjstatus = zjstatus.packages.x86_64-linux.default;
+            };
             modules = [
-              { nixpkgs.config.allowUnfree = true; }
               ./home.nix
               {
                 custom.username = "so";
