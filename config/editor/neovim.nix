@@ -131,7 +131,7 @@ let
     };
     extensions = {
       ui-select = {
-        _raw = "require('telescope.themes').get_cursor {}";
+        _raw = "require('telescope.themes').get_dropdown {}";
       };
       project = {
         base_dirs = [
