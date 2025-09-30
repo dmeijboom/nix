@@ -33,6 +33,18 @@
               format_space "#[bg=#2E3440]"
 
               mode_normal          "#[bg=#88C0D0] "
+              mode_locked          "#[bg=#D08770] "
+              mode_resize          "#[bg=#A3BE8C] "
+              mode_pane            "#[bg=#EBCB8B] "
+              mode_tab             "#[bg=#B48EAD] "
+              mode_scroll          "#[bg=#88C0D0] "
+              mode_enter_search    "#[bg=#5E81AC] "
+              mode_search          "#[bg=#5E81AC] "
+              mode_rename_tab      "#[bg=#B48EAD] "
+              mode_rename_pane     "#[bg=#EBCB8B] "
+              mode_session         "#[bg=#BF616A] "
+              mode_move            "#[bg=#A3BE8C] "
+              mode_prompt          "#[bg=#EBCB8B] "
               mode_tmux            "#[bg=#EBCB8B] "
               mode_default_to_mode "normal"
 
