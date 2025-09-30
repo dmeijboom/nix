@@ -21,14 +21,27 @@ vim.api.nvim_create_autocmd('DirChanged', {
   callback = sync_tab_name
 })
 
-vim.api.nvim_create_autocmd({'CursorMoved', 'CursorMovedI', 'WinEnter', 'BufEnter'}, {
-  callback = function()
-    local result = vim.api.nvim_eval_statusline(
-      '%h%m%r%=%-14.(%l,%c%V%) %P',
-      { highlights = true }
-    )
+local timer = nil
 
-    vim.fn.system("zellij pipe 'zjstatus::pipe::pipe_status::" .. vim.trim(result.str) .. "'")
+vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI', 'WinEnter', 'BufEnter' }, {
+  callback = function()
+    if timer then
+      timer:stop()
+      timer:close()
+    end
+
+    timer = vim.loop.new_timer()
+    timer:start(100, 0, vim.schedule_wrap(function()
+      local result = vim.api.nvim_eval_statusline(
+        '%l:%c%{reg_recording()!=""?" REC":""}',
+        { highlights = true }
+      )
+
+      vim.system(
+        { 'zellij', 'pipe', 'zjstatus::pipe::pipe_status::' .. vim.trim(result.str) },
+        { text = true }
+      )
+    end))
   end
 })
 
@@ -230,7 +243,7 @@ vim.opt.relativenumber = true
 vim.opt.completeopt = { 'menuone', 'noinsert', 'noselect' }
 vim.opt.shortmess:append('I')
 vim.opt.shiftwidth = 4
-vim.opt.cmdheight=0
+vim.opt.cmdheight = 0
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.expandtab = true
