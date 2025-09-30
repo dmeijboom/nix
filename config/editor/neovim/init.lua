@@ -219,6 +219,7 @@ vim.opt.relativenumber = true
 vim.opt.completeopt = { 'menuone', 'noinsert', 'noselect' }
 vim.opt.shortmess:append('I')
 vim.opt.shiftwidth = 4
+vim.opt.cmdheight=0
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.expandtab = true
