@@ -315,7 +315,7 @@ keymap("v", "ga", "<cmd>CodeCompanionChat Add<cr>", extra("Add context"))
 keymap('n', '<leader>R', ':Rest run<CR>', extra('REST Run'))
 
 -- Telescope operations
-keymap('n', '<leader>b', ':Telescope buffers theme=dropdown previewer=false<CR>', extra("Show buffers"))
+keymap('n', '<leader>b', ':Telescope buffers theme=dropdown previewer=false prompt_title=false<CR>', extra("Show buffers"))
 keymap('n', '<leader>t', function()
   vim.ui.select(vim.fn.systemlist('zellij action query-tab-names'), {
     prompt = 'Select tab:',
@@ -327,13 +327,15 @@ keymap('n', '<leader>t', function()
 end, extra("Show tabs"))
 
 -- File operations
-keymap('n', '<C-p>', ':Telescope find_files theme=dropdown previewer=false find_command=rg,--ignore,--files<CR>', quiet)
+keymap('n', '<C-p>', ':Telescope find_files theme=dropdown previewer=false prompt_title=false find_command=rg,--ignore,--files<CR>', quiet)
 keymap('n', '<C-f>', ':NvimTreeFindFileToggle<CR>', quiet)
 keymap('n', '<leader>p', function()
-  require('telescope').extensions.project.project(require('telescope.themes').get_dropdown({}))
+  require('telescope').extensions.project.project(require('telescope.themes').get_dropdown({
+  prompt_title = false,
+}))
 end, quiet)
-keymap('n', '<leader>ff', ':Telescope live_grep theme=ivy<CR>', extra('Find in files'))
-keymap('n', '<leader>fs', ':Telescope lsp_document_symbols theme=dropdown previewer=false<CR>', extra('Show symbols'))
+keymap('n', '<leader>ff', ':Telescope live_grep prompt_title=false preview_title=false theme=ivy<CR>', extra('Find in files'))
+keymap('n', '<leader>fs', ':Telescope lsp_document_symbols prompt_title=false theme=dropdown previewer=false<CR>', extra('Show symbols'))
 keymap('n', '<leader>fw', function()
   require('telescope.builtin').live_grep(require('telescope.themes').get_cursor({
     default_text = vim.fn.expand('<cword>')
@@ -341,7 +343,7 @@ keymap('n', '<leader>fw', function()
 end, extra('Find selected word'))
 
 -- Git operations
-keymap('n', '<leader>gb', ':Telescope git_branches<CR>', extra('Git branches'))
+keymap('n', '<leader>gb', ':Telescope git_branches prompt_title=false<CR>', extra('Git branches'))
 keymap('n', '<leader>gs', ':Neogit<CR>', extra('Git status'))
 keymap('n', '<leader>gl', ':NeogitLogCurrent<CR>', extra('Git log'))
 
@@ -419,3 +421,5 @@ vim.api.nvim_set_hl(0, 'Type', { fg = '#8FBCBB' })
 vim.api.nvim_set_hl(0, 'LspInlayHint', { fg = '#4c6d9b' })
 vim.api.nvim_set_hl(0, 'IndentLine', { fg = '#383E4C' })
 vim.api.nvim_set_hl(0, 'IndentLineCurrent', { fg = '#404859' })
+vim.api.nvim_set_hl(0, 'TelescopeBorder', { fg = '#434C5E' })
+vim.api.nvim_set_hl(0, 'TelescopePromptBorder', { fg = '#434C5E' })

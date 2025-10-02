@@ -141,7 +141,11 @@ let
   telescope-nvim = mkPlugin "telescope-nvim" {
     name = "telescope";
     defaults = {
-      border = false;
+      winblend = 0;
+      prompt_prefix = "";
+      selection_caret = "";
+      entry_prefix = "";
+      borderchars = [ "─" "│" "─" "│" "╭" "╮" "╯" "╰" ];
     };
     extensions = {
       ui-select = {
