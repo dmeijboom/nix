@@ -284,10 +284,7 @@ vim.opt.termguicolors = true
 vim.opt.relativenumber = true
 vim.opt.completeopt = { 'menuone', 'noinsert', 'noselect' }
 vim.opt.shortmess:append('I')
-vim.opt.shiftwidth = 4
 vim.opt.cmdheight = 0
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
 vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.clipboard = 'unnamedplus'
@@ -393,6 +390,9 @@ wk.add({
 
 -- Setup custom plugins
 require('mdx').setup()
+require('indentmini').setup {
+  char = '│',
+}
 require 'nvim-treesitter.configs'.setup {
   textobjects = {
     select = {
@@ -417,3 +417,5 @@ vim.api.nvim_set_hl(0, 'htmlTag', { fg = '#81A1C1' })
 vim.api.nvim_set_hl(0, 'htmlTagName', { fg = '#81A1C1' })
 vim.api.nvim_set_hl(0, 'Type', { fg = '#8FBCBB' })
 vim.api.nvim_set_hl(0, 'LspInlayHint', { fg = '#4c6d9b' })
+vim.api.nvim_set_hl(0, 'IndentLine', { fg = '#383E4C' })
+vim.api.nvim_set_hl(0, 'IndentLineCurrent', { fg = '#404859' })

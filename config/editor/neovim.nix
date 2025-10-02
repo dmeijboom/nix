@@ -13,6 +13,16 @@ let
     }
   );
 
+  indentmini-nvim = pkgs.vimUtils.buildVimPlugin {
+    name = "indentmini";
+    src = pkgs.fetchFromGitHub {
+      owner = "nvimdev";
+      repo = "indentmini.nvim";
+      rev = "0dc4bc2b3fc763420793e748b672292bc43ee722";
+      sha256 = "sha256-iMQn9eJuwThatTg9aTKhgHQaBc1NV4h/6gGt+fhZG9k=";
+    };
+  };
+
   mdx-nvim = pkgs.vimUtils.buildVimPlugin {
     name = "mdx";
     src = pkgs.fetchFromGitHub {
@@ -29,6 +39,10 @@ let
   nvim-surround = mkPlugin "nvim-surround" { name = "nvim-surround"; };
   auto-save-nvim = mkPlugin "auto-save-nvim" { name = "auto-save"; };
   nvim-web-devicons = mkPlugin "nvim-web-devicons" { name = "nvim-web-devicons"; };
+  guess-indent-nvim = mkPlugin "guess-indent-nvim" {
+    name = "guess-indent";
+    auto_cmd = true;
+  };
   codecompanion-nvim = mkPlugin "codecompanion-nvim" {
     name = "codecompanion";
     strategies = {
@@ -205,17 +219,6 @@ let
       };
     };
   };
-  indent-blankline-nvim-lua = mkPlugin "indent-blankline-nvim-lua" {
-    name = "ibl";
-    scope = {
-      show_start = false;
-      show_end = false;
-      highlight = "IblScope";
-    };
-    indent = {
-      char = "│";
-    };
-  };
 
   plugins = [
     "rest-nvim"
@@ -224,10 +227,10 @@ let
     "telescope-ui-select-nvim"
     "telescope-project-nvim"
     "nvim-treesitter-textobjects"
+    guess-indent-nvim
     codecompanion-nvim
     nvim-treesitter
     blink-cmp
-    indent-blankline-nvim-lua
     quicker-nvim
     overseer-nvim
     gitsigns-nvim
@@ -307,7 +310,7 @@ in
     plugins =
       with pkgs.vimPlugins;
       map (name: pkgs.vimPlugins.${name}) pluginNames
-      ++ [ mdx-nvim ]
+      ++ [ mdx-nvim indentmini-nvim ]
       ++ (with pkgs.vimPlugins.nvim-treesitter-parsers; [
         bash
         c
