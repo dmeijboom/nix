@@ -41,14 +41,14 @@ vim.api.nvim_create_autocmd('ExitPre', {
 })
 
 vim.api.nvim_create_autocmd('FocusGained', {
-  callback = function ()
+  callback = function()
     zellij_enabled = true
     zellij_sync()
   end
 })
 
 vim.api.nvim_create_autocmd('FocusLost', {
-  callback = function ()
+  callback = function()
     zellij_pipe('status', '')
     zellij_enabled = false
   end
@@ -393,6 +393,18 @@ wk.add({
 
 -- Setup custom plugins
 require('mdx').setup()
+require 'nvim-treesitter.configs'.setup {
+  textobjects = {
+    select = {
+      enable = true,
+      lookahead = true,
+      keymaps = {
+        ["ai"] = "@parameter.inner",
+        ["aa"] = "@parameter.outer",
+      },
+    }
+  }
+}
 
 -- Misc
 require('telescope').load_extension('ui-select')

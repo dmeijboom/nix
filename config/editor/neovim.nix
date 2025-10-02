@@ -223,6 +223,7 @@ let
     "vim-illuminate"
     "telescope-ui-select-nvim"
     "telescope-project-nvim"
+    "nvim-treesitter-textobjects"
     codecompanion-nvim
     nvim-treesitter
     blink-cmp
