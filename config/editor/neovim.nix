@@ -256,6 +256,7 @@ let
     "nil"
     "sqls"
     "deno"
+    "ruff"
     "gopls"
     "tombi"
     "vtsls"
@@ -329,6 +330,7 @@ in
         http
         javascript
         typescript
+        tsx
         yaml
         xml
         toml

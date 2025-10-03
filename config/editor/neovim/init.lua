@@ -117,6 +117,30 @@ vim.lsp.config('bashls', {
 vim.lsp.config('basedpyright', {
   capabilities = capabilities,
   cmd = { '@basedpyright@/bin/basedpyright-langserver', '--stdio' },
+  settings = {
+    basedpyright = {
+      analysis = {
+        ignore = { '*' },
+        typeCheckingMode = 'basic',
+        disableOrganizeImports = true,
+      }
+    }
+  }
+})
+
+vim.lsp.config('ruff', {
+  capabilities = capabilities,
+  cmd = { '@ruff@/bin/ruff', 'server' },
+  on_attach = function(client, bufnr)
+    client.server_capabilities.hoverProvider = false
+  end,
+  init_options = {
+    settings = {
+      lint = {
+        preview = true,
+      },
+    },
+  },
 })
 
 vim.lsp.config('dockerls', {
@@ -260,6 +284,7 @@ vim.lsp.enable('tailwindcss')
 vim.lsp.enable('eslint')
 vim.lsp.enable('dockerls')
 vim.lsp.enable('bashls')
+vim.lsp.enable('ruff')
 vim.lsp.enable('basedpyright')
 vim.lsp.enable('marksman')
 vim.lsp.enable('lua_ls')
@@ -317,7 +342,8 @@ keymap("v", "ga", "<cmd>CodeCompanionChat Add<cr>", extra("Add context"))
 keymap('n', '<leader>R', ':Rest run<CR>', extra('REST Run'))
 
 -- Telescope operations
-keymap('n', '<leader>b', ':Telescope buffers theme=dropdown previewer=false prompt_title=false<CR>', extra("Show buffers"))
+keymap('n', '<leader>b', ':Telescope buffers theme=dropdown previewer=false prompt_title=false<CR>',
+  extra("Show buffers"))
 keymap('n', '<leader>t', function()
   vim.ui.select(vim.fn.systemlist('zellij action query-tab-names'), {
     prompt = 'Select tab:',
@@ -329,15 +355,18 @@ keymap('n', '<leader>t', function()
 end, extra("Show tabs"))
 
 -- File operations
-keymap('n', '<C-p>', ':Telescope find_files theme=dropdown previewer=false prompt_title=false find_command=rg,--ignore,--files<CR>', quiet)
+keymap('n', '<C-p>',
+  ':Telescope find_files theme=dropdown previewer=false prompt_title=false find_command=rg,--ignore,--files<CR>', quiet)
 keymap('n', '<C-f>', ':NvimTreeFindFileToggle<CR>', quiet)
 keymap('n', '<leader>p', function()
   require('telescope').extensions.project.project(require('telescope.themes').get_dropdown({
-  prompt_title = false,
-}))
+    prompt_title = false,
+  }))
 end, quiet)
-keymap('n', '<leader>ff', ':Telescope live_grep prompt_title=false preview_title=false theme=ivy<CR>', extra('Find in files'))
-keymap('n', '<leader>fs', ':Telescope lsp_document_symbols prompt_title=false theme=dropdown previewer=false<CR>', extra('Show symbols'))
+keymap('n', '<leader>ff', ':Telescope live_grep prompt_title=false preview_title=false theme=ivy<CR>',
+  extra('Find in files'))
+keymap('n', '<leader>fs', ':Telescope lsp_document_symbols prompt_title=false theme=dropdown previewer=false<CR>',
+  extra('Show symbols'))
 keymap('n', '<leader>fw', function()
   require('telescope.builtin').live_grep(require('telescope.themes').get_cursor({
     default_text = vim.fn.expand('<cword>')
