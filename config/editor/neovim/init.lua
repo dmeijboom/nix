@@ -288,6 +288,8 @@ vim.opt.cmdheight = 0
 vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.clipboard = 'unnamedplus'
+vim.opt.iskeyword:append('-')
+vim.opt.iskeyword:append('_')
 
 -- Leader key
 vim.g.mapleader = ','
