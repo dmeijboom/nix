@@ -61,5 +61,6 @@
     ./config/editor/zed.nix
     ./config/editor/neovim.nix
     ./config/shell/zellij.nix
+    ./config/shell/starship.nix
   ];
 }

@@ -21,44 +21,44 @@
       };
       layouts = {
         default = ''
-        layout {
-          pane split_direction="vertical" {
-            pane
-          }
+          layout {
+            pane split_direction="vertical" {
+              pane
+            }
 
-          pane size=1 borderless=true {
-            plugin location="file:${zjstatus}/bin/zjstatus.wasm" {
-              format_left  "{mode} {tabs}"
-              format_right "#[fg=#4C566A,bg=#2E3440] {pipe_status}"
-              format_space "#[bg=#2E3440]"
+            pane size=1 borderless=true {
+              plugin location="file:${zjstatus}/bin/zjstatus.wasm" {
+                format_left  "{mode} {tabs}"
+                format_right "#[fg=#4C566A,bg=#2E3440] {pipe_status}"
+                format_space "#[bg=#2E3440]"
 
-              pipe_status_format     "{output}"
-              pipe_status_rendermode "raw"
+                pipe_status_format     "{output}"
+                pipe_status_rendermode "raw"
 
-              mode_normal          "#[bg=#88C0D0] "
-              mode_locked          "#[bg=#D08770] "
-              mode_resize          "#[bg=#A3BE8C] "
-              mode_pane            "#[bg=#EBCB8B] "
-              mode_tab             "#[bg=#B48EAD] "
-              mode_scroll          "#[bg=#88C0D0] "
-              mode_enter_search    "#[bg=#5E81AC] "
-              mode_search          "#[bg=#5E81AC] "
-              mode_rename_tab      "#[bg=#B48EAD] "
-              mode_rename_pane     "#[bg=#EBCB8B] "
-              mode_session         "#[bg=#BF616A] "
-              mode_move            "#[bg=#A3BE8C] "
-              mode_prompt          "#[bg=#EBCB8B] "
-              mode_tmux            "#[bg=#EBCB8B] "
-              mode_default_to_mode "normal"
+                mode_normal          "#[bg=#88C0D0] "
+                mode_locked          "#[bg=#D08770] "
+                mode_resize          "#[bg=#A3BE8C] "
+                mode_pane            "#[bg=#EBCB8B] "
+                mode_tab             "#[bg=#B48EAD] "
+                mode_scroll          "#[bg=#88C0D0] "
+                mode_enter_search    "#[bg=#5E81AC] "
+                mode_search          "#[bg=#5E81AC] "
+                mode_rename_tab      "#[bg=#B48EAD] "
+                mode_rename_pane     "#[bg=#EBCB8B] "
+                mode_session         "#[bg=#BF616A] "
+                mode_move            "#[bg=#A3BE8C] "
+                mode_prompt          "#[bg=#EBCB8B] "
+                mode_tmux            "#[bg=#EBCB8B] "
+                mode_default_to_mode "normal"
 
-              tab_normal               "#[fg=#4C566A,bg=#2E3440] {index} {name} {fullscreen_indicator}{sync_indicator}{floating_indicator}"
-              tab_active               "#[fg=#D8DEE9,bg=#3c4353,bold] {index} {name} {fullscreen_indicator}{sync_indicator}{floating_indicator}"
-              tab_fullscreen_indicator "□ "
-              tab_sync_indicator       "  "
-              tab_floating_indicator   "󰉈 "
+                tab_normal               "#[fg=#4C566A,bg=#2E3440] {index} {name} {fullscreen_indicator}{sync_indicator}{floating_indicator}"
+                tab_active               "#[fg=#D8DEE9,bg=#3c4353,bold] {index} {name} {fullscreen_indicator}{sync_indicator}{floating_indicator}"
+                tab_fullscreen_indicator "□ "
+                tab_sync_indicator       "  "
+                tab_floating_indicator   "󰉈 "
+              }
             }
           }
-        }
         '';
       };
       extraConfig = ''

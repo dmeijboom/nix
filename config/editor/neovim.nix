@@ -53,12 +53,18 @@ let
         };
         keymaps = {
           accept_change = {
-            modes = { n = "ga"; };
+            modes = {
+              n = "ga";
+            };
             description = "Accept the suggested change";
           };
           reject_change = {
-            modes = { n = "gr"; };
-            opts = { nowait = true; };
+            modes = {
+              n = "gr";
+            };
+            opts = {
+              nowait = true;
+            };
             description = "Reject the suggested change";
           };
         };
@@ -145,7 +151,16 @@ let
       prompt_prefix = "";
       selection_caret = "";
       entry_prefix = "";
-      borderchars = [ "─" "│" "─" "│" "╭" "╮" "╯" "╰" ];
+      borderchars = [
+        "─"
+        "│"
+        "─"
+        "│"
+        "╭"
+        "╮"
+        "╯"
+        "╰"
+      ];
     };
     extensions = {
       ui-select = {
@@ -305,16 +320,21 @@ in
     + "\n"
     + (builtins.readFile (
       pkgs.replaceVars ./neovim/init.lua (
-        builtins.listToAttrs (map (name: {
-          name = name;
-          value = "${builtins.getAttr name pkgs}";
-        }) languageServers)
+        builtins.listToAttrs (
+          map (name: {
+            name = name;
+            value = "${builtins.getAttr name pkgs}";
+          }) languageServers
+        )
       )
     ));
     plugins =
       with pkgs.vimPlugins;
       map (name: pkgs.vimPlugins.${name}) pluginNames
-      ++ [ mdx-nvim indentmini-nvim ]
+      ++ [
+        mdx-nvim
+        indentmini-nvim
+      ]
       ++ (with pkgs.vimPlugins.nvim-treesitter-parsers; [
         bash
         c

@@ -2,14 +2,6 @@
   lib,
   ...
 }:
-let
-  starshipDisabledMods = [
-    "aws"
-    "gcloud"
-    "docker_context"
-    "container"
-  ];
-in
 {
   programs = {
     zsh = {
@@ -37,6 +29,14 @@ in
         export FZF_CTRL_T_COMMAND=
         export KONSOLE_VERSION="230804"
       '';
+      initContent = ''
+        update_status() {
+          ZELLIJ_STATUS=$(starship prompt --profile zellij --terminal-width 80 | sed "s/%{//g; s/%}//g")
+          zellij pipe zjstatus::pipe::pipe_status::"$ZELLIJ_STATUS" 2>/dev/null
+        }
+
+        precmd_functions+=(update_status)
+      '';
     };
 
     autojump = {
@@ -50,23 +50,6 @@ in
       enableZshIntegration = true;
       nix-direnv.enable = true;
     };
-
-    starship.enable = true;
-    starship.enableZshIntegration = true;
-    starship.settings = {
-      add_newline = false;
-      character = {
-        success_symbol = "[➜](bold green)";
-        error_symbol = "[➜](bold red)";
-        vicmd_symbol = "[V](bold green)";
-      };
-      kubernetes = {
-        disabled = false;
-      };
-    }
-    // lib.genAttrs starshipDisabledMods (name: {
-      disabled = true;
-    });
 
     fzf.enable = true;
     fzf.enableZshIntegration = true;
@@ -108,12 +91,12 @@ in
               bgColor = "#2E3440";
               logoColor = "#5E81AC";
             };
-            
+
             info = {
               fgColor = "#88C0D0";
               sectionColor = "#D8DEE9";
             };
-            
+
             dialog = {
               fgColor = "#D8DEE9";
               bgColor = "#2E3440";
@@ -124,25 +107,25 @@ in
               labelFgColor = "#88C0D0";
               fieldFgColor = "#BF616A";
             };
-            
+
             frame = {
               border = {
                 fgColor = "#5E81AC";
                 focusColor = "#5E81AC";
               };
-              
+
               menu = {
                 fgColor = "#D8DEE9";
                 keyColor = "#A3BE8C";
                 numKeyColor = "#A3BE8C";
               };
-              
+
               crumbs = {
                 fgColor = "#D8DEE9";
                 bgColor = "#2E3440";
                 activeColor = "#3B4252";
               };
-              
+
               status = {
                 newColor = "#88C0D0";
                 modifyColor = "#EBCB8B";
@@ -153,7 +136,7 @@ in
                 killColor = "#A3BE8C";
                 completedColor = "#5E81AC";
               };
-              
+
               title = {
                 fgColor = "#D8DEE9";
                 bgColor = "#2E3440";
@@ -162,30 +145,36 @@ in
                 filterColor = "#EBCB8B";
               };
             };
-            
+
             views = {
               charts = {
                 bgColor = "#2E3440";
                 dialBgColor = "#2E3440";
                 chartBgColor = "#2E3440";
-                defaultDialColors = [ "#88C0D0" "#BF616A" ];
-                defaultChartColors = [ "#88C0D0" "#BF616A" ];
+                defaultDialColors = [
+                  "#88C0D0"
+                  "#BF616A"
+                ];
+                defaultChartColors = [
+                  "#88C0D0"
+                  "#BF616A"
+                ];
               };
-              
+
               table = {
                 fgColor = "#D8DEE9";
                 bgColor = "#2E3440";
                 cursorFgColor = "#2E3440";
                 cursorBgColor = "#2E3440";
                 markColor = "#D8DEE9";
-                
+
                 header = {
                   fgColor = "#D8DEE9";
                   bgColor = "#2E3440";
                   sorterColor = "#88C0D0";
                 };
               };
-              
+
               xray = {
                 fgColor = "#D8DEE9";
                 bgColor = "#2E3440";
@@ -193,17 +182,17 @@ in
                 cursorTextColor = "#D8DEE9";
                 graphicColor = "#88C0D0";
               };
-              
+
               yaml = {
                 keyColor = "#88C0D0";
                 colonColor = "#88C0D0";
                 valueColor = "#D8DEE9";
               };
-              
+
               logs = {
                 fgColor = "#D8DEE9";
                 bgColor = "#2E3440";
-                
+
                 indicator = {
                   fgColor = "#D8DEE9";
                   bgColor = "#5E81AC";

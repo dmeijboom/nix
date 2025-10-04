@@ -1,7 +1,7 @@
 vim.loader.enable()
 
 -- Event handling
-local git_branch = nil
+local prompt = nil
 local zellij_enabled = true
 
 local zellij_pipe = function(name, result)
@@ -24,8 +24,8 @@ local zellij_sync = function()
   local divider = '\27[38;2;59;66;82m›\27[0m'
   local ghost_text = '\27[38;2;97;110;136m' .. result.str .. '\27[0m'
 
-  if git_branch then
-    zellij_pipe('status', '\27[38;2;164;121;157m ' .. git_branch .. '\27[0m ' .. divider .. ' ' .. ghost_text)
+  if prompt then
+    zellij_pipe('status', prompt .. divider .. ' ' .. ghost_text)
   else
     zellij_pipe('status', ghost_text)
   end
@@ -54,20 +54,29 @@ vim.api.nvim_create_autocmd('FocusLost', {
   end
 })
 
-vim.api.nvim_create_autocmd({ 'UIEnter', 'DirChanged' }, {
-  callback = function()
-    local cwd = vim.fn.getcwd()
-    local dirname = vim.fs.basename(cwd)
+local update_prompt = function()
+  local cwd = vim.fn.getcwd()
+  local dirname = vim.fs.basename(cwd)
 
-    vim.cmd('silent !zellij action rename-tab "' .. dirname .. '"')
-    vim.system({ 'git', '-C', cwd, 'rev-parse', '--abbrev-ref', 'HEAD' }, { text = true }, function(result)
+  vim.cmd('silent !zellij action rename-tab "' .. dirname .. '"')
+  vim.system(
+    { 'zsh', '-c', 'starship prompt --profile zellij --path "' ..
+    cwd .. '" --terminal-width 80 | sed "s/%{//g; s/%}//g"' }, { text = true }, function(result)
       if result.code == 0 then
-        git_branch = vim.trim(result.stdout)
+        prompt = result.stdout
       else
-        git_branch = nil
+        prompt = nil
       end
     end)
-  end
+end
+
+vim.api.nvim_create_autocmd('User', {
+  pattern = { 'NeogitStatusRefreshed', 'NeogitCommitComplete', 'NeogitPushComplete', 'NeogitPullComplete', 'NeogitBranchCheckout' },
+  callback = update_prompt,
+})
+
+vim.api.nvim_create_autocmd({ 'UIEnter', 'DirChanged' }, {
+  callback = update_prompt,
 })
 
 local timer = nil
