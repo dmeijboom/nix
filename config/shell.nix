@@ -35,6 +35,7 @@ in
       };
       envExtra = ''
         export FZF_CTRL_T_COMMAND=
+        export KONSOLE_VERSION="230804"
       '';
     };
 

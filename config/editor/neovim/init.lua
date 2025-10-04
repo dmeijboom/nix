@@ -445,6 +445,11 @@ require 'nvim-treesitter.configs'.setup {
 
 -- Misc
 require('telescope').load_extension('ui-select')
+vim.diagnostic.config({
+  virtual_text = false,
+  signs = false,
+  underline = true,
+})
 
 vim.cmd.colorscheme 'nord'
 
@@ -458,3 +463,23 @@ vim.api.nvim_set_hl(0, 'IndentLine', { fg = '#383E4C' })
 vim.api.nvim_set_hl(0, 'IndentLineCurrent', { fg = '#404859' })
 vim.api.nvim_set_hl(0, 'TelescopeBorder', { fg = '#434C5E' })
 vim.api.nvim_set_hl(0, 'TelescopePromptBorder', { fg = '#434C5E' })
+
+vim.api.nvim_set_hl(0, 'DiagnosticUnderlineError', {
+  undercurl = true,
+  sp = '#BF616A'
+})
+
+vim.api.nvim_set_hl(0, 'DiagnosticUnderlineWarn', {
+  undercurl = true,
+  sp = '#EBCB8B'
+})
+
+vim.api.nvim_set_hl(0, 'DiagnosticUnderlineInfo', {
+  undercurl = true,
+  sp = '#88C0D0'
+})
+
+vim.api.nvim_set_hl(0, 'DiagnosticUnderlineHint', {
+  undercurl = true,
+  sp = '#A3BE8C'
+})

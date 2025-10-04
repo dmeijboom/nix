@@ -202,16 +202,15 @@ let
       };
     };
   };
-  trouble-nvim = mkPlugin "trouble-nvim" {
-    name = "trouble";
-    modes = {
-      diagnostics = {
-        auto_open = false;
-        auto_close = true;
-        preview = {
-          scratch = false;
-        };
-      };
+  tiny-inline-diagnostic-nvim = mkPlugin "tiny-inline-diagnostic-nvim" {
+    name = "tiny-inline-diagnostic";
+    preset = "simple";
+    signs = {
+      diag = "";
+    };
+    options = {
+      # add_messages = false;
+      # multilines = true;
     };
   };
   which-key-nvim = mkPlugin "which-key-nvim" { name = "which-key"; };
@@ -239,7 +238,7 @@ let
     overseer-nvim
     gitsigns-nvim
     which-key-nvim
-    trouble-nvim
+    tiny-inline-diagnostic-nvim
     nvim-web-devicons
     nvim-surround
     mini-icons
