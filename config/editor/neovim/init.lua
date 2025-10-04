@@ -21,7 +21,7 @@ local zellij_sync = function()
     { highlights = true }
   )
 
-  local divider = '\27[38;2;59;66;82m›\27[0m'
+  local divider = '\27[38;2;129;161;193m›\27[0m'
   local ghost_text = '\27[38;2;97;110;136m' .. result.str .. '\27[0m'
 
   if prompt then
