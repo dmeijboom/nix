@@ -25,10 +25,25 @@ in
       profiles = {
         zellij = "$git_branch$git_status$kubernetes";
       };
+      git_status = {
+        style = "bold fg:#b48ead";
+        conflicted = "";
+        ahead = "⇡";
+        behind = "⇣";
+        diverged = "󰹺";
+        up_to_date = "";
+        untracked = "";
+        stashed = "";
+        modified = "";
+        staged = "󰐕";
+        renamed = "󰑕";
+        deleted = "";
+      };
       kubernetes = {
         disabled = false;
         symbol = "󱃾 ";
-        format = "[$symbol$context]($style)";
+        format = "[$symbol$context]($style) ";
+        style = "bold fg:#5e81ac";
       };
       aws = {
         symbol = " ";
@@ -83,6 +98,7 @@ in
       };
       git_branch = {
         symbol = " ";
+        style = "bold fg:#8fbcbb";
         format = "[$symbol$branch(:$remote_branch)]($style) ";
       };
       git_commit = {
