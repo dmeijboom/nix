@@ -142,6 +142,13 @@ let
     name = "nvim-tree";
     renderer = {
       root_folder_label = ":t";
+      icons = {
+        glyphs = {
+          git = {
+            untracked = "";
+          };
+        };
+      };
     };
   };
   telescope-nvim = mkPlugin "telescope-nvim" {
