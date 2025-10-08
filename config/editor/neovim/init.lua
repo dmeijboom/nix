@@ -417,7 +417,8 @@ vim.api.nvim_command(
   'autocmd BufRead,BufNewFile */templates/*.yaml,*/templates/*.tpl,*.gotmpl,helmfile*.yaml set ft=helm')
 
 -- Diagnostics
-keymap('n', '<leader>d', ':Trouble diagnostics toggle<CR>', extra('Toggle diagnostics'))
+keymap('n', '<leader>en', '<cmd>lua vim.diagnostic.goto_next()<CR>', extra('Next error'))
+keymap('n', '<leader>eN', '<cmd>lua vim.diagnostic.goto_prev()<CR>', extra('Previous error'))
 
 vim.diagnostic.config({
   signs = false,
@@ -432,6 +433,7 @@ wk.add({
   { "<leader>f", group = "file" },
   { "<leader>w", group = "window" },
   { "<leader>g", group = "git" },
+  { "<leader>e", group = "errors" },
 })
 
 -- Setup custom plugins
