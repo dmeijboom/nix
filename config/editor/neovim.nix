@@ -275,6 +275,7 @@ let
 
   languageServers = [
     "nil"
+    "buf"
     "sqls"
     "deno"
     "ruff"
@@ -291,6 +292,7 @@ let
     "bash-language-server"
     "emmet-language-server"
     "yaml-language-server"
+    "prisma-language-server"
     "dockerfile-language-server"
     "tailwindcss-language-server"
     "vscode-langservers-extracted"
@@ -362,6 +364,7 @@ in
         toml
         json
         nix
+        prisma
       ]);
   };
 }

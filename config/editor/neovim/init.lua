@@ -105,9 +105,19 @@ vim.g.rest_nvim = {
 -- Language servers
 local capabilities = require('blink.cmp').get_lsp_capabilities()
 
+vim.lsp.config('buf_ls', {
+  capabilities = capabilities,
+  cmd = { '@buf@/bin/buf', 'beta', 'lsp', '--timeout=0', '--log-format=text' },
+})
+
 vim.lsp.config('mdx_analyzer', {
   capabilities = capabilities,
   cmd = { '@mdx-language-server@/bin/mdx-language-server', '--stdio' },
+})
+
+vim.lsp.config('prismals', {
+  capabilities = capabilities,
+  cmd = { '@prisma-language-server@/bin/prisma-language-server', '--stdio' },
 })
 
 vim.lsp.config('emmet_language_server', {
@@ -288,6 +298,7 @@ vim.lsp.config('helm_ls', {
 })
 
 vim.lsp.enable('sqls')
+vim.lsp.enable('prismals')
 vim.lsp.enable('tombi')
 vim.lsp.enable('vue_ls')
 vim.lsp.enable('vtsls')
@@ -308,6 +319,7 @@ vim.lsp.enable('helm_ls')
 vim.lsp.enable('rust_analyzer')
 vim.lsp.enable('emmet_language_server')
 vim.lsp.enable('mdx_analyzer')
+vim.lsp.enable('buf_ls')
 vim.lsp.inlay_hint.enable()
 
 -- Settings
