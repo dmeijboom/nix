@@ -1,5 +1,5 @@
 {
-  lib,
+  pkgs,
   ...
 }:
 let
@@ -26,7 +26,24 @@ let
         + " }"
     else
       throw "unknown type: ${builtins.typeOf value}";
+
+  mkPlugin = (
+    config: {
+      pluginName = config.name;
+      config = serialize (removeAttrs config [ "name" "src" ]);
+      setup = (
+        name:
+        if builtins.hasAttr "src" config then
+          pkgs.vimUtils.buildVimPlugin {
+            name = config.name;
+            src = config.src;
+          }
+        else
+          pkgs.vimPlugins.${name}
+      );
+    }
+  );
 in
 {
-  serialize = serialize;
+  mkPlugin = mkPlugin;
 }

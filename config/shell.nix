@@ -64,7 +64,10 @@
           decorations = "None";
           startup_mode = "Maximized";
           option_as_alt = "OnlyLeft";
-          padding = { x = 8; y = 8; };
+          padding = {
+            x = 8;
+            y = 8;
+          };
         };
         font = {
           size = 14;

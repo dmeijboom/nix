@@ -449,10 +449,6 @@ wk.add({
 })
 
 -- Setup custom plugins
-require('mdx').setup()
-require('indentmini').setup {
-  char = '│',
-}
 require 'nvim-treesitter.configs'.setup {
   textobjects = {
     select = {
