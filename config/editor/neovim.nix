@@ -16,7 +16,6 @@ let
   ];
 
   plugins = {
-    mini-icons = vim.mkPlugin { name = "mini.icons"; };
     quicker-nvim = vim.mkPlugin { name = "quicker"; };
     gitsigns-nvim = vim.mkPlugin { name = "gitsigns"; };
     nvim-surround = vim.mkPlugin { name = "nvim-surround"; };
