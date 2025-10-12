@@ -402,6 +402,7 @@ end, extra('Find selected word'))
 keymap('n', '<leader>gb', ':Telescope git_branches prompt_title=false<CR>', extra('Git branches'))
 keymap('n', '<leader>gs', ':Neogit<CR>', extra('Git status'))
 keymap('n', '<leader>gl', ':NeogitLogCurrent<CR>', extra('Git log'))
+keymap('n', '<leader>gd', ':Gitsigns preview_hunk<CR>', extra('Git diff (line)'))
 
 -- Overseer toggle
 keymap('n', '<C-t>', ':OverseerToggle<CR>', quiet)
@@ -482,6 +483,12 @@ vim.api.nvim_set_hl(0, 'IndentLine', { fg = '#383E4C' })
 vim.api.nvim_set_hl(0, 'IndentLineCurrent', { fg = '#404859' })
 vim.api.nvim_set_hl(0, 'TelescopeBorder', { fg = '#434C5E' })
 vim.api.nvim_set_hl(0, 'TelescopePromptBorder', { fg = '#434C5E' })
+vim.api.nvim_set_hl(0, 'GitSignsAddPreview', { bg = '#3b4252', fg = '#a3be8c' })
+vim.api.nvim_set_hl(0, 'GitSignsDeletePreview', { bg = '#3b4252', fg = '#bf616a' })
+vim.api.nvim_set_hl(0, 'GitSignsAddInline', { bg = '#a3be8c', fg = '#2e3440' })
+vim.api.nvim_set_hl(0, 'GitSignsDeleteInline', { bg = '#bf616a', fg = '#2e3440' })
+vim.api.nvim_set_hl(0, 'GitSignsChangeInline', { bg = '#ebcb8b', fg = '#2e3440' })
+vim.api.nvim_set_hl(0, 'GitSignsDeleteVirtLn', { bg = '#3b4252', fg = '#bf616a' })
 
 vim.api.nvim_set_hl(0, 'DiagnosticUnderlineError', {
   undercurl = true,

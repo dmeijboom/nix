@@ -17,11 +17,17 @@ let
 
   plugins = {
     quicker-nvim = vim.mkPlugin { name = "quicker"; };
-    gitsigns-nvim = vim.mkPlugin { name = "gitsigns"; };
     nvim-surround = vim.mkPlugin { name = "nvim-surround"; };
     auto-save-nvim = vim.mkPlugin { name = "auto-save"; };
     which-key-nvim = vim.mkPlugin { name = "which-key"; };
     nvim-web-devicons = vim.mkPlugin { name = "nvim-web-devicons"; };
+
+    gitsigns-nvim = vim.mkPlugin {
+      name = "gitsigns"; 
+      preview_config = {
+        style = "minimal";
+      };
+    };
 
     indentmini-nvim = vim.mkPlugin {
       name = "indentmini";
