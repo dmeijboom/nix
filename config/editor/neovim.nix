@@ -12,6 +12,7 @@ let
     "vim-illuminate"
     "telescope-ui-select-nvim"
     "telescope-project-nvim"
+    "telescope-github-nvim"
     "nvim-treesitter-textobjects"
   ];
 

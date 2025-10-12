@@ -29,6 +29,9 @@
       # Generic
       zsh
 
+      # Git
+      gh
+
       # Build tools
       devenv
       bazelisk

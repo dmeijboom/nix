@@ -404,6 +404,9 @@ keymap('n', '<leader>gs', ':Neogit<CR>', extra('Git status'))
 keymap('n', '<leader>gl', ':NeogitLogCurrent<CR>', extra('Git log'))
 keymap('n', '<leader>gd', ':Gitsigns preview_hunk<CR>', extra('Git diff (line)'))
 
+-- Github operations
+keymap('n', '<leader>hp', ':Telescope gh pull_request<CR>', extra('Github PRs'))
+
 -- Overseer toggle
 keymap('n', '<C-t>', ':OverseerToggle<CR>', quiet)
 keymap('n', '<leader>x', ':OverseerRun<CR>', extra('Run task'))
@@ -446,6 +449,7 @@ wk.add({
   { "<leader>f", group = "file" },
   { "<leader>w", group = "window" },
   { "<leader>g", group = "git" },
+  { "<leader>h", group = "github" },
   { "<leader>e", group = "errors" },
 })
 
@@ -464,7 +468,11 @@ require 'nvim-treesitter.configs'.setup {
 }
 
 -- Misc
-require('telescope').load_extension('ui-select')
+local telescope = require('telescope')
+
+telescope.load_extension('ui-select')
+telescope.load_extension('gh')
+
 vim.diagnostic.config({
   virtual_text = false,
   signs = false,
