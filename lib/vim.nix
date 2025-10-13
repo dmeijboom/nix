@@ -30,7 +30,12 @@ let
   mkPlugin = (
     config: {
       pluginName = config.name;
-      config = serialize (removeAttrs config [ "name" "src" ]);
+      config = serialize (
+        removeAttrs config [
+          "name"
+          "src"
+        ]
+      );
       setup = (
         name:
         if builtins.hasAttr "src" config then

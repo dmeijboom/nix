@@ -1,5 +1,6 @@
 {
   lib,
+  config,
   ...
 }:
 {
@@ -81,6 +82,37 @@
           blinking = "Never";
         };
       };
+    };
+
+    irssi = {
+      enable = true;
+      networks = {
+        atom = {
+          nick = config.custom.username;
+          autoCommands = [
+            "/ignore -levels CRAP *"
+          ];
+          server = {
+            address = "localhost";
+            port = 6697;
+            autoConnect = true;
+            ssl = {
+              enable = true;
+              verify = false;
+              certificateFile = "${config.home.homeDirectory}/.certs/irc/client-with-key.pem";
+            };
+          };
+          channels = {
+            general.autoJoin = true;
+          };
+          saslExternal = true;
+        };
+      };
+      extraConfig = ''
+        settings = {
+          "fe-common/core" = { theme = "nord"; };
+        }
+      '';
     };
 
     k9s = {
@@ -218,4 +250,119 @@
       };
     };
   };
+
+  home.file.".irssi/nord.theme".text = ''
+    default_color = "-1";
+    info_eol = "false";
+    replaces = { "[]=" = "%_$*%_"; };
+
+    abstracts = {
+      line_start = "";
+      timestamp = "%K$*%n";
+      hilight = "%_$*%_";
+      error = "%R$*%n";
+      channel = "%_$*%_";
+      nick = "%_$*%_";
+      nickhost = "❬$*❭";
+      server = "%_$*%_";
+      comment = "($*)";
+      reason = "{comment $*}";
+      mode = "{comment $*}";
+      channick_hilight = "%c$*%K";
+      chanhost_hilight = "{nickhost $*}";
+      channick = "$*";
+      chanhost = "{nickhost $*}";
+      channelhilight = "%c$*%n";
+      ban = "%R$*%n";
+      msgnick = "%b%_%b$0$1-%_%w %|";
+      ownmsgnick = "{msgnick $0 $1-}%b";
+      ownnick = "%b$*%n";
+      pubmsgnick = "{msgnick $0 $1-}";
+      pubnick = "%b%_$*%_%n";
+      pubmsgmenick = "{msgnick $0 $1-}";
+      menick = "%m$*%n";
+      pubmsghinick = "{msgnick $1 $0$2-%n}";
+      msgchannel = "%K:%c$*%n";
+      privmsg = "[%m$0%K❬%n$1-%K❭%n] ";
+      ownprivmsg = "[%b$0%K❬%B$1-%K❭%n] ";
+      ownprivmsgnick = "{msgnick  $*}%b";
+      ownprivnick = "%b$*%n";
+      privmsgnick = "{msgnick  %m$*%n}%m";
+      action_core = "%_*%n $*";
+      action = "{action_core %_$*%n} ";
+      ownaction = "{action_core %b$*%n} ";
+      ownaction_target = "{action_core $0}%K:%b$1%n ";
+      pvtaction = "%M (*) $*%n ";
+      pvtaction_query = "{action $*}";
+      pubaction = "{action $*}";
+      whois = "%# $[8]0 : $1-";
+      ownnotice = "[%b$0%K(%b$1-%K)]%n ";
+      notice = "%K-%M$*%K-%n ";
+      pubnotice_channel = "%K:%m$*";
+      pvtnotice_host = "%K(%m$*%K)";
+      servernotice = "%g!$*%n ";
+      ownctcp = "[%b$0%K(%b$1-%K)] ";
+      ctcp = "%g$*%n";
+      wallop = "%c$*%n: ";
+      wallop_nick = "%n$*";
+      wallop_action = "%c * $*%n ";
+      netsplit = "%r$*%n";
+      netjoin = "%g$*%n";
+      names_prefix = "";
+      names_nick = "[%_$0%_$1-] ";
+      names_nick_op = "{names_nick $*}";
+      names_nick_halfop = "{names_nick $*}";
+      names_nick_voice = "{names_nick $*}";
+      names_users = "[%g$*%n]";
+      names_channel = "%c$*%n";
+      dcc = "%g$*%n";
+      dccfile = "%_$*%_";
+      dccownmsg = "[%b$0%K❬$1-%K❭%n] ";
+      dccownnick = "%b$*%n";
+      dccownquerynick = "%c$*%n";
+      dccownaction = "{action $*}";
+      dccownaction_target = "{action_core $0}%K:%c$1%n ";
+      dccmsg = "[%g$1-%K❬$0%K❭%n] ";
+      dccquerynick = "%g$*%n";
+      dccaction = "%c (*dcc*) $*%n %|";
+      
+      # Minimal statusbar colors - dark and subtle
+      sb_background = "%K";
+      sb_default_bg = "%K";
+      sb_topic_bg = "%K";
+      sb_window_bg = "%K";
+      sb_prompt_bg = "%K";
+      sb_info_bg = "%K";
+      
+      sbstart = "";
+      sbend = " ";
+      topicsbstart = "{sbstart $*}";
+      topicsbend = "{sbend $*}";
+      prompt = "%c$*%n> ";
+      
+      # Statusbar with subtle nerd font icons
+      sb = " $* %K│%n";
+      sbmode = "%K(%n$*%K)%n";
+      sbaway = " %K󰒲%n";
+      sbservertag = ":%K$0%n";
+      sbnickmode = "$0";
+      sb_act_sep = "%K$*";
+      sb_act_text = "%w$*";
+      sb_act_msg = "%Y$*";
+      sb_act_hilight = "%R$*";
+      sb_act_hilight_color = "$0$1-%n";
+      sb_usercount = "{sb %_$0%_ %K󰀄%n %K$1-%n}";
+      sb_uc_ircops = "%K⚡%n$*";
+      sb_uc_ops = "%K@%n$*";
+      sb_uc_halfops = "%K%%%n$*";
+      sb_uc_voices = "%K+%n$*";
+      sb_uc_normal = "$*";
+    };
+
+    formats = {
+      "fe-common/core" = {
+        daychange = "           %K─────%w─%W─%n Day changed to %%D %W─%w─%K─────%n";
+      };
+    };
+  '';
 }

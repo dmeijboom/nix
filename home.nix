@@ -12,10 +12,13 @@
       description = "Username";
     };
     vscode.enable = lib.mkEnableOption "Enable vscode";
-    cloud.enable = lib.mkEnableOption "Kubernetes tools";
+    cloud.enable = lib.mkEnableOption "Enable Kubernetes tools";
+    irc.enable = lib.mkEnableOption "Enable IRC server";
   };
 
   config = {
+    home.emptyActivationPath = true;
+
     home.username = config.custom.username;
     home.homeDirectory =
       if pkgs.stdenv.isLinux then
@@ -60,6 +63,7 @@
   imports = [
     ./config/shell.nix
     ./config/git.nix
+    ./config/irc.nix
     ./config/cloud.nix
     ./config/editor/zed.nix
     ./config/editor/neovim.nix

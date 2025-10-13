@@ -25,7 +25,7 @@ let
     nvim-web-devicons = vim.mkPlugin { name = "nvim-web-devicons"; };
 
     gitsigns-nvim = vim.mkPlugin {
-      name = "gitsigns"; 
+      name = "gitsigns";
       preview_config = {
         style = "minimal";
       };
