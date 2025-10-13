@@ -411,6 +411,23 @@ keymap('n', '<leader>hp', ':Telescope gh pull_request<CR>', extra('Github PRs'))
 keymap('n', '<C-t>', ':OverseerToggle<CR>', quiet)
 keymap('n', '<leader>x', ':OverseerRun<CR>', extra('Run task'))
 
+-- Cursor operations
+local mc = require('multicursor-nvim')
+
+keymap('n', '<leader>ma', function()
+  mc.addCursor()
+  mc.disableCursors()
+end, extra('Add cursor'))
+keymap('n', '<leader>me', function()
+  mc.enableCursors()
+end, extra('Enable cursors'))
+
+mc.addKeymapLayer(function(layerSet)
+  layerSet('n', '<esc>', function()
+    mc.clearCursors()
+  end)
+end)
+
 -- Window navigation
 keymap('n', '<leader>wh', '<C-w>h', quiet)
 keymap('n', '<leader>wj', '<C-w>j', quiet)

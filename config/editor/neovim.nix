@@ -17,6 +17,7 @@ let
   ];
 
   plugins = {
+    multicursor-nvim = vim.mkPlugin { name = "multicursor-nvim"; };
     quicker-nvim = vim.mkPlugin { name = "quicker"; };
     nvim-surround = vim.mkPlugin { name = "nvim-surround"; };
     auto-save-nvim = vim.mkPlugin { name = "auto-save"; };
