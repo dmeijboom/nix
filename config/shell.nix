@@ -93,7 +93,7 @@
             "/ignore -levels CRAP *"
           ];
           server = {
-            address = "localhost";
+            address = "atom.localhost";
             port = 6697;
             autoConnect = true;
             ssl = {
