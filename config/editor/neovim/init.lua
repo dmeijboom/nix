@@ -137,18 +137,9 @@ vim.lsp.config('bashls', {
   cmd = { '@bash-language-server@/bin/bash-language-server', 'start' },
 })
 
-vim.lsp.config('basedpyright', {
+vim.lsp.config('pyrefly', {
   capabilities = capabilities,
-  cmd = { '@basedpyright@/bin/basedpyright-langserver', '--stdio' },
-  settings = {
-    basedpyright = {
-      analysis = {
-        ignore = { '*' },
-        typeCheckingMode = 'basic',
-        disableOrganizeImports = true,
-      }
-    }
-  }
+  cmd = { '@pyrefly@/bin/pyrefly', 'lsp' },
 })
 
 vim.lsp.config('ruff', {
@@ -313,7 +304,7 @@ vim.lsp.enable('eslint')
 vim.lsp.enable('dockerls')
 vim.lsp.enable('bashls')
 vim.lsp.enable('ruff')
-vim.lsp.enable('basedpyright')
+vim.lsp.enable('pyrefly')
 vim.lsp.enable('marksman')
 vim.lsp.enable('lua_ls')
 vim.lsp.enable('jsonls')
