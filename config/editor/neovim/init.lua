@@ -55,6 +55,10 @@ vim.api.nvim_create_autocmd('FocusLost', {
 })
 
 local update_prompt = function()
+  if not zellij_enabled then
+    return
+  end
+
   local cwd = vim.fn.getcwd()
   local dirname = vim.fs.basename(cwd)
 
