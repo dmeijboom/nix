@@ -142,6 +142,11 @@ vim.lsp.config('pyrefly', {
   cmd = { '@pyrefly@/bin/pyrefly', 'lsp' },
 })
 
+vim.lsp.config('starpls', {
+  capabilities = capabilities,
+  cmd = { '@starpls@/bin/starpls' },
+})
+
 vim.lsp.config('ruff', {
   capabilities = capabilities,
   cmd = { '@ruff@/bin/ruff', 'server' },
@@ -305,6 +310,7 @@ vim.lsp.enable('dockerls')
 vim.lsp.enable('bashls')
 vim.lsp.enable('ruff')
 vim.lsp.enable('pyrefly')
+vim.lsp.enable('starpls')
 vim.lsp.enable('marksman')
 vim.lsp.enable('lua_ls')
 vim.lsp.enable('jsonls')

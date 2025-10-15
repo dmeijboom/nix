@@ -277,6 +277,7 @@ let
     "rustup"
     "helm-ls"
     "pyrefly"
+    "starpls"
     "marksman"
     "mdx-language-server"
     "lua-language-server"
