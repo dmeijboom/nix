@@ -252,116 +252,105 @@
   };
 
   home.file.".irssi/nord.theme".text = ''
-    default_color = "-1";
-    info_eol = "false";
-    replaces = { "[]=" = "%_$*%_"; };
-
+    replaces = { };
     abstracts = {
       line_start = "";
-      timestamp = "%K$*%n";
-      hilight = "%_$*%_";
-      error = "%R$*%n";
-      channel = "%_$*%_";
-      nick = "%_$*%_";
-      nickhost = "❬$*❭";
-      server = "%_$*%_";
-      comment = "($*)";
-      reason = "{comment $*}";
-      mode = "{comment $*}";
-      channick_hilight = "%c$*%K";
-      chanhost_hilight = "{nickhost $*}";
-      channick = "$*";
-      chanhost = "{nickhost $*}";
-      channelhilight = "%c$*%n";
-      ban = "%R$*%n";
-      msgnick = "%b%_%b$0$1-%_%w %|";
-      ownmsgnick = "{msgnick $0 $1-}%b";
-      ownnick = "%b$*%n";
+      timestamp = "%K$0%n";
+      hilight = "%b$0%n";
+      error = "%R$0-%n";
+      channel = "%b$0-%n";
+      nick = "%_$0-%_";
+      nickhost = "%n%9[%_$0-%9]%_";
+      server = "$0-";
+      comment = "[$0-]";
+      reason = "($0-)";
+      mode = "%r$0-%n";
+
+      channick_hilight = "%B$0-%n";
+      chanhost_hilight = "{nickhost $0-}";
+      channick = "%b$0-";
+      chanhost = "{nickhost $0-}";
+      channelhilight = "%_$0-%_";
+      ban = "$0-";
+
+      msgnick = "$_%b$0%n$1-%9:%n %|";
+
+      ownmsgnick = "%b$0%n$1%n%R:%n %|";
+      ownnick = "$0-";
       pubmsgnick = "{msgnick $0 $1-}";
-      pubnick = "%b%_$*%_%n";
-      pubmsgmenick = "{msgnick $0 $1-}";
-      menick = "%m$*%n";
-      pubmsghinick = "{msgnick $1 $0$2-%n}";
-      msgchannel = "%K:%c$*%n";
-      privmsg = "[%m$0%K❬%n$1-%K❭%n] ";
-      ownprivmsg = "[%b$0%K❬%B$1-%K❭%n] ";
-      ownprivmsgnick = "{msgnick  $*}%b";
-      ownprivnick = "%b$*%n";
-      privmsgnick = "{msgnick  %m$*%n}%m";
-      action_core = "%_*%n $*";
-      action = "{action_core %_$*%n} ";
-      ownaction = "{action_core %b$*%n} ";
-      ownaction_target = "{action_core $0}%K:%b$1%n ";
-      pvtaction = "%M (*) $*%n ";
-      pvtaction_query = "{action $*}";
-      pubaction = "{action $*}";
-      whois = "%# $[8]0 : $1-";
-      ownnotice = "[%b$0%K(%b$1-%K)]%n ";
-      notice = "%K-%M$*%K-%n ";
-      pubnotice_channel = "%K:%m$*";
-      pvtnotice_host = "%K(%m$*%K)";
-      servernotice = "%g!$*%n ";
-      ownctcp = "[%b$0%K(%b$1-%K)] ";
-      ctcp = "%g$*%n";
-      wallop = "%c$*%n: ";
-      wallop_nick = "%n$*";
-      wallop_action = "%c * $*%n ";
-      netsplit = "%r$*%n";
-      netjoin = "%g$*%n";
-      names_prefix = "";
-      names_nick = "[%_$0%_$1-] ";
-      names_nick_op = "{names_nick $*}";
-      names_nick_halfop = "{names_nick $*}";
-      names_nick_voice = "{names_nick $*}";
-      names_users = "[%g$*%n]";
-      names_channel = "%c$*%n";
-      dcc = "%g$*%n";
-      dccfile = "%_$*%_";
-      dccownmsg = "[%b$0%K❬$1-%K❭%n] ";
-      dccownnick = "%b$*%n";
-      dccownquerynick = "%c$*%n";
-      dccownaction = "{action $*}";
-      dccownaction_target = "{action_core $0}%K:%c$1%n ";
-      dccmsg = "[%g$1-%K❬$0%K❭%n] ";
-      dccquerynick = "%g$*%n";
-      dccaction = "%c (*dcc*) $*%n %|";
-      
-      # Minimal statusbar colors - dark and subtle
-      sb_background = "%K";
-      sb_default_bg = "%K";
-      sb_topic_bg = "%K";
-      sb_window_bg = "%K";
-      sb_prompt_bg = "%K";
-      sb_info_bg = "%K";
-      
+      pubnick = "$0-";
+      pubmsgmenick = "%b$0%r$1-%b%9:%n %|";
+      menick = "$0-";
+      pubmsghinick = "%b$1$2-: %|";
+      msgchannel = "%w|%c$0-";
+      privmsg = "<-%c$0%n[%C$1%n] ";
+      ownprivmsg = "->[%c$1-%n] $0";
+      ownprivmsgnick = "{ownmsgnick = %C$0-%n}";
+      ownprivnick = "$0-";
+      privmsgnick = "{msgnick = %C$0-%n}";
+
+      action_core = "%b*%n $0-";
+      action = "{action_core $0-} ";
+      ownaction = "{action $0-}";
+      ownaction_target = "{action_core $0}{msgchannel $1} ";
+      pvtaction = " %g(*) $0- ";
+      pvtaction_query = "{action $0-}";
+      pubaction = "{action $0-}";
+
+      ownnotice = "-> %gnotice%n[%G$1%n] ";
+      notice = "<- %Gnotice%n[%g$0%n] ";
+      pubnotice_channel = "{msgchannel $0}";
+      pvtnotice_host = "";
+      servernotice = "{notice $0-}";
+      ownctcp = "-> %b$0%n[%B$1-%n] ";
+      ctcp = "%B$0-";
+      wallop = "%y$0-: %n";
+      wallop_nick = "%y$0-%n";
+      wallop_action = "%y * $0-%n ";
+      netsplit = "%M%%%r $0-%n";
+      netjoin = "%M%%%b $0-%n";
+      names_nick = "  %b$0%n$1";
+      names_users = "%M#%b $0-";
+      names_channel = "{channel $0-}";
+      dcc = "$0-";
+      dccfile = "%_$0-%_";
+      dccownmsg = "*%c=$1-%n*> %g";
+      dccownaction = "{action $0-}";
+      dccownaction_target = "{ownaction_target $0-}";
+      dccmsg = "*%c=$1-%n* ";
+      dccquerynick = "$0-";
+      dccaction = " (*dcc*) $0- %|";
+      sb_background = "%n";
+      sb_window_bg = "%n";
+      sb_prompt_bg = "%n";
+      sb_info_bg = "%5";
+      sb_topic_bg = "%K%W";
       sbstart = "";
       sbend = " ";
-      topicsbstart = "{sbstart $*}";
-      topicsbend = "{sbend $*}";
-      prompt = "%c$*%n> ";
-      
-      # Statusbar with subtle nerd font icons
-      sb = " $* %K│%n";
-      sbmode = "%K(%n$*%K)%n";
-      sbaway = " %K󰒲%n";
-      sbservertag = ":%K$0%n";
-      sbnickmode = "$0";
-      sb_act_sep = "%K$*";
-      sb_act_text = "%w$*";
-      sb_act_msg = "%Y$*";
-      sb_act_hilight = "%R$*";
-      sb_act_hilight_color = "$0$1-%n";
-      sb_usercount = "{sb %_$0%_ %K󰀄%n %K$1-%n}";
-      sb_uc_ircops = "%K⚡%n$*";
-      sb_uc_ops = "%K@%n$*";
-      sb_uc_halfops = "%K%%%n$*";
-      sb_uc_voices = "%K+%n$*";
-      sb_uc_normal = "$*";
-    };
+      prompt = "{channel $*}%n%9>%_ ";
+      sb = " %n$*%w |";
+      sbmode = " (%b+%n$*)";
+      sbaway = " %nis away";
+      sbservertag = ":$0 (change with ^X)";
 
+      sb_act_sep = "%k$*";
+      sb_act_text = "%k$*";
+      sb_act_msg = "%R$*";
+      sb_act_hilight = "%M$*";
+      sb_act_hilight_color = "$0$1-%n";
+
+    };
     formats = {
       "fe-common/core" = {
-        daychange = "           %K─────%w─%W─%n Day changed to %%D %W─%w─%K─────%n";
+        join = "%M+%n {channick_hilight $0} {chanhost_hilight $1} joined {channel $2}";
+        part = "%M-%n {channick $0} {chanhost $1} left {channel $2} {reason $3}";
+        kick = "%M!%n {channick $0} was kicked from {channel $1} by {nick $2} {reason $3}";
+        quit = "%M=%n {channick $0} {chanhost $1} quit {reason $2}";
+      };
+      "fe-common/irc" = {
+        chanmode_change = "%M~%n {nick $2} set {mode $1} on {channel $0}";
+        whois = "{nick $0} {nickhost $1@$2}%: ircname : $3";
+        server_chanmode_change = "{netsplit ServerMode}/{channelhilight $0}: {mode $1} by {nick $2}";
       };
     };
   '';
