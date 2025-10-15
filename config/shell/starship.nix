@@ -21,7 +21,7 @@ in
         error_symbol = "[➜](bold red)";
         vicmd_symbol = "[V](bold green)";
       };
-      format = "$directory$kubernetes$battery$status$jobs$cmd_duration\n$character";
+      format = "$directory$battery$status$jobs$cmd_duration\n$character";
       profiles = {
         zellij = "$git_branch$git_status$kubernetes";
       };
