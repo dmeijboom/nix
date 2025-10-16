@@ -73,7 +73,12 @@
             extraSpecialArgs = {
               zjstatus = zjstatus.packages.${system}.default;
             };
-            modules = [ ./home.nix ];
+            modules = [
+              ./home.nix
+              {
+                custom.irc.enable = true;
+              }
+            ];
           }
         )
         // {
