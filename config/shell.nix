@@ -93,7 +93,7 @@
             "/ignore -levels CRAP *"
           ];
           server = {
-            address = "atom.localhost";
+            address = "cloud.dillen.dev";
             port = 6697;
             autoConnect = true;
             ssl = {

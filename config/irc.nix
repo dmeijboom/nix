@@ -333,7 +333,7 @@ in
         $VERBOSE_ECHO "Generating server certificate..."
         $DRY_RUN_CMD ${pkgs.mkcert}/bin/mkcert \
           -cert-file "$CERT_DIR/server.pem" -key-file "$CERT_DIR/server.key" \
-          localhost atom.localhost 127.0.0.1 ::1
+          localhost cloud.dillen.dev 127.0.0.1 ::1
       fi
 
       # Generate client certificate
