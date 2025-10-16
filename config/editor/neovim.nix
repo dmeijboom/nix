@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  config,
   ...
 }:
 let
@@ -292,67 +293,69 @@ let
   ];
 in
 {
-  home.packages =
-    with pkgs;
-    [
-      # Neovim utils
-      fd
-      bat
-      ripgrep
+  config = lib.mkIf (config.custom.mode == "client") {
+    home.packages =
+      with pkgs;
+      [
+        # Neovim utils
+        fd
+        bat
+        ripgrep
 
-      # Tree-sitter requirements
-      go
-      nodejs
-      tree-sitter
-    ]
-    ++ map (name: builtins.getAttr name pkgs) languageServers;
-
-  programs.neovim = {
-    enable = true;
-    extraLuaConfig = ''
-      local parser_install_dir = vim.fs.joinpath(vim.fn.stdpath("data"), "treesitter")
-      vim.opt.runtimepath:append(parser_install_dir)
-    ''
-    + (lib.concatStringsSep "\n" (
-      lib.attrsets.mapAttrsToList (
-        _: plugin: "require('${plugin.pluginName}').setup ${plugin.config}"
-      ) plugins
-    ))
-    + "\n"
-    + (builtins.readFile (
-      pkgs.replaceVars ./neovim/init.lua (
-        builtins.listToAttrs (
-          map (name: {
-            name = name;
-            value = "${builtins.getAttr name pkgs}";
-          }) languageServers
-        )
-      )
-    ));
-    plugins =
-      map (name: pkgs.vimPlugins.${name}) simplePlugins
-      ++ lib.attrsets.mapAttrsToList (name: plugin: plugin.setup name) plugins
-      ++ (with pkgs.vimPlugins.nvim-treesitter-parsers; [
-        bash
-        c
+        # Tree-sitter requirements
         go
-        html
-        helm
-        markdown
-        markdown_inline
-        ruby
-        python
-        rust
-        http
-        javascript
-        typescript
-        tsx
-        yaml
-        xml
-        toml
-        json
-        nix
-        prisma
-      ]);
+        nodejs
+        tree-sitter
+      ]
+      ++ map (name: builtins.getAttr name pkgs) languageServers;
+
+    programs.neovim = {
+      enable = true;
+      extraLuaConfig = ''
+        local parser_install_dir = vim.fs.joinpath(vim.fn.stdpath("data"), "treesitter")
+        vim.opt.runtimepath:append(parser_install_dir)
+      ''
+      + (lib.concatStringsSep "\n" (
+        lib.attrsets.mapAttrsToList (
+          _: plugin: "require('${plugin.pluginName}').setup ${plugin.config}"
+        ) plugins
+      ))
+      + "\n"
+      + (builtins.readFile (
+        pkgs.replaceVars ./neovim/init.lua (
+          builtins.listToAttrs (
+            map (name: {
+              name = name;
+              value = "${builtins.getAttr name pkgs}";
+            }) languageServers
+          )
+        )
+      ));
+      plugins =
+        map (name: pkgs.vimPlugins.${name}) simplePlugins
+        ++ lib.attrsets.mapAttrsToList (name: plugin: plugin.setup name) plugins
+        ++ (with pkgs.vimPlugins.nvim-treesitter-parsers; [
+          bash
+          c
+          go
+          html
+          helm
+          markdown
+          markdown_inline
+          ruby
+          python
+          rust
+          http
+          javascript
+          typescript
+          tsx
+          yaml
+          xml
+          toml
+          json
+          nix
+          prisma
+        ]);
+    };
   };
 }

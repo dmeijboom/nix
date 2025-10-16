@@ -64,39 +64,40 @@
           }
         ];
       };
-      homeConfigurations =
-        forAllSystems (
-          system:
-          home-manager.lib.homeManagerConfiguration {
-            pkgs = nixpkgs.legacyPackages.${system};
-            extraSpecialArgs = {
-              zjstatus = zjstatus.packages.${system}.default;
-            };
-            modules = [
-              ./home.nix
-              {
-                custom.mode = "server";
-              }
-            ];
-          }
-        )
-        // {
-          kpn = home-manager.lib.homeManagerConfiguration {
-            pkgs = import nixpkgs {
-              system = "x86_64-linux";
-              config.allowUnfree = true;
-            };
-            extraSpecialArgs = {
-              zjstatus = zjstatus.packages.x86_64-linux.default;
-            };
-            modules = [
-              ./home.nix
-              {
-                custom.username = "so";
-                custom.cloud.enable = true;
-              }
-            ];
+      homeConfigurations = {
+        server = home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs {
+            system = "x86_64-linux";
+            config.allowUnfree = true;
           };
+          extraSpecialArgs = {
+            zjstatus = zjstatus.packages.x86_64-linux.default;
+          };
+          modules = [
+            ./home.nix
+            {
+              custom.mode = "server";
+            }
+          ];
         };
+      }
+      // {
+        kpn = home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs {
+            system = "x86_64-linux";
+            config.allowUnfree = true;
+          };
+          extraSpecialArgs = {
+            zjstatus = zjstatus.packages.x86_64-linux.default;
+          };
+          modules = [
+            ./home.nix
+            {
+              custom.username = "so";
+              custom.cloud.enable = true;
+            }
+          ];
+        };
+      };
     };
 }
