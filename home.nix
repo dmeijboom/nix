@@ -11,9 +11,17 @@
       default = "dmeijboom";
       description = "Username";
     };
-    vscode.enable = lib.mkEnableOption "Enable vscode";
+
+    mode = lib.mkOption {
+      type = lib.types.enum [
+        "client"
+        "server"
+      ];
+      default = "client";
+      description = "Installation mode";
+    };
+
     cloud.enable = lib.mkEnableOption "Enable Kubernetes tools";
-    irc.enable = lib.mkEnableOption "Enable IRC server";
   };
 
   config = {
@@ -28,29 +36,32 @@
 
     programs.home-manager.enable = pkgs.stdenv.isLinux;
 
-    home.packages = with pkgs; [
-      # Generic
-      zsh
+    home.packages =
+      with pkgs;
+      [
+        # Generic
+        zsh
+      ]
+      ++ lib.optionals (config.custom.mode == "client") [
+        # Git
+        gh
 
-      # Git
-      gh
+        # Build tools
+        devenv
+        bazelisk
+        buildifier
+        buildozer
 
-      # Build tools
-      devenv
-      bazelisk
-      buildifier
-      buildozer
+        # Misc tools
+        duckdb
+        ast-grep
 
-      # Misc tools
-      duckdb
-      ast-grep
+        # Hacks
+        rustup
 
-      # Hacks
-      rustup
-
-      # Fonts
-      nerd-fonts.jetbrains-mono
-    ];
+        # Fonts
+        nerd-fonts.jetbrains-mono
+      ];
 
     home.shellAliases = {
       sg = "ast-grep";
@@ -62,12 +73,11 @@
 
   imports = [
     ./config/shell.nix
-    ./config/git.nix
+    ./config/shell/starship.nix
     ./config/irc.nix
+    ./config/git.nix
     ./config/cloud.nix
-    ./config/editor/zed.nix
     ./config/editor/neovim.nix
     ./config/shell/zellij.nix
-    ./config/shell/starship.nix
   ];
 }

@@ -58,7 +58,6 @@
               users.dmeijboom = {
                 imports = [ ./home.nix ];
                 custom.cloud.enable = true;
-                custom.irc.enable = true;
               };
             };
             users.users.dmeijboom.home = "/Users/dmeijboom";
@@ -76,7 +75,7 @@
             modules = [
               ./home.nix
               {
-                custom.irc.enable = true;
+                custom.mode = "server";
               }
             ];
           }

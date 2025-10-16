@@ -29,7 +29,7 @@
       envExtra = ''
         export FZF_CTRL_T_COMMAND=
       '';
-      initContent = ''
+      initContent = lib.mkIf (config.custom.mode == "client") ''
         update_status() {
           ZELLIJ_STATUS=$(starship prompt --profile zellij --terminal-width 80 | sed "s/%{//g; s/%}//g")
           zellij pipe zjstatus::pipe::pipe_status::"$ZELLIJ_STATUS" 2>/dev/null

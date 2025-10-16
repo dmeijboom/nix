@@ -27,7 +27,7 @@ let
     };
 
     server = {
-      name = "atom.localhost";
+      name = "cloud.dillen.dev";
 
       listeners = {
         ":6697" = {
@@ -308,9 +308,10 @@ let
 in
 {
   config = {
-    home.packages = lib.optionals config.custom.irc.enable [
-      ergo
-    ];
+    home.packages =
+      lib.optionals (config.custom.mode == "server") [
+        ergo
+      ];
 
     home.activation.installMkcertCA = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
       export PATH="$PATH:/usr/bin"
@@ -350,13 +351,14 @@ in
       fi
     '';
 
-    home.activation.createErgoDataDir = lib.mkIf config.custom.irc.enable (
-      lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        $DRY_RUN_CMD mkdir -p ${dataDir}
-      ''
-    );
+    home.activation.createErgoDataDir =
+      lib.mkIf (config.custom.mode == "server") (
+        lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+          $DRY_RUN_CMD mkdir -p ${dataDir}
+        ''
+      );
 
-    systemd.user.services.ergo = lib.mkIf (config.custom.irc.enable && pkgs.stdenv.isLinux) {
+    systemd.user.services.ergo = lib.mkIf (config.custom.mode == "server" && pkgs.stdenv.isLinux) {
       Unit = {
         Description = "Ergo reverse proxy service";
         After = [ "network.target" ];
@@ -373,7 +375,7 @@ in
       };
     };
 
-    launchd.agents.ergo = lib.mkIf (config.custom.irc.enable && pkgs.stdenv.isDarwin) {
+    launchd.agents.ergo = lib.mkIf (config.custom.mode == "server" && pkgs.stdenv.isDarwin) {
       enable = true;
       config = {
         ProgramArguments = lib.splitString " " cmd;
