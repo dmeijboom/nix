@@ -6,7 +6,6 @@
 }:
 let
   dataDir = "${config.xdg.dataHome}/ergo";
-  certDir = "${config.home.homeDirectory}/.certs/irc";
 
   ergo = pkgs.buildGoModule rec {
     pname = "ergo";
@@ -32,8 +31,8 @@ let
       listeners = {
         ":6697" = {
           tls = {
-            cert = "${config.home.homeDirectory}/.certs/irc/server.pem";
-            key = "${config.home.homeDirectory}/.certs/irc/server.key";
+            cert = "/etc/letsencrypt/live/cloud.dillen.dev/fullchain.pem";
+            key = "/etc/letsencrypt/live/cloud.dillen.dev/privkey.pem";
           };
           proxy = false;
           min-tls-version = "1.2";
@@ -311,44 +310,6 @@ in
     home.packages = lib.optionals (config.custom.mode == "server") [
       ergo
     ];
-
-    home.activation.installMkcertCA = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-      export PATH="$PATH:/usr/bin"
-      export CAROOT="${certDir}"
-
-      if ! ${pkgs.mkcert}/bin/mkcert -check-ca &>/dev/null; then
-        $VERBOSE_ECHO "Installing mkcert CA..."
-        $DRY_RUN_CMD ${pkgs.mkcert}/bin/mkcert -install
-      fi
-    '';
-
-    home.activation.generateCerts = lib.hm.dag.entryAfter [ "installMkcertCA" ] ''
-      export CAROOT="${certDir}"
-      export CERT_DIR="${certDir}"
-
-      $DRY_RUN_CMD mkdir -p "$CERT_DIR"
-
-      # Generate server certificate
-      if [ ! -f "$CERT_DIR/server.pem" ]; then
-        $VERBOSE_ECHO "Generating server certificate..."
-        $DRY_RUN_CMD ${pkgs.mkcert}/bin/mkcert \
-          -cert-file "$CERT_DIR/server.pem" -key-file "$CERT_DIR/server.key" \
-          localhost cloud.dillen.dev 127.0.0.1 ::1
-      fi
-
-      # Generate client certificate
-      if [ ! -f "$CERT_DIR/client.pem" ]; then
-        $VERBOSE_ECHO "Generating client certificate..."
-        $DRY_RUN_CMD ${pkgs.mkcert}/bin/mkcert -client \
-          -cert-file "$CERT_DIR/client.pem" -key-file "$CERT_DIR/client.key" \
-          ${config.custom.username}
-
-        $DRY_RUN_CMD ${pkgs.openssl}/bin/openssl x509 -in "$CERT_DIR/client.pem" -outform DER | \
-          ${pkgs.coreutils}/bin/sha256sum | cut -d' ' -f1 > "$CERT_DIR/client-fingerprint.txt"
-
-        $DRY_RUN_CMD cat "$CERT_DIR/client.pem" "$CERT_DIR/client.key" > "$CERT_DIR/client-with-key.pem"
-      fi
-    '';
 
     home.activation.createErgoDataDir = lib.mkIf (config.custom.mode == "server") (
       lib.hm.dag.entryAfter [ "writeBoundary" ] ''

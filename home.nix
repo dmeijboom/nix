@@ -74,10 +74,11 @@
   imports = [
     ./config/shell.nix
     ./config/shell/starship.nix
-    ./config/irc.nix
     ./config/git.nix
     ./config/cloud.nix
     ./config/editor/neovim.nix
     ./config/shell/zellij.nix
+    ./config/irc/ergo.nix
+    ./config/irc/client.nix
   ];
 }
