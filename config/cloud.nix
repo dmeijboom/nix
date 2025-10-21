@@ -17,7 +17,7 @@
       # Cloud Tooling
       sops
       skaffold
-      kubelogin
+      #kubelogin @TODO: broken..
       (google-cloud-sdk.withExtraComponents (
         with google-cloud-sdk.components;
         [

@@ -7,9 +7,13 @@
 {
   config = lib.mkIf (config.custom.mode == "client") {
     programs = {
+      delta = {
+        enable = true;
+        enableGitIntegration = true;
+      };
+
       git = {
         enable = true;
-        delta.enable = true;
         lfs.enable = true;
         signing = {
           format = "ssh";
@@ -22,9 +26,11 @@
         // lib.optionalAttrs pkgs.stdenv.isLinux {
           key = "/home/${config.custom.username}/.ssh/signing_key.pub";
         };
-        userName = "Dillen Meijboom";
-        userEmail = "dillen@brainhive.nl";
-        extraConfig = {
+        settings = {
+          user = {
+            name = "Dillen Meijboom";
+            email = "dillen@brainhive.nl";
+          };
           push = {
             autoSetupRemote = true;
           };
