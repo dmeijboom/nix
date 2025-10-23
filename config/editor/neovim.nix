@@ -280,6 +280,7 @@ let
     "pyrefly"
     "starpls"
     "marksman"
+    "phpactor"
     "mdx-language-server"
     "lua-language-server"
     "vue-language-server"

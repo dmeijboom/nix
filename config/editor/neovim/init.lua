@@ -132,6 +132,11 @@ vim.lsp.config('emmet_language_server', {
   },
 })
 
+vim.lsp.config('phpactor', {
+  capabilities = capabilities,
+  cmd = { '@phpactor@/bin/phpactor', 'language-server' },
+})
+
 vim.lsp.config('bashls', {
   capabilities = capabilities,
   cmd = { '@bash-language-server@/bin/bash-language-server', 'start' },
@@ -308,6 +313,7 @@ vim.lsp.enable('tailwindcss')
 vim.lsp.enable('eslint')
 vim.lsp.enable('dockerls')
 vim.lsp.enable('bashls')
+vim.lsp.enable('phpactor')
 vim.lsp.enable('ruff')
 vim.lsp.enable('pyrefly')
 vim.lsp.enable('starpls')
