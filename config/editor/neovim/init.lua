@@ -470,11 +470,11 @@ vim.diagnostic.config({
 -- Which key
 local wk = require('which-key')
 wk.add({
-  { "<leader>f", group = "file" },
-  { "<leader>w", group = "window" },
-  { "<leader>g", group = "git" },
-  { "<leader>h", group = "github" },
-  { "<leader>e", group = "errors" },
+  { '<leader>f', group = 'file' },
+  { '<leader>w', group = 'window' },
+  { '<leader>g', group = 'git' },
+  { '<leader>h', group = 'github' },
+  { '<leader>e', group = 'errors' },
 })
 
 -- Setup custom plugins
@@ -484,8 +484,10 @@ require 'nvim-treesitter.configs'.setup {
       enable = true,
       lookahead = true,
       keymaps = {
-        ["ai"] = "@parameter.inner",
-        ["aa"] = "@parameter.outer",
+        ['ai'] = '@parameter.inner',
+        ['aa'] = '@parameter.outer',
+        ['al'] = '@assignment.lhs',
+        ['ar'] = '@assignment.rhs',
       },
     }
   }
