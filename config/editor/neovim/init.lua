@@ -1,86 +1,87 @@
 vim.loader.enable()
 
 -- Event handling
-local prompt = nil
-local zellij_enabled = true
-
-local zellij_pipe = function(name, result)
-  if not zellij_enabled then
-    return
-  end
-
+local active = false
+local zellij_rerun = function(command)
   vim.system(
-    { 'zellij', 'pipe', 'zjstatus::pipe::pipe_' .. name .. '::' .. vim.trim(result) },
+    { 'zellij', 'pipe', 'zjstatus::rerun::command_' .. command },
     { text = true }
   )
 end
 
-local zellij_sync = function()
-  local result = vim.api.nvim_eval_statusline(
+local zellij_update_status = function()
+  if not active then
+    return
+  end
+
+  local status = vim.api.nvim_eval_statusline(
     '%t %l:%c%{reg_recording()!=""?" [REC]":""}%r',
     { highlights = true }
   )
 
-  local divider = '\27[38;2;129;161;193m›\27[0m'
-  local ghost_text = '\27[38;2;97;110;136m' .. result.str .. '\27[0m'
+  local content = '\27[38;2;97;110;136m' .. status.str .. '\27[0m'
+  local session_name = vim.env.ZELLIJ_SESSION_NAME
 
-  if prompt then
-    zellij_pipe('status', prompt .. divider .. ' ' .. ghost_text)
-  else
-    zellij_pipe('status', ghost_text)
+  if session_name == nil then
+    return
   end
+
+  vim.system(
+    { 'zsh', '-c', 'starship prompt --profile zellij --path "' ..
+    vim.fn.getcwd() .. '" --terminal-width 80 | sed "s/%{//g; s/%}//g"' }, { text = true }, function(result)
+      if result.code == 0 then
+        content = result.stdout .. ' ' .. content
+      end
+
+      local file = io.open('/tmp/.zjstatus_' .. session_name, 'w+')
+      if file then
+        file:write(vim.trim(content))
+        file:close()
+
+        zellij_rerun('termstate')
+      end
+    end)
 end
+
 
 vim.api.nvim_create_autocmd('ExitPre', {
   callback = function()
     local dirname = vim.fs.basename(vim.fn.getcwd())
     vim.cmd('mks! /tmp/.session_' .. dirname)
+  end
+})
 
-    zellij_pipe('status', '')
+vim.api.nvim_create_autocmd('User', {
+  pattern = { 'NeogitStatusRefreshed', 'NeogitCommitComplete', 'NeogitPushComplete', 'NeogitPullComplete', 'NeogitBranchCheckout' },
+  callback = zellij_update_status,
+})
+
+vim.api.nvim_create_autocmd('DirChanged', {
+  callback = function()
+    local dirname = vim.fs.basename(vim.fn.getcwd())
+    vim.cmd('silent !zellij action rename-tab "' .. dirname .. '"')
+    zellij_update_status()
   end
 })
 
 vim.api.nvim_create_autocmd('FocusGained', {
   callback = function()
-    zellij_enabled = true
-    zellij_sync()
-  end
+    active = true
+    zellij_update_status()
+  end,
 })
 
 vim.api.nvim_create_autocmd('FocusLost', {
   callback = function()
-    zellij_pipe('status', '')
-    zellij_enabled = false
-  end
+    active = false
+  end,
 })
 
-local update_prompt = function()
-  if not zellij_enabled then
-    return
-  end
-
-  local cwd = vim.fn.getcwd()
-  local dirname = vim.fs.basename(cwd)
-
-  vim.cmd('silent !zellij action rename-tab "' .. dirname .. '"')
-  vim.system(
-    { 'zsh', '-c', 'starship prompt --profile zellij --path "' ..
-    cwd .. '" --terminal-width 80 | sed "s/%{//g; s/%}//g"' }, { text = true }, function(result)
-      if result.code == 0 then
-        prompt = result.stdout
-      else
-        prompt = nil
-      end
-    end)
-end
-
-vim.api.nvim_create_autocmd('User', {
-  pattern = { 'NeogitStatusRefreshed', 'NeogitCommitComplete', 'NeogitPushComplete', 'NeogitPullComplete', 'NeogitBranchCheckout' },
-  callback = update_prompt,
-})
-
-vim.api.nvim_create_autocmd({ 'UIEnter', 'DirChanged' }, {
-  callback = update_prompt,
+vim.api.nvim_create_autocmd({ 'UIEnter' }, {
+  callback = function()
+    active = true
+    zellij_update_status()
+  end,
 })
 
 local timer = nil
@@ -93,8 +94,8 @@ vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI', 'WinEnter', 'BufEnt
     end
 
     timer = vim.loop.new_timer()
-    timer:start(400, 0, vim.schedule_wrap(function()
-      zellij_sync()
+    timer:start(250, 0, vim.schedule_wrap(function()
+      zellij_update_status()
     end))
   end
 })

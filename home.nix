@@ -72,12 +72,14 @@
   };
 
   imports = [
-    ./config/shell.nix
+    ./config/shell/alacritty.nix
+    ./config/shell/k9s.nix
     ./config/shell/starship.nix
+    ./config/shell/zellij.nix
+    ./config/shell/zsh.nix
     ./config/git.nix
     ./config/cloud.nix
     ./config/editor/neovim.nix
-    ./config/shell/zellij.nix
     ./config/irc/ergo.nix
     ./config/irc/client.nix
   ];
