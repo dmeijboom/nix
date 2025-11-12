@@ -77,6 +77,7 @@
     ./config/shell/starship.nix
     ./config/shell/zellij.nix
     ./config/shell/zsh.nix
+    ./config/shell/lazygit.nix
     ./config/git.nix
     ./config/cloud.nix
     ./config/editor/neovim.nix

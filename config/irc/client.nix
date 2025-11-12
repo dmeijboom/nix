@@ -13,17 +13,23 @@ in
       tiny = {
         enable = true;
         settings = {
-          servers = [{
-            addr = "cloud.dillen.dev";
-            port = 6697;
-            tls = true;
-            realname = "dmeijboom";
-            nicks = ["dmeijboom"];
-            join = ["#general" "#updates" "#testing"];
-            sasl.pem = "${config.home.homeDirectory}/.certs/irc/client-with-key.pem";
-          }];
+          servers = [
+            {
+              addr = "cloud.dillen.dev";
+              port = 6697;
+              tls = true;
+              realname = "dmeijboom";
+              nicks = [ "dmeijboom" ];
+              join = [
+                "#general"
+                "#updates"
+                "#testing"
+              ];
+              sasl.pem = "${config.home.homeDirectory}/.certs/irc/client-with-key.pem";
+            }
+          ];
           defaults = {
-            nicks = ["dmeijboom"];
+            nicks = [ "dmeijboom" ];
             realname = "dmeijboom";
           };
         };
