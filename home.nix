@@ -60,7 +60,7 @@
         rustup
 
         # Fonts
-        nerd-fonts.jetbrains-mono
+        nerd-fonts.monaspace
       ];
 
     home.shellAliases = {

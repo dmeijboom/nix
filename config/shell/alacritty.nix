@@ -21,11 +21,11 @@
         };
       };
       font = {
-        size = 14;
-        normal.family = "JetBrainsMono Nerd Font";
-        bold.family = "JetBrainsMono Nerd Font";
-        italic.family = "JetBrainsMono Nerd Font";
-        bold_italic.family = "JetBrainsMono Nerd Font";
+        size = 13;
+        normal.family = "MonaspiceAr Nerd Font Mono";
+        bold.family = "MonaspiceAr Nerd Font Mono";
+        italic.family = "MonaspiceAr Nerd Font Mono";
+        bold_italic.family = "MonaspiceAr Nerd Font Mono";
       };
       cursor.style = {
         shape = "Underline";
