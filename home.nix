@@ -53,6 +53,7 @@
         buildozer
 
         # Misc tools
+        ripgrep
         duckdb
         ast-grep
 
@@ -80,7 +81,7 @@
     ./config/shell/lazygit.nix
     ./config/git.nix
     ./config/cloud.nix
-    ./config/editor/neovim.nix
+    ./config/editor/helix.nix
     ./config/irc/ergo.nix
     ./config/irc/client.nix
   ];
