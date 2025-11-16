@@ -31,8 +31,11 @@ let
   ];
 in
 {
-  home.packages = with pkgs; [
-  ] ++ map (name: builtins.getAttr name pkgs) languageServers;
+  home.packages =
+    with pkgs;
+    [
+    ]
+    ++ map (name: builtins.getAttr name pkgs) languageServers;
 
   programs.yazi = {
     enable = true;
@@ -57,24 +60,78 @@ in
     languages = {
       language-server.typescript-language-server = {
         command = "vtsls";
-        args = ["--stdio"];
+        args = [ "--stdio" ];
+        config = {
+          typescript = {
+            updateImportsOnFileMove = {
+              enabled = "always";
+            };
+            suggest = {
+              completeFunctionCalls = true;
+            };
+          };
+          inlayHints = {
+            parameterNames.enabled = "all";
+            parameterTypes.enabled = true;
+            variableTypes.enabled = true;
+            propertyDeclarationTypes.enabled = true;
+            functionLikeReturnTypes = true;
+            enumMemberValues.enabled = true;
+          };
+        };
       };
-      language = [{
-        name = "kcl";
-        scope = "source.kcl";
-        file-types = ["k"];
-        roots = ["kcl.mod"];
-        auto-format = true;
-        injection-regex = "^kcl$";
-      }
-      {
-         name = "tsx"; 
-         language-servers = ["typescript-language-server" "tailwindcss-ls"];
-      }];
-      grammar = [{
-        name = "kcl";
-        source = { git = "https://github.com/kcl-lang/tree-sitter-kcl"; rev = "b0b2eb38009e04035a6e266c7e11e541f3caab7c"; };
-      }];
+      language = [
+        {
+          name = "kcl";
+          scope = "source.kcl";
+          file-types = [ "k" ];
+          roots = [ "kcl.mod" ];
+          auto-format = true;
+          injection-regex = "^kcl$";
+        }
+        {
+          name = "tsx";
+          language-servers = [
+            "typescript-language-server"
+            "tailwindcss-ls"
+          ];
+        }
+        {
+          name = "javascript";
+          language-servers = [
+            {
+              name = "typescript-language-server";
+              except-features = [
+                "format"
+                "diagnostics"
+              ];
+            }
+            "vscode-eslint-language-server"
+          ];
+        }
+        {
+          name = "vue";
+          language-servers = [
+            {
+              name = "typescript-language-server";
+              except-features = [
+                "format"
+                "diagnostics"
+              ];
+            }
+            "vscode-eslint-language-server"
+          ];
+        }
+      ];
+      grammar = [
+        {
+          name = "kcl";
+          source = {
+            git = "https://github.com/kcl-lang/tree-sitter-kcl";
+            rev = "b0b2eb38009e04035a6e266c7e11e541f3caab7c";
+          };
+        }
+      ];
     };
     settings = {
       theme = "nord-ext";
@@ -83,6 +140,12 @@ in
           b = ":echo %sh{git blame -L %{cursor_line},+1 %{buffer_name}}";
           a = "code_action";
           f = ":format";
+          e = [
+            ":sh rm -f /tmp/tk-task"
+            ":sh printf \"\x1b[<u\" > /dev/tty && tk --summary | fzf --height 20%% > /tmp/tk-task || true; printf \"\x1b[>1u\" > /dev/tty"
+            ":sh test -s /tmp/tk-task && zellij run --close-on-exit --height 40%% --floating -- \"%sh{cat /tmp/tk-task}\""
+            ":redraw"
+          ];
         };
         "S-k" = "signature_help";
         "C-p" = "file_picker";
@@ -101,9 +164,13 @@ in
         end-of-line-diagnostics = "hint";
         default-yank-register = "+";
         statusline = {
-          left = ["spinner"];
-          center = [];
-          right = ["file-name" "position" "diagnostics"];
+          left = [ "spinner" ];
+          center = [ ];
+          right = [
+            "file-name"
+            "position"
+            "diagnostics"
+          ];
         };
         cursor-shape = {
           normal = "underline";
@@ -126,9 +193,18 @@ in
     themes = {
       nord-ext = {
         inherits = "nord";
-        "ui.statusline" = { fg = "#606a81"; bg = "#2f343f"; };
-        "comment" = { fg = "nord3_bright"; modifiers = []; };
-        "ui.virtual.inlay-hint" = { fg = "nord3"; modifiers = []; };
+        "ui.statusline" = {
+          fg = "#606a81";
+          bg = "#2f343f";
+        };
+        "comment" = {
+          fg = "nord3_bright";
+          modifiers = [ ];
+        };
+        "ui.virtual.inlay-hint" = {
+          fg = "nord3";
+          modifiers = [ ];
+        };
       };
     };
   };
