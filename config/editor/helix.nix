@@ -13,6 +13,7 @@ let
     "tombi"
     "vtsls"
     "rustup"
+    "oxlint"
     "helm-ls"
     "pyrefly"
     "starpls"
@@ -58,10 +59,26 @@ in
     enable = true;
     defaultEditor = true;
     languages = {
+      language-server.oxlint = {
+        command = "oxc_language_server";
+      };
+
       language-server.typescript-language-server = {
         command = "vtsls";
         args = [ "--stdio" ];
         config = {
+          vtsls = {
+            tsserver = {
+              globalPlugins = [
+                {
+                  name = "@vue/typescript-plugin";
+                  languages = [ "vue" ];
+                  configNamespace = "typescript";
+                  location = "${pkgs.vue-language-server}/lib/language-tools/packages/language-server";
+                }
+              ];
+            };
+          };
           typescript = {
             updateImportsOnFileMove = {
               enabled = "always";
@@ -69,17 +86,22 @@ in
             suggest = {
               completeFunctionCalls = true;
             };
+            inlayHints = {
+              parameterNames = {
+                enabled = "all";
+              };
+            };
           };
-          inlayHints = {
-            parameterNames.enabled = "all";
-            parameterTypes.enabled = true;
-            variableTypes.enabled = true;
-            propertyDeclarationTypes.enabled = true;
-            functionLikeReturnTypes = true;
-            enumMemberValues.enabled = true;
+          javascript = {
+            inlayHints = {
+              parameterNames = {
+                enabled = "all";
+              };
+            };
           };
         };
       };
+
       language = [
         {
           name = "kcl";
@@ -101,12 +123,9 @@ in
           language-servers = [
             {
               name = "typescript-language-server";
-              except-features = [
-                "format"
-                "diagnostics"
-              ];
+              except-features = [ "diagnostics" ];
             }
-            "vscode-eslint-language-server"
+            "oxlint"
           ];
         }
         {
@@ -114,12 +133,9 @@ in
           language-servers = [
             {
               name = "typescript-language-server";
-              except-features = [
-                "format"
-                "diagnostics"
-              ];
+              except-features = [ "diagnostics" ];
             }
-            "vscode-eslint-language-server"
+            "oxlint"
           ];
         }
       ];
