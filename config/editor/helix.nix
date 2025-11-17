@@ -156,12 +156,7 @@ in
           b = ":echo %sh{git blame -L %{cursor_line},+1 %{buffer_name}}";
           a = "code_action";
           f = ":format";
-          e = [
-            ":sh rm -f /tmp/tk-task"
-            ":sh printf \"\x1b[<u\" > /dev/tty && tk --summary | fzf --height 20%% > /tmp/tk-task || true; printf \"\x1b[>1u\" > /dev/tty"
-            ":sh test -s /tmp/tk-task && zellij run --close-on-exit --height 40%% --floating -- \"%sh{cat /tmp/tk-task}\""
-            ":redraw"
-          ];
+          e = ":sh zellij run --close-on-exit --height 40%% --floating -- devenv shell -- 'tk \"$(tk --summary | fzf)\"'";
           g = [
             ":write-all"
             ":new"
