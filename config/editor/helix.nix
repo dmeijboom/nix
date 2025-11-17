@@ -162,6 +162,16 @@ in
             ":sh test -s /tmp/tk-task && zellij run --close-on-exit --height 40%% --floating -- \"%sh{cat /tmp/tk-task}\""
             ":redraw"
           ];
+          g = [
+            ":write-all"
+            ":new"
+            ":insert-output lazygit"
+            ":set mouse false"
+            ":set mouse true"
+            ":buffer-close!"
+            ":redraw"
+            ":reload-all"
+          ];
         };
         "S-k" = "signature_help";
         "C-p" = "file_picker";
