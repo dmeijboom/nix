@@ -52,8 +52,11 @@
         buildifier
         buildozer
 
-        # Misc tools
+        # Term utils
         ripgrep
+        task-keeper
+
+        # Misc tools
         duckdb
         ast-grep
 
@@ -65,6 +68,7 @@
       ];
 
     home.shellAliases = {
+      g = "lazygit";
       sg = "ast-grep";
       bazel = "bazelisk";
     };
