@@ -111,7 +111,8 @@
         "home-manager": "home-manager",
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs",
-        "zjstatus": "zjstatus"
+        "zjstatus": "zjstatus",
+        "zsh-helix-mode": "zsh-helix-mode"
       }
     },
     "rust-overlay": {
@@ -168,6 +169,27 @@
       "original": {
         "owner": "dj95",
         "repo": "zjstatus",
+        "type": "github"
+      }
+    },
+    "zsh-helix-mode": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1758445842,
+        "narHash": "sha256-wiUocowz3uL3fTAxTfG3URhOwB2RrFWEmUnW4k0ETJ4=",
+        "owner": "multirious",
+        "repo": "zsh-helix-mode",
+        "rev": "f9d72d23f5ce12da31967a6ecd15dcafa1355fa7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "multirious",
+        "ref": "main",
+        "repo": "zsh-helix-mode",
         "type": "github"
       }
     }

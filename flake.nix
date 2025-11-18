@@ -6,21 +6,20 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     zjstatus.url = "github:dj95/zjstatus";
+    zsh-helix-mode.url = "github:multirious/zsh-helix-mode/main";
+    zsh-helix-mode.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
-    inputs@{
+    {
       self,
       nix-darwin,
       home-manager,
       nixpkgs,
       zjstatus,
+      zsh-helix-mode,
     }:
     let
-      forAllSystems = nixpkgs.lib.genAttrs [
-        "x86_64-linux"
-        "aarch64-linux"
-      ];
       config = {
         nixpkgs.config.allowUnfree = true;
         nix.settings = {
@@ -54,6 +53,7 @@
               useUserPackages = true;
               extraSpecialArgs = {
                 zjstatus = zjstatus.packages.aarch64-darwin.default;
+                zsh-helix-mode = zsh-helix-mode.packages.aarch64-darwin.default;
               };
               users.dmeijboom = {
                 imports = [ ./home.nix ];
@@ -72,6 +72,7 @@
           };
           extraSpecialArgs = {
             zjstatus = zjstatus.packages.x86_64-linux.default;
+            zsh-helix-mode = zsh-helix-mode.packages.x86_64-linux.default;
           };
           modules = [
             ./home.nix
@@ -89,6 +90,7 @@
           };
           extraSpecialArgs = {
             zjstatus = zjstatus.packages.x86_64-linux.default;
+            zsh-helix-mode = zsh-helix-mode.packages.x86_64-linux.default;
           };
           modules = [
             ./home.nix

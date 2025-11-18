@@ -32,11 +32,7 @@ let
   ];
 in
 {
-  home.packages =
-    with pkgs;
-    [
-    ]
-    ++ map (name: builtins.getAttr name pkgs) languageServers;
+  home.packages = map (name: builtins.getAttr name pkgs) languageServers;
 
   programs.yazi = {
     enable = true;
@@ -152,7 +148,7 @@ in
     settings = {
       theme = "nord-ext";
       keys.normal = {
-        "," = {
+        "C-," = {
           b = ":echo %sh{git blame -L %{cursor_line},+1 %{buffer_name}}";
           a = "code_action";
           f = ":format";
