@@ -148,6 +148,7 @@ in
     settings = {
       theme = "nord-ext";
       keys.normal = {
+        space."=" = ":format";
         "C-," = {
           b = ":echo %sh{git blame -L %{cursor_line},+1 %{buffer_name}}";
           a = "code_action";
