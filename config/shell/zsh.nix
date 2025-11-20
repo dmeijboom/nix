@@ -14,11 +14,11 @@
       syntaxHighlighting.enable = true;
       historySubstringSearch.enable = true;
       plugins = [
-        {
-          name = "zsh-helix-mode";
-          src = zsh-helix-mode;
-          file = "share/zsh-helix-mode/zsh-helix-mode.plugin.zsh";
-        }
+        # {
+        #   name = "zsh-helix-mode";
+        #   src = zsh-helix-mode;
+        #   file = "share/zsh-helix-mode/zsh-helix-mode.plugin.zsh";
+        # }
       ];
       dirHashes = {
         git = "$HOME/git";
