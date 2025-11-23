@@ -83,6 +83,7 @@
     ./config/shell/zellij.nix
     ./config/shell/zsh.nix
     ./config/shell/lazygit.nix
+    ./config/shell/yazi.nix
     ./config/git.nix
     ./config/cloud.nix
     ./config/editor/helix.nix

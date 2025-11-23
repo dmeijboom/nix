@@ -19,6 +19,7 @@ let
     "starpls"
     "marksman"
     "phpactor"
+    "terraform-ls"
     "mdx-language-server"
     "lua-language-server"
     "vue-language-server"
@@ -33,23 +34,6 @@ let
 in
 {
   home.packages = map (name: builtins.getAttr name pkgs) languageServers;
-
-  programs.yazi = {
-    enable = true;
-    settings.mgr.show_symlink = false;
-    plugins = with pkgs.yaziPlugins; {
-      inherit nord full-border;
-    };
-    flavors = { inherit (pkgs.yaziPlugins) nord; };
-    theme.flavor = {
-      light = "nord";
-      dark = "nord";
-    };
-    initLua = ''
-      require("nord"):setup()
-      require("full-border"):setup()
-    '';
-  };
 
   programs.helix = {
     enable = true;
@@ -149,12 +133,27 @@ in
       theme = "nord-ext";
       keys.normal = {
         space."=" = ":format";
-        "C-," = {
-          b = ":echo %sh{git blame -L %{cursor_line},+1 %{buffer_name}}";
-          a = "code_action";
-          f = ":format";
-          e = ":sh zellij run --close-on-exit --height 40%% --floating -- devenv shell -- 'tk \"$(tk --summary | fzf)\"'";
-          g = [
+        "S-k" = "signature_help";
+        "C-p" = "file_picker";
+        "C-f" = [
+          ":sh rm -f /tmp/unique-file"
+          ":insert-output yazi %{buffer_name} --chooser-file=/tmp/unique-file"
+          ":insert-output echo \"\x1b[?1049h\x1b[?2004h\" > /dev/tty"
+          ":open %sh{cat /tmp/unique-file}"
+          ":redraw"
+        ];
+        "C-g" = {
+          l = [
+            ":write-all"
+            ":new"
+            ":insert-output lazygit log"
+            ":set mouse false"
+            ":set mouse true"
+            ":buffer-close!"
+            ":redraw"
+            ":reload-all"
+          ];
+          s = [
             ":write-all"
             ":new"
             ":insert-output lazygit"
@@ -165,15 +164,6 @@ in
             ":reload-all"
           ];
         };
-        "S-k" = "signature_help";
-        "C-p" = "file_picker";
-        "C-f" = [
-          ":sh rm -f /tmp/unique-file"
-          ":insert-output yazi %{buffer_name} --chooser-file=/tmp/unique-file"
-          ":insert-output echo \"\x1b[?1049h\x1b[?2004h\" > /dev/tty"
-          ":open %sh{cat /tmp/unique-file}"
-          ":redraw"
-        ];
       };
       editor = {
         true-color = true;
