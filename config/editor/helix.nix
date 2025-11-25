@@ -39,10 +39,8 @@ in
     enable = true;
     defaultEditor = true;
     languages = {
-      language-server.oxlint = {
-        command = "oxc_language_server";
-      };
-
+      language-server.sqls.command = "sqls";
+      language-server.oxlint.command = "oxc_language_server";
       language-server.typescript-language-server = {
         command = "vtsls";
         args = [ "--stdio" ];
@@ -83,6 +81,10 @@ in
       };
 
       language = [
+        {
+          name = "sql";
+          language-servers = [ "sqls" ];
+        }
         {
           name = "kcl";
           scope = "source.kcl";
