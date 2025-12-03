@@ -171,8 +171,11 @@ in
         true-color = true;
         undercurl = true;
         line-number = "relative";
-        end-of-line-diagnostics = "hint";
         default-yank-register = "+";
+        end-of-line-diagnostics = "hint";
+        inline-diagnostics = {
+          cursor-line = "warning";
+        };
         statusline = {
           left = [ "spinner" ];
           center = [ ];
