@@ -5,9 +5,9 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    zjstatus.url = "github:dj95/zjstatus";
-    zsh-helix-mode.url = "github:multirious/zsh-helix-mode/main";
-    zsh-helix-mode.inputs.nixpkgs.follows = "nixpkgs";
+    # zjstatus.url = "github:dj95/zjstatus"; build issue: https://github.com/dj95/zjstatus/pull/200
+    zjstatus.url = "github:andreaskrath/zjstatus/fix-lock-file";
+    zjstatus.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -17,7 +17,6 @@
       home-manager,
       nixpkgs,
       zjstatus,
-      zsh-helix-mode,
     }:
     let
       config = {
@@ -53,7 +52,6 @@
               useUserPackages = true;
               extraSpecialArgs = {
                 zjstatus = zjstatus.packages.aarch64-darwin.default;
-                zsh-helix-mode = zsh-helix-mode.packages.aarch64-darwin.default;
               };
               users.dmeijboom = {
                 imports = [ ./home.nix ];
@@ -72,7 +70,6 @@
           };
           extraSpecialArgs = {
             zjstatus = zjstatus.packages.x86_64-linux.default;
-            zsh-helix-mode = zsh-helix-mode.packages.x86_64-linux.default;
           };
           modules = [
             ./home.nix
@@ -90,7 +87,6 @@
           };
           extraSpecialArgs = {
             zjstatus = zjstatus.packages.x86_64-linux.default;
-            zsh-helix-mode = zsh-helix-mode.packages.x86_64-linux.default;
           };
           modules = [
             ./home.nix

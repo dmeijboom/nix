@@ -177,12 +177,11 @@ in
           cursor-line = "warning";
         };
         statusline = {
-          left = [ "spinner" ];
+          left = [ "diagnostics" ];
           center = [ ];
           right = [
             "file-name"
             "position"
-            "diagnostics"
           ];
         };
         cursor-shape = {
@@ -191,7 +190,7 @@ in
         auto-save = {
           after-delay = {
             enable = true;
-            timeout = 1500;
+            timeout = 500;
           };
         };
         indent-guides = {
