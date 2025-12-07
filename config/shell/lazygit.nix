@@ -45,9 +45,11 @@
         }
       ];
       promptToReturnFromSubprocess = false;
-      git.pagers = [{
-        pager = "delta --dark --paging=never";
-      }];
+      git.pagers = [
+        {
+          useExternalDiffGitConfig = true;
+        }
+      ];
       git.autoFetch = false;
       gui.statusPanelView = "allBranchesLog";
       gui.authorColors = {
@@ -59,10 +61,10 @@
       gui.screenMode = "half";
       gui.theme = {
         activeBorderColor = [
-          "#8aadf4"
+          "#4e5668"
           "bold"
         ];
-        inactiveBorderColor = [ "#a5adcb" ];
+        inactiveBorderColor = [ "#363b48" ];
         optionsTextColor = [ "#8aadf4" ];
         selectedLineBgColor = [ "#363a4f" ];
         cherryPickedCommitBgColor = [ "#494d64" ];

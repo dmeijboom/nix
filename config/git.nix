@@ -7,9 +7,13 @@
 {
   config = lib.mkIf (config.custom.mode == "client") {
     programs = {
-      delta = {
+      difftastic = {
         enable = true;
-        enableGitIntegration = true;
+        git.enable = true;
+        git.diffToolMode = true;
+        options = {
+          color = "always";
+        };
       };
 
       git = {

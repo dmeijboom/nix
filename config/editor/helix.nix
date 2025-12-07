@@ -135,6 +135,26 @@ in
       theme = "nord-ext";
       keys.normal = {
         space."=" = ":format";
+        space."v" = [
+          ":write-all"
+          ":new"
+          ":insert-output lazygit"
+          ":set mouse false"
+          ":set mouse true"
+          ":buffer-close!"
+          ":redraw"
+          ":reload-all"
+        ];
+        space."l" = [
+          ":write-all"
+          ":new"
+          ":insert-output lazygit log"
+          ":set mouse false"
+          ":set mouse true"
+          ":buffer-close!"
+          ":redraw"
+          ":reload-all"
+        ];
         "S-k" = "signature_help";
         "C-p" = "file_picker";
         "C-f" = [
@@ -144,28 +164,6 @@ in
           ":open %sh{cat /tmp/unique-file}"
           ":redraw"
         ];
-        "C-g" = {
-          l = [
-            ":write-all"
-            ":new"
-            ":insert-output lazygit log"
-            ":set mouse false"
-            ":set mouse true"
-            ":buffer-close!"
-            ":redraw"
-            ":reload-all"
-          ];
-          s = [
-            ":write-all"
-            ":new"
-            ":insert-output lazygit"
-            ":set mouse false"
-            ":set mouse true"
-            ":buffer-close!"
-            ":redraw"
-            ":reload-all"
-          ];
-        };
       };
       editor = {
         true-color = true;
