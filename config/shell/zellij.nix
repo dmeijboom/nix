@@ -194,6 +194,14 @@
         keybinds {
           normal {
             bind "n" { NewPane; }          
+            bind "f" { ToggleFocusFullscreen; }
+            bind "s" {
+              LaunchOrFocusPlugin "session-manager" {
+                  floating true
+                  move_to_focused_tab true
+              };
+              SwitchToMode "Locked";
+            }
           }
 
           locked {
