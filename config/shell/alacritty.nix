@@ -9,6 +9,18 @@
       env.KONSOLE_VERSION = "230804";
       general.live_config_reload = true;
       mouse.hide_when_typing = true;
+      keyboard.bindings = [
+        {
+          key = "Left";
+          mods = "Alt";
+          chars = "\\u001Bb";
+        }
+        {
+          key = "Right";
+          mods = "Alt";
+          chars = "\\u001Bf";
+        }
+      ];
       window = {
         decorations = "None";
         startup_mode = "Maximized";
