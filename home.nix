@@ -54,6 +54,7 @@
 
         # Term utils
         ripgrep
+        typst
         task-keeper
 
         # Misc tools
