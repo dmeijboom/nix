@@ -17,7 +17,9 @@
       # Cloud Tooling
       sops
       skaffold
-      #kubelogin @TODO: broken..
+      (kubelogin.overrideAttrs (_: {
+        doCheck = false;
+      }))
       (google-cloud-sdk.withExtraComponents (
         with google-cloud-sdk.components;
         [
