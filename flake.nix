@@ -6,7 +6,7 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     # zjstatus.url = "github:dj95/zjstatus"; build issue: https://github.com/dj95/zjstatus/pull/200
-    zjstatus.url = "github:andreaskrath/zjstatus/fix-lock-file";
+    zjstatus.url = "github:dj95/zjstatus";
     zjstatus.inputs.nixpkgs.follows = "nixpkgs";
   };
 

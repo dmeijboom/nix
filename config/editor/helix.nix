@@ -16,7 +16,7 @@ let
     "helm-ls"
     "pyrefly"
     "starpls"
-    "marksman"
+    "markdown-oxide"
     "phpactor"
     "tinymist"
     "terraform-ls"
@@ -155,6 +155,7 @@ in
           ":redraw"
           ":reload-all"
         ];
+        "_" = "goto_first_nonwhitespace";
         "S-k" = "signature_help";
         "C-p" = "file_picker";
         "C-f" = [
