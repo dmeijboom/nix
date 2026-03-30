@@ -8,6 +8,7 @@
       enable = true;
       settings = {
         theme = "nord-custom";
+        theme_dir = "/Users/dmeijboom/.config/zellij/themes";
         web_client = false;
         pane_frames = false;
         show_startup_tips = false;
@@ -93,8 +94,16 @@
                 emphasis_2 163 190 140
                 emphasis_3 180 142 173
               }
+              frame_unselected {
+                base 59 66 82
+                background 0
+                emphasis_0 208 135 112
+                emphasis_1 136 192 208
+                emphasis_2 180 142 173
+                emphasis_3 0
+              }
               frame_selected {
-                base 55 63 81
+                base 59 66 82
                 background 0
                 emphasis_0 208 135 112
                 emphasis_1 136 192 208
