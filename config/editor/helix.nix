@@ -36,7 +36,7 @@ in
 {
   home.packages = map (name: builtins.getAttr name pkgs) languageServers;
 
-  xdg.configFile."helix/runtime/queries/kcl/highlights.scm".text = ''
+  xdg.configFile."helix/runtime/queries/kcl-lang/highlights.scm".text = ''
     (identifier) @variable
 
     ; Reset highlighting in string interpolations
@@ -257,7 +257,7 @@ in
           language-servers = [ "sqls" ];
         }
         {
-          name = "kcl";
+          name = "kcl-lang";
           scope = "source.kcl";
           file-types = [ "k" ];
           roots = [ "kcl.mod" ];
@@ -299,7 +299,7 @@ in
       ];
       grammar = [
         {
-          name = "kcl";
+          name = "kcl-lang";
           source = {
             git = "https://github.com/kcl-lang/tree-sitter-kcl";
             rev = "b0b2eb38009e04035a6e266c7e11e541f3caab7c";
