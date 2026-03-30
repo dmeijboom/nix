@@ -8,6 +8,8 @@
     # zjstatus.url = "github:dj95/zjstatus"; build issue: https://github.com/dj95/zjstatus/pull/200
     zjstatus.url = "github:dj95/zjstatus";
     zjstatus.inputs.nixpkgs.follows = "nixpkgs";
+    helix.url = "github:helix-editor/helix/master";
+    helix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -17,6 +19,7 @@
       home-manager,
       nixpkgs,
       zjstatus,
+      helix,
     }:
     let
       config = {
@@ -52,6 +55,7 @@
               useUserPackages = true;
               extraSpecialArgs = {
                 zjstatus = zjstatus.packages.aarch64-darwin.default;
+                helix-pkg = helix.packages.aarch64-darwin.default;
               };
               users.dmeijboom = {
                 imports = [ ./home.nix ];
@@ -70,6 +74,7 @@
           };
           extraSpecialArgs = {
             zjstatus = zjstatus.packages.x86_64-linux.default;
+            helix-pkg = helix.packages.x86_64-linux.default;
           };
           modules = [
             ./home.nix
@@ -87,6 +92,7 @@
           };
           extraSpecialArgs = {
             zjstatus = zjstatus.packages.x86_64-linux.default;
+            helix-pkg = helix.packages.x86_64-linux.default;
           };
           modules = [
             ./home.nix
