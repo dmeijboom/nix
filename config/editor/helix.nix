@@ -258,6 +258,7 @@ in
         }
         {
           name = "kcl-lang";
+          grammar = "kcl-lang";
           scope = "source.kcl";
           file-types = [ "k" ];
           roots = [ "kcl.mod" ];
