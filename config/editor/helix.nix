@@ -4,6 +4,34 @@
   ...
 }:
 let
+  # Build a kcl-lang dylib that exports tree_sitter_kcl_lang.
+  # Helix derives the C symbol from the grammar name: "kcl-lang" → tree_sitter_kcl_lang.
+  # The upstream grammar exports tree_sitter_kcl, so we compile with a shim.
+  kclLangGrammar = pkgs.stdenv.mkDerivation {
+    name = "helix-tree-sitter-kcl-lang";
+    src = pkgs.fetchFromGitHub {
+      owner = "kcl-lang";
+      repo = "tree-sitter-kcl";
+      rev = "b0b2eb38009e04035a6e266c7e11e541f3caab7c";
+      hash = "sha256-Aeu1j77GdsNpo9PU+FcqN3ttT0eLaDKY4n8buftMiDc=";
+    };
+    buildPhase = ''
+      # Write a shim that aliases tree_sitter_kcl → tree_sitter_kcl_lang
+      cat > shim.c <<'EOF'
+      extern void* tree_sitter_kcl(void);
+      void* tree_sitter_kcl_lang(void) { return tree_sitter_kcl(); }
+      EOF
+      $CC -shared -fPIC -O2 \
+        src/parser.c src/scanner.c shim.c \
+        -I src \
+        -o kcl-lang${pkgs.stdenv.hostPlatform.extensions.sharedLibrary}
+    '';
+    installPhase = ''
+      mkdir -p $out
+      cp kcl-lang${pkgs.stdenv.hostPlatform.extensions.sharedLibrary} $out/
+    '';
+  };
+
   languageServers = [
     "nil"
     "buf"
@@ -35,6 +63,9 @@ let
 in
 {
   home.packages = map (name: builtins.getAttr name pkgs) languageServers;
+
+  xdg.configFile."helix/runtime/grammars/kcl-lang${pkgs.stdenv.hostPlatform.extensions.sharedLibrary}".source =
+    "${kclLangGrammar}/kcl-lang${pkgs.stdenv.hostPlatform.extensions.sharedLibrary}";
 
   xdg.configFile."helix/runtime/queries/kcl-lang/highlights.scm".text = ''
     (identifier) @variable
@@ -298,15 +329,7 @@ in
           ];
         }
       ];
-      grammar = [
-        {
-          name = "kcl-lang";
-          source = {
-            git = "https://github.com/kcl-lang/tree-sitter-kcl";
-            rev = "b0b2eb38009e04035a6e266c7e11e541f3caab7c";
-          };
-        }
-      ];
+      grammar = [ ];
     };
     settings = {
       theme = "nord-ext";
