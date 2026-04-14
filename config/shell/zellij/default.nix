@@ -43,9 +43,8 @@ let
 
   mkLayout = body: ''
     layout {
-    ${body}
-
-    ${zjstatusBar}
+      ${body}
+      ${zjstatusBar}
     }
   '';
 
@@ -220,7 +219,14 @@ in
             bind "n" { NewPane; }          
             bind "f" { ToggleFocusFullscreen; }
             bind "s" {
-              LaunchOrFocusPlugin "session-manager" {
+              LaunchOrFocusPlugin "zellij:session-manager" {
+                  floating true
+                  move_to_focused_tab true
+              };
+              SwitchToMode "Locked";
+            }
+            bind "l" {
+              LaunchOrFocusPlugin "zellij:layout-manager" {
                   floating true
                   move_to_focused_tab true
               };
@@ -231,6 +237,8 @@ in
           locked {
             bind "Alt h" { MoveFocusOrTab "Left"; }
             bind "Alt l" { MoveFocusOrTab "Right"; }
+            bind "Alt k" { MoveFocus "Up"; }
+            bind "Alt j" { MoveFocus "Down"; }
           }
         }
       '';
