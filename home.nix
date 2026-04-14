@@ -81,7 +81,7 @@
     ./config/shell/alacritty.nix
     ./config/shell/k9s.nix
     ./config/shell/starship.nix
-    ./config/shell/zellij.nix
+    ./config/shell/zellij
     ./config/shell/zsh.nix
     ./config/shell/lazygit.nix
     ./config/shell/yazi.nix

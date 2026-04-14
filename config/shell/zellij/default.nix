@@ -1,14 +1,71 @@
 {
+  lib,
+  config,
   zjstatus,
   ...
 }:
+let
+  zjstatusBar = ''
+    pane size=1 borderless=true {
+      plugin location="file:${zjstatus}/bin/zjstatus.wasm" {
+        format_left  "{mode} {tabs}"
+        format_right "#[fg=#4C566A,bg=#2E3440] {command_termstate}"
+        format_space "#[bg=#2E3440]"
+
+        command_termstate_command    "bash -c \"cat /tmp/.zjstatus_''${ZELLIJ_SESSION_NAME}\""
+        command_termstate_format     "{stdout}"
+        rommand_termstate_rendermode "raw"
+
+        mode_normal          "#[bg=#88C0D0] "
+        mode_locked          "#[bg=#D08770] "
+        mode_resize          "#[bg=#A3BE8C] "
+        mode_pane            "#[bg=#EBCB8B] "
+        mode_tab             "#[bg=#B48EAD] "
+        mode_scroll          "#[bg=#88C0D0] "
+        mode_enter_search    "#[bg=#5E81AC] "
+        mode_search          "#[bg=#5E81AC] "
+        mode_rename_tab      "#[bg=#B48EAD] "
+        mode_rename_pane     "#[bg=#EBCB8B] "
+        mode_session         "#[bg=#BF616A] "
+        mode_move            "#[bg=#A3BE8C] "
+        mode_prompt          "#[bg=#EBCB8B] "
+        mode_tmux            "#[bg=#EBCB8B] "
+        mode_default_to_mode "normal"
+
+        tab_normal               "#[fg=#4C566A,bg=#2E3440] {name} {fullscreen_indicator}{sync_indicator}{floating_indicator}"
+        tab_active               "#[fg=#D8DEE9,bg=#3c4353,bold] {name} {fullscreen_indicator}{sync_indicator}{floating_indicator}"
+        tab_fullscreen_indicator "□ "
+        tab_sync_indicator       "  "
+        tab_floating_indicator   "󰉈 "
+      }
+    }
+  '';
+
+  mkLayout = body: ''
+    layout {
+    ${body}
+
+    ${zjstatusBar}
+    }
+  '';
+
+  layoutDir = ./layouts;
+  layoutFiles = builtins.readDir layoutDir;
+  nixFiles = builtins.filter (n: builtins.match ".*\\.nix" n != null) (builtins.attrNames layoutFiles);
+  layouts = builtins.listToAttrs (
+    map (filename: {
+      name = lib.removeSuffix ".nix" filename;
+      value = mkLayout ((import (layoutDir + "/${filename}")) { inherit zjstatus; });
+    }) nixFiles
+  );
+in
 {
   programs = {
     zellij = {
       enable = true;
       settings = {
         theme = "nord-custom";
-        theme_dir = "/Users/dmeijboom/.config/zellij/themes";
+        theme_dir = "${config.home.homeDirectory}/.config/zellij/themes";
         web_client = false;
         pane_frames = false;
         show_startup_tips = false;
@@ -150,49 +207,7 @@
           }
         '';
       };
-      layouts = {
-        default = ''
-          layout {
-            pane split_direction="vertical" {
-              pane
-            }
-
-            pane size=1 borderless=true {
-              plugin location="file:${zjstatus}/bin/zjstatus.wasm" {
-                format_left  "{mode} {tabs}"
-                format_right "#[fg=#4C566A,bg=#2E3440] {command_termstate}"
-                format_space "#[bg=#2E3440]"
-
-                command_termstate_command    "bash -c \"cat /tmp/.zjstatus_''${ZELLIJ_SESSION_NAME}\""
-                command_termstate_format     "{stdout}"
-                rommand_termstate_rendermode "raw"
-
-                mode_normal          "#[bg=#88C0D0] "
-                mode_locked          "#[bg=#D08770] "
-                mode_resize          "#[bg=#A3BE8C] "
-                mode_pane            "#[bg=#EBCB8B] "
-                mode_tab             "#[bg=#B48EAD] "
-                mode_scroll          "#[bg=#88C0D0] "
-                mode_enter_search    "#[bg=#5E81AC] "
-                mode_search          "#[bg=#5E81AC] "
-                mode_rename_tab      "#[bg=#B48EAD] "
-                mode_rename_pane     "#[bg=#EBCB8B] "
-                mode_session         "#[bg=#BF616A] "
-                mode_move            "#[bg=#A3BE8C] "
-                mode_prompt          "#[bg=#EBCB8B] "
-                mode_tmux            "#[bg=#EBCB8B] "
-                mode_default_to_mode "normal"
-
-                tab_normal               "#[fg=#4C566A,bg=#2E3440] {name} {fullscreen_indicator}{sync_indicator}{floating_indicator}"
-                tab_active               "#[fg=#D8DEE9,bg=#3c4353,bold] {name} {fullscreen_indicator}{sync_indicator}{floating_indicator}"
-                tab_fullscreen_indicator "□ "
-                tab_sync_indicator       "  "
-                tab_floating_indicator   "󰉈 "
-              }
-            }
-          }
-        '';
-      };
+      layouts = layouts;
       extraConfig = ''
         load_plugins {
           "file:${zjstatus}/bin/zjstatus.wasm" {}

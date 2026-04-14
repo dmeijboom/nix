@@ -30,6 +30,20 @@
           extra-trusted-public-keys = "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=";
         };
       };
+
+      mkHome =
+        system: modules:
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+          };
+          extraSpecialArgs = {
+            zjstatus = zjstatus.packages.${system}.default;
+            helix-pkg = helix.packages.${system}.default;
+          };
+          modules = [ ./home.nix ] ++ modules;
+        };
     in
     {
       darwinConfigurations."Dillens-MacBook-Pro" = nix-darwin.lib.darwinSystem {
@@ -67,41 +81,15 @@
         ];
       };
       homeConfigurations = {
-        server = home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs {
-            system = "x86_64-linux";
-            config.allowUnfree = true;
-          };
-          extraSpecialArgs = {
-            zjstatus = zjstatus.packages.x86_64-linux.default;
-            helix-pkg = helix.packages.x86_64-linux.default;
-          };
-          modules = [
-            ./home.nix
-            {
-              custom.mode = "server";
-            }
-          ];
-        };
-      }
-      // {
-        kpn = home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs {
-            system = "x86_64-linux";
-            config.allowUnfree = true;
-          };
-          extraSpecialArgs = {
-            zjstatus = zjstatus.packages.x86_64-linux.default;
-            helix-pkg = helix.packages.x86_64-linux.default;
-          };
-          modules = [
-            ./home.nix
-            {
-              custom.username = "so";
-              custom.cloud.enable = true;
-            }
-          ];
-        };
+        server = mkHome "x86_64-linux" [
+          { custom.mode = "server"; }
+        ];
+        kpn = mkHome "x86_64-linux" [
+          {
+            custom.username = "so";
+            custom.cloud.enable = true;
+          }
+        ];
       };
     };
 }
