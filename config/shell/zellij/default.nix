@@ -213,6 +213,7 @@ in
         }
 
         default_mode "locked"
+        session_serialization true
 
         keybinds {
           normal {
