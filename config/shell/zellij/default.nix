@@ -12,7 +12,7 @@ let
         format_right "#[fg=#4C566A,bg=#2E3440] {command_termstate}"
         format_space "#[bg=#2E3440]"
 
-        command_termstate_command    "bash -c \"cat /tmp/.zjstatus_''${ZELLIJ_SESSION_NAME}\""
+        command_termstate_command    "bash -c \"cat /tmp/.zjstatus_''${ZELLIJ_SESSION_NAME}_''${ZELLIJ_PANE_ID}\""
         command_termstate_format     "{stdout}"
         rommand_termstate_rendermode "raw"
 
