@@ -15,9 +15,10 @@
       dirHashes = {
         git = "$HOME/git";
         github = "$HOME/git/github.com";
-        brainhive = "$HOME/git/github.com/brainhivenl";
+        wellsync = "$HOME/git/github.com/wellsync";
         brainpod = "$HOME/git/github.com/brainpodnl";
         dmeijboom = "$HOME/git/github.com/dmeijboom";
+        brainhive = "$HOME/git/github.com/brainhivenl";
       };
       history = {
         share = true;
@@ -28,6 +29,7 @@
         save = 10000000;
       };
       envExtra = ''
+        export PATH="$HOME/.local/bin:$PATH"
         export FZF_CTRL_T_COMMAND=
       '';
       initContent = lib.mkIf (config.custom.mode == "client") ''
@@ -37,7 +39,7 @@
             local zjstatus_project=$(basename "$(git rev-parse --show-toplevel 2>/dev/null || pwd)")
 
             zellij action rename-tab "$zjstatus_project" 2>/dev/null
-            echo -n "$zjstatus_prompt" > "/tmp/.zjstatus_''${ZELLIJ_SESSION_NAME}"
+            echo -n "$zjstatus_prompt" > "/tmp/.zjstatus_''${ZELLIJ_SESSION_NAME}_''${ZELLIJ_PANE_ID}"
             zellij pipe zjstatus::rerun::command_termstate 2>/dev/null
           fi
         }
