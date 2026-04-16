@@ -1,9 +1,9 @@
-{ zjstatus }:
+{ zjstatus, config }:
 ''
   pane split_direction="vertical" {
     pane name="code" focus=true
     pane name="tools" size="35%" stacked=true {
-      pane name="ai" command="copilot"
+      pane name="ai" command="${config.home.homeDirectory}/.opencode/bin/opencode"
       pane name="git" command="lazygit" {
         args "-sm" "full"
       }

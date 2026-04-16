@@ -50,11 +50,18 @@ let
 
   layoutDir = ./layouts;
   layoutFiles = builtins.readDir layoutDir;
-  nixFiles = builtins.filter (n: builtins.match ".*\\.nix" n != null) (builtins.attrNames layoutFiles);
+  nixFiles = builtins.filter (n: builtins.match ".*\\.nix" n != null) (
+    builtins.attrNames layoutFiles
+  );
   layouts = builtins.listToAttrs (
     map (filename: {
       name = lib.removeSuffix ".nix" filename;
-      value = mkLayout ((import (layoutDir + "/${filename}")) { inherit zjstatus; });
+      value = mkLayout (
+        (import (layoutDir + "/${filename}")) {
+          inherit zjstatus;
+          inherit config;
+        }
+      );
     }) nixFiles
   );
 in
