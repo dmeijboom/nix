@@ -62,7 +62,7 @@ let
   ];
 in
 {
-  home.packages = map (name: builtins.getAttr name pkgs) languageServers;
+  home.packages = [ pkgs.prettier ] ++ map (name: builtins.getAttr name pkgs) languageServers;
 
   xdg.configFile."helix/runtime/grammars/kcl-lang${pkgs.stdenv.hostPlatform.extensions.sharedLibrary}".source =
     "${kclLangGrammar}/kcl-lang${pkgs.stdenv.hostPlatform.extensions.sharedLibrary}";
@@ -254,6 +254,7 @@ in
                   name = "@vue/typescript-plugin";
                   languages = [ "vue" ];
                   configNamespace = "typescript";
+                  enableForWorkspaceTypeScriptVersions = true;
                   location = "${pkgs.vue-language-server}/lib/language-tools/packages/language-server";
                 }
               ];
@@ -305,27 +306,34 @@ in
           name = "tsx";
           language-servers = [
             "typescript-language-server"
+            "vscode-eslint-language-server"
             "tailwindcss-ls"
+            "emmet-lsp"
           ];
         }
         {
           name = "javascript";
           language-servers = [
-            {
-              name = "typescript-language-server";
-              except-features = [ "diagnostics" ];
-            }
-            "oxlint"
+            "typescript-language-server"
+            "vscode-eslint-language-server"
+            "tailwindcss-ls"
+            "emmet-lsp"
           ];
         }
         {
           name = "vue";
+          formatter = {
+            command = "${pkgs.prettier}/bin/prettier";
+            args = [
+              "--parser"
+              "vue"
+            ];
+          };
           language-servers = [
-            {
-              name = "typescript-language-server";
-              except-features = [ "diagnostics" ];
-            }
-            "oxlint"
+            "typescript-language-server"
+            "vscode-eslint-language-server"
+            "tailwindcss-ls"
+            "emmet-lsp"
           ];
         }
       ];
