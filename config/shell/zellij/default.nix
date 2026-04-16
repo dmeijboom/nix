@@ -225,7 +225,10 @@ in
         keybinds {
           normal {
             bind "n" { NewPane; }          
-            bind "f" { ToggleFocusFullscreen; }
+            bind "f" {
+              ToggleFocusFullscreen;
+              SwitchToMode "Locked";
+            }
             bind "s" {
               LaunchOrFocusPlugin "zellij:session-manager" {
                   floating true
@@ -243,8 +246,10 @@ in
           }
 
           locked {
-            bind "Alt h" { MoveFocusOrTab "Left"; }
-            bind "Alt l" { MoveFocusOrTab "Right"; }
+            bind "Alt h" { MoveFocus "Left"; }
+            bind "Alt l" { MoveFocus "Right"; }
+            bind "Alt Shift h" { GoToPreviousTab; }
+            bind "Alt Shift l" { GoToNextTab; }
             bind "Alt k" { MoveFocus "Up"; }
             bind "Alt j" { MoveFocus "Down"; }
           }
