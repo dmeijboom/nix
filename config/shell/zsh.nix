@@ -39,7 +39,7 @@
             local zjstatus_project=$(basename "$(git rev-parse --show-toplevel 2>/dev/null || pwd)")
 
             zellij action rename-tab "$zjstatus_project" 2>/dev/null
-            echo -n "$zjstatus_prompt" > "/tmp/.zjstatus_''${ZELLIJ_SESSION_NAME}_''${ZELLIJ_PANE_ID}"
+            echo -n "$zjstatus_prompt" > "/tmp/.zjstatus_''${ZELLIJ_SESSION_NAME}"
             zellij pipe zjstatus::rerun::command_termstate 2>/dev/null
           fi
         }
