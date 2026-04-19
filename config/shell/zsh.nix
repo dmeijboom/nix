@@ -30,7 +30,6 @@
       };
       envExtra = ''
         export PATH="$HOME/.local/bin:$PATH"
-        export FZF_CTRL_T_COMMAND=
       '';
       initContent = lib.mkIf (config.custom.mode == "client") ''
         zellij_update() {
@@ -50,6 +49,10 @@
     };
 
     autojump = {
+      enable = false;
+    };
+
+    zoxide = {
       enable = true;
       enableZshIntegration = true;
     };
@@ -64,6 +67,16 @@
     fzf = {
       enable = true;
       enableZshIntegration = true;
+      defaultCommand = "fd --type f --hidden --exclude .git";
+      fileWidgetCommand = "fd --type f --hidden --exclude .git";
+      fileWidgetOptions = [ "--preview 'head -200 {}'" ];
+      changeDirWidgetCommand = "fd --type d --hidden --exclude .git";
+      defaultOptions = [
+        "--color=fg:#D8DEE9,bg:#2E3440,hl:#88C0D0"
+        "--color=fg+:#ECEFF4,bg+:#3B4252,hl+:#8FBCBB"
+        "--color=info:#81A1C1,prompt:#BF616A,pointer:#B48EAD"
+        "--color=marker:#A3BE8C,spinner:#B48EAD,header:#88C0D0"
+      ];
     };
   };
 }

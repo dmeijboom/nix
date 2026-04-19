@@ -53,6 +53,7 @@
         buildozer
 
         # Term utils
+        fd
         ripgrep
         typst
         task-keeper
