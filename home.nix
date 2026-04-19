@@ -63,6 +63,7 @@
 
         # Hacks
         rustup
+        go
 
         # Fonts
         nerd-fonts.monaspace
