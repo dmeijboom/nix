@@ -53,7 +53,7 @@
       git.autoFetch = false;
       gui.statusPanelView = "allBranchesLog";
       gui.authorColors = {
-        "*" = "#b7bdf8";
+        "*" = "#B48EAD";
       };
       gui.showRandomTip = false;
       gui.showCommandLog = false;
@@ -61,17 +61,17 @@
       gui.screenMode = "half";
       gui.theme = {
         activeBorderColor = [
-          "#4e5668"
+          "#81A1C1"
           "bold"
         ];
-        inactiveBorderColor = [ "#363b48" ];
-        optionsTextColor = [ "#8aadf4" ];
-        selectedLineBgColor = [ "#363a4f" ];
-        cherryPickedCommitBgColor = [ "#494d64" ];
-        cherryPickedCommitFgColor = [ "#8aadf4" ];
-        unstagedChangesColor = [ "#ed8796" ];
-        defaultFgColor = [ "#cad3f5" ];
-        searchingActiveBorderColor = [ "#eed49f" ];
+        inactiveBorderColor = [ "#3B4252" ];
+        optionsTextColor = [ "#88C0D0" ];
+        selectedLineBgColor = [ "#3B4252" ];
+        cherryPickedCommitBgColor = [ "#434C5E" ];
+        cherryPickedCommitFgColor = [ "#88C0D0" ];
+        unstagedChangesColor = [ "#BF616A" ];
+        defaultFgColor = [ "#D8DEE9" ];
+        searchingActiveBorderColor = [ "#EBCB8B" ];
       };
     };
   };
