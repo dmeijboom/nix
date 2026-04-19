@@ -1,7 +1,9 @@
 { zjstatus, config }:
 ''
   pane split_direction="vertical" {
-    pane name="code" command="hx" focus=true
+    pane name="code" focus=true command="direnv" {
+      args "exec" "." "hx"
+    }
     pane name="tools" size="35%" stacked=true {
       pane name="ai" command="${config.home.homeDirectory}/.opencode/bin/opencode" start_suspended=true
       pane name="git" command="lazygit" {
