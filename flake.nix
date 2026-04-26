@@ -5,7 +5,6 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    # zjstatus.url = "github:dj95/zjstatus"; build issue: https://github.com/dj95/zjstatus/pull/200
     zjstatus.url = "github:dj95/zjstatus";
     zjstatus.inputs.nixpkgs.follows = "nixpkgs";
     helix.url = "github:helix-editor/helix/master";
@@ -23,7 +22,17 @@
     }:
     let
       config = {
-        nixpkgs.config.allowUnfree = true;
+        nixpkgs.config = {
+          allowUnfree = true;
+          doCheckByDefault = false;
+        };
+        nixpkgs.overlays = [
+          (final: prev: {
+            direnv = prev.direnv.overrideAttrs (_: {
+              doCheck = false;
+            });
+          })
+        ];
         nix.settings = {
           experimental-features = "nix-command flakes pipe-operators";
           extra-substituters = "https://devenv.cachix.org";
@@ -37,6 +46,14 @@
           pkgs = import nixpkgs {
             inherit system;
             config.allowUnfree = true;
+            config.doCheckByDefault = false;
+            overlays = [
+              (final: prev: {
+                direnv = prev.direnv.overrideAttrs (_: {
+                  doCheck = false;
+                });
+              })
+            ];
           };
           extraSpecialArgs = {
             zjstatus = zjstatus.packages.${system}.default;
