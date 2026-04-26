@@ -55,6 +55,7 @@
         # Term utils
         bat
         fd
+        hurl
         ripgrep
         typst
         task-keeper
