@@ -53,6 +53,7 @@
         buildozer
 
         # Term utils
+        bat
         fd
         ripgrep
         typst
