@@ -49,6 +49,8 @@
         '')
         (lib.mkOrder 1500 ''
           bindkey '^T' fzf-file-widget
+          bindkey '^[[1;3D' backward-word
+          bindkey '^[[1;3C' forward-word
         '')
       ];
     };
