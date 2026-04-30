@@ -55,14 +55,15 @@
         # Term utils
         bat
         fd
+        yq
+        jq
         hurl
         ripgrep
-        typst
+        ast-grep
         task-keeper
 
         # Misc tools
         duckdb
-        ast-grep
 
         # Hacks
         rustup
@@ -76,6 +77,11 @@
       g = "lazygit";
       sg = "ast-grep";
       bazel = "bazelisk";
+    };
+
+    programs.worktrunk = lib.mkIf (config.custom.mode == "client") {
+      enable = true;
+      enableZshIntegration = true;
     };
 
     home.stateVersion = "23.11";

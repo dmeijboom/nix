@@ -9,6 +9,8 @@
     zjstatus.inputs.nixpkgs.follows = "nixpkgs";
     helix.url = "github:helix-editor/helix/master";
     helix.inputs.nixpkgs.follows = "nixpkgs";
+    worktrunk.url = "github:max-sixty/worktrunk";
+    worktrunk.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -19,6 +21,7 @@
       nixpkgs,
       zjstatus,
       helix,
+      worktrunk,
     }:
     let
       config = {
@@ -59,7 +62,10 @@
             zjstatus = zjstatus.packages.${system}.default;
             helix-pkg = helix.packages.${system}.default;
           };
-          modules = [ ./home.nix ] ++ modules;
+          modules = [
+            ./home.nix
+            worktrunk.homeModules.default
+          ] ++ modules;
         };
     in
     {
@@ -89,7 +95,10 @@
                 helix-pkg = helix.packages.aarch64-darwin.default;
               };
               users.dmeijboom = {
-                imports = [ ./home.nix ];
+                imports = [
+                  ./home.nix
+                  worktrunk.homeModules.default
+                ];
                 custom.cloud.enable = true;
               };
             };
