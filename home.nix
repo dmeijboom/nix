@@ -12,15 +12,6 @@
       description = "Username";
     };
 
-    mode = lib.mkOption {
-      type = lib.types.enum [
-        "client"
-        "server"
-      ];
-      default = "client";
-      description = "Installation mode";
-    };
-
     cloud.enable = lib.mkEnableOption "Enable Kubernetes tools";
   };
 
@@ -36,42 +27,39 @@
 
     programs.home-manager.enable = pkgs.stdenv.isLinux;
 
-    home.packages =
-      with pkgs;
-      [
-        # Generic
-        zsh
-      ]
-      ++ lib.optionals (config.custom.mode == "client") [
-        # Git
-        gh
+    home.packages = with pkgs; [
+      # Generic
+      zsh
 
-        # Build tools
-        devenv
-        bazelisk
-        buildifier
-        buildozer
+      # Git
+      gh
 
-        # Term utils
-        bat
-        fd
-        yq
-        jq
-        hurl
-        ripgrep
-        ast-grep
-        task-keeper
+      # Build tools
+      devenv
+      bazelisk
+      buildifier
+      buildozer
 
-        # Misc tools
-        duckdb
+      # Term utils
+      bat
+      fd
+      yq
+      jq
+      hurl
+      ripgrep
+      ast-grep
+      task-keeper
 
-        # Hacks
-        rustup
-        go
+      # Misc tools
+      duckdb
 
-        # Fonts
-        nerd-fonts.monaspace
-      ];
+      # Hacks
+      rustup
+      go
+
+      # Fonts
+      nerd-fonts.monaspace
+    ];
 
     home.shellAliases = {
       g = "lazygit";
@@ -79,7 +67,7 @@
       bazel = "bazelisk";
     };
 
-    programs.worktrunk = lib.mkIf (config.custom.mode == "client") {
+    programs.worktrunk = {
       enable = true;
       enableZshIntegration = true;
     };
@@ -98,7 +86,5 @@
     ./config/git.nix
     ./config/cloud.nix
     ./config/editor/helix.nix
-    ./config/irc/ergo.nix
-    ./config/irc/client.nix
   ];
 }

@@ -5,50 +5,48 @@
   ...
 }:
 {
-  config = lib.mkIf (config.custom.mode == "client") {
-    programs = {
-      difftastic = {
-        enable = true;
-        git.enable = true;
-        git.diffToolMode = true;
-        options = {
-          color = "always";
-        };
+  programs = {
+    difftastic = {
+      enable = true;
+      git.enable = true;
+      git.diffToolMode = true;
+      options = {
+        color = "always";
       };
+    };
 
-      git = {
-        enable = true;
-        lfs.enable = true;
-        signing = {
-          format = "ssh";
-          signByDefault = true;
-        }
-        // lib.optionalAttrs pkgs.stdenv.isDarwin {
-          key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM3qdw1DknYTEUeIuyRqCitz/Mqo5m1+a0g8/KdfQ2wr";
-          signer = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
-        }
-        // lib.optionalAttrs pkgs.stdenv.isLinux {
-          key = "/home/${config.custom.username}/.ssh/signing_key.pub";
-        };
-        settings = {
-          user = {
-            name = "Dillen Meijboom";
-            email = "dillen@brainhive.nl";
-          };
-          push = {
-            autoSetupRemote = true;
-          };
-          pull = {
-            ff = "only";
-          };
-        };
-        ignores = [
-          ".env"
-          ".dev"
-          ".direnv"
-          ".zed/tasks.json"
-        ];
+    git = {
+      enable = true;
+      lfs.enable = true;
+      signing = {
+        format = "ssh";
+        signByDefault = true;
+      }
+      // lib.optionalAttrs pkgs.stdenv.isDarwin {
+        key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM3qdw1DknYTEUeIuyRqCitz/Mqo5m1+a0g8/KdfQ2wr";
+        signer = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
+      }
+      // lib.optionalAttrs pkgs.stdenv.isLinux {
+        key = "/home/${config.custom.username}/.ssh/signing_key.pub";
       };
+      settings = {
+        user = {
+          name = "Dillen Meijboom";
+          email = "dillen@brainhive.nl";
+        };
+        push = {
+          autoSetupRemote = true;
+        };
+        pull = {
+          ff = "only";
+        };
+      };
+      ignores = [
+        ".env"
+        ".dev"
+        ".direnv"
+        ".zed/tasks.json"
+      ];
     };
   };
 }

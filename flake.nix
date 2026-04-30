@@ -107,9 +107,6 @@
         ];
       };
       homeConfigurations = {
-        server = mkHome "x86_64-linux" [
-          { custom.mode = "server"; }
-        ];
         kpn = mkHome "x86_64-linux" [
           {
             custom.username = "so";

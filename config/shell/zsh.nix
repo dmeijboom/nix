@@ -1,6 +1,5 @@
 {
   lib,
-  config,
   ...
 }:
 {
@@ -32,7 +31,7 @@
         export PATH="$HOME/.local/bin:$PATH"
       '';
       initContent = lib.mkMerge [
-        (lib.mkIf (config.custom.mode == "client") ''
+        (''
           zellij_update() {
             if [[ -n "$ZELLIJ_SESSION_NAME" ]]; then
               local zjstatus_prompt=$(starship prompt --profile zellij --terminal-width 80 | sed "s/%{//g; s/%}//g")
