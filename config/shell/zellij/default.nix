@@ -1,10 +1,11 @@
 {
   lib,
   config,
-  zjstatus,
+  pkgs,
   ...
 }:
 let
+  zjstatus = pkgs.zjstatus;
   zjstatusBar = ''
     pane size=1 borderless=true {
       plugin location="file:${zjstatus}/bin/zjstatus.wasm" {

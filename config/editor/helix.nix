@@ -1,6 +1,5 @@
 {
   pkgs,
-  helix-pkg,
   ...
 }:
 let
@@ -238,7 +237,7 @@ in
 
   programs.helix = {
     enable = true;
-    package = helix-pkg;
+    package = pkgs.helix;
     defaultEditor = true;
     languages = {
       language-server.sqls.command = "sqls";
